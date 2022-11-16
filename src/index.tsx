@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 import Chart from "./Chart";
+import Main from "./Main";
 
 //serviceWorkerRegistration.unregister();
 serviceWorkerRegistration.register();
@@ -13,7 +14,7 @@ serviceWorkerRegistration.register();
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Main />,
   },
   {
     path: "chart",
@@ -27,6 +28,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
+    <App />
   </React.StrictMode>
 );
 
