@@ -1,19 +1,14 @@
 import { Route, Routes } from "react-router-dom";
-import Chart from "./Chart";
-import Main from "./Main";
-import MyStudy from "./MyStudy";
-import Setting from "./Setting";
-import Studies from "./Studies";
-import Timer from "./Timer";
+import { Timer, Chart, AllStudies, MyStudy, More } from "./page";
 
 const Router = () => {
   return (
     <Routes>
       <Route path="/timer" element={<Timer />} />;
       <Route path="/chart" element={<Chart />} />;
-      <Route path="/studies" element={<Studies />} />;
+      <Route path="/allstudies" element={<AllStudies />} />;
       <Route path="/mystudy" element={<MyStudy />} />;
-      <Route path="/setting" element={<Setting />} />;
+      <Route path="/more" element={<More />} />;
     </Routes>
   );
 };
