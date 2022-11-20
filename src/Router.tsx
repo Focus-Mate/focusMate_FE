@@ -1,10 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 import Chart from "./Chart";
+import Main from "./Main";
 
 const Router = () => {
   return (
     <Routes>
-      <Route path="/Chart" element={<Chart />} />;
+      <Route path="/" element={<Main />} />;
+      <Route path="/chart" element={<Chart />} />;
     </Routes>
   );
 };
