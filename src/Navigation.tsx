@@ -10,19 +10,29 @@ function Navigation() {
   return (
     <GNB>
       <GNBIcon>
-        <Link to={"timer"}> 타이머 </Link>
+        <Link to={"timer"}>
+          <TimerIcon />
+        </Link>
       </GNBIcon>
       <GNBIcon>
-        <Link to={"chart"}>통계</Link>
+        <Link to={"chart"}>
+          <ChartIcon />
+        </Link>
       </GNBIcon>
       <GNBIcon>
-        <Link to={"allstudies"}>스터디 찾기</Link>
+        <Link to={"allstudies"}>
+          <AllStudyIcon />
+        </Link>
       </GNBIcon>
       <GNBIcon>
-        <Link to={"mystudy"}>내 스터디</Link>
+        <Link to={"mystudy"}>
+          <MyStudyIcon />
+        </Link>
       </GNBIcon>
       <GNBIcon>
-        <Link to={"more"}>설정</Link>
+        <Link to={"more"}>
+          <MoreIcon />
+        </Link>
       </GNBIcon>
     </GNB>
   );
@@ -47,4 +57,5 @@ const GNB = styled.div`
 const GNBIcon = styled.div`
   width: 48px;
   height: 48px;
+  text-align: center;
 `;
