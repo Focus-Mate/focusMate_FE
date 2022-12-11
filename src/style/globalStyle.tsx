@@ -31,8 +31,13 @@ footer, header, hgroup, main, menu, nav, section {
 *[hidden] {
     display: none;
 }
+*{
+  box-sizing: border-box;
+}
+html{
+}
 body {
-
-
+width: 100%;
+height: 100%;
 }
 `;
