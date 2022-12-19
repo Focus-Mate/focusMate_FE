@@ -1,5 +1,7 @@
+import StudyTime from "./StudyTime";
+
 const WeekChart = () => {
-  return <>Weekchart</>;
+  return <StudyTime period="week" studyTime={125346} />;
 };
 
 export default WeekChart;

@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import { ReactComponent as DDayIcon } from "../style/icon/chartPage/dday_icon.svg";
-import { ReactComponent as AlarmIcon } from "../style/icon/chartPage/alarm_icon.svg";
+import { DDayIcon, AlarmIcon } from "../style/icon/chartPage";
 import { ReactComponent as ViewMoreIcon } from "../style/icon/viewmore_icon.svg";
 import DayChart from "../component/chart/DayChart";
 import WeekChart from "../component/chart/WeekChart";
 import MonthChart from "../component/chart/MonthChart";
 import { useState } from "react";
-function Chart() {
+
+const Chart = () => {
   const [currentTab, setCurrentTab] = useState(1);
   const chartPeriod = [
     { period: "일", content: <DayChart />, id: 1 },
@@ -59,7 +59,7 @@ function Chart() {
       {chartPeriod[currentTab - 1]?.content}
     </>
   );
-}
+};
 
 export default Chart;
 
