@@ -18,7 +18,7 @@ export default StudyHistory;
 
 const HistoryContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 9fr;
+  grid-template-columns: 40px 9fr;
   gap: 16px;
   margin-bottom: 16px;
 `;
