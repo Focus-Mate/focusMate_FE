@@ -1,20 +1,29 @@
 import styled from "styled-components";
 import { LeftArrowIcon, RightArrowIcon } from "../../style/icon/chartPage";
-import { getToday, getTodayDate } from "../../util";
-const PeriodSelector = () => {
-  const 날짜 = getTodayDate();
-  const 요일 = getToday();
+import { useState } from "react";
+import ReactDatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "react-datepicker/dist/react-datepicker-cssmodules.css";
 
+const PeriodSelector = () => {
+  const [startDate, setStartDate] = useState(new Date());
   return (
-    <PeriodSelectWrapper>
-      <PeriodSelectBtn>
-        <LeftArrowIcon />
-      </PeriodSelectBtn>
-      {날짜} ({요일})
-      <PeriodSelectBtn>
-        <RightArrowIcon />
-      </PeriodSelectBtn>
-    </PeriodSelectWrapper>
+    <>
+      <PeriodSelectWrapper>
+        <PeriodSelectBtn>
+          <LeftArrowIcon />
+        </PeriodSelectBtn>
+
+        <ReactDatePicker
+          selected={startDate}
+          onChange={(date: Date) => setStartDate(date)}
+        />
+
+        <PeriodSelectBtn>
+          <RightArrowIcon />
+        </PeriodSelectBtn>
+      </PeriodSelectWrapper>
+    </>
   );
 };
 
@@ -34,7 +43,7 @@ const PeriodSelectBtn = styled.button`
 const PeriodSelectWrapper = styled.div`
   margin: 15px 0px 49px 0px;
   color: #777;
-  display: flex;
+  /* display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: center; */
 `;
