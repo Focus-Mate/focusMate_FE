@@ -6,7 +6,9 @@ import { Timer, Chart, AllStudies, MyStudy, More } from "./page";
 const Router = () => {
   return (
     <Routes>
+      {/* NOTE LandingGuide = 랜딩 분기점 (추후에 로그인/게스트 분기점) */}
       <Route path="/" element={<LandingGuide />}>
+        {/* NOTE DefaultLayout = 하단에 Navigation 붙어있는 layout component */}
         <Route element={<DefaultLayout />}>
           <Route path="timer" element={<Timer />} index />;
           <Route path="chart" element={<Chart />} />;
