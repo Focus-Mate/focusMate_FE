@@ -11,8 +11,6 @@ const DayChart = () => {
       <StudyTime period="day" studyTime={1243546} />
       <SubTitle>공부 기록</SubTitle>
       <StudyHistory />
-      <StudyHistory />
-      <StudyHistory />
     </>
   );
 };

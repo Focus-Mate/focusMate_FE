@@ -13,16 +13,19 @@ const PeriodSelector = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [isToday, setIsToday] = useState(true);
 
+  useEffect(() => {
+    todayCheck();
+    dailyChartRequest();
+  }, [startDate]);
+
   const dateAdd = () => {
     const result = add(startDate, { days: 1 });
     setStartDate(result);
-    console.log(startDate);
   };
 
   const dateSub = () => {
     const result = sub(startDate, { days: 1 });
     setStartDate(result);
-    console.log(startDate);
   };
 
   const todayCheck = () => {
@@ -34,9 +37,13 @@ const PeriodSelector = () => {
       setIsToday(false);
     }
   };
-  useEffect(() => {
-    todayCheck();
-  }, [startDate]);
+
+  const dailyChartRequest = () => {
+    const day = startDate.toISOString();
+    const requestDay = day.substring(0, day.length - 14);
+    console.log(requestDay);
+  };
+
   return (
     <PeriodSelectWrapper>
       <PeriodSelectBtn onClick={dateSub}>
