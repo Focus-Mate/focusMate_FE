@@ -21,4 +21,5 @@ const LayoutContainer = styled.div`
   min-height: 100%;
   width: 100%;
   padding: 10px;
+  margin-bottom: 80px;
 `;
