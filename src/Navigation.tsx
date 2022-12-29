@@ -41,6 +41,7 @@ function Navigation() {
 export default Navigation;
 
 const GNB = styled.div`
+  background-color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -50,8 +51,8 @@ const GNB = styled.div`
   border-bottom: 0px;
   border-radius: 24px 24px 0px 0px;
   bottom: 0;
-  position: absolute;
-  width: 100vw;
+  position: fixed;
+  width: 100%;
 `;
 
 const GNBIcon = styled.div`
