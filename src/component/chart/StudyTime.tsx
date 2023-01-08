@@ -1,3 +1,5 @@
+import axios from "axios";
+import { useEffect } from "react";
 import styled from "styled-components";
 
 type StudyTimeProps = {
@@ -17,9 +19,7 @@ const StudyTime = (props: StudyTimeProps) => {
   return (
     <StudyTimeWrapper>
       {studyTimeTable[index].period} {studyTimeTable[index].total} 공부시간
-      <p>
-        <h1>{props.studyTime}</h1>
-      </p>
+      <h1>{props.studyTime}</h1>
     </StudyTimeWrapper>
   );
 };
@@ -30,11 +30,10 @@ const StudyTimeWrapper = styled.div`
   text-align: center;
   color: #555;
   margin-bottom: 44px;
-  p {
+
+  h1 {
     margin-top: 5px;
     color: #111;
-  }
-  h1 {
     font-weight: 700;
     font-size: 36px;
   }
