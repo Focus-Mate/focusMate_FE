@@ -41,3 +41,13 @@ width: 100%;
 height: 100%;
 }
 `;
+
+export const Input = styled.input`
+  width: 100%;
+  border-radius: 16px;
+  border: 0px solid transparent;
+  background-color: #f6f6f6;
+  padding: 23px;
+  outline-color: #34dbc4;
+  caret-color: #34dbc4;
+`;
