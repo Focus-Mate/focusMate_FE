@@ -1,36 +1,62 @@
 // Grey
-export const neutral = {
-  0: "#ffffff",
-  100: "#f6f6f6",
-  200: "#dcdcdc",
-  300: "#b8b8b8",
-  400: "#949494",
-  500: "#777777",
-  600: "#555555",
-  700: "#303030",
-  800: "#111111",
+const grey = {
+  400: "#BABABA",
+  500: "#949494",
+  600: "#777777",
+  700: "#555555",
+  800: "#303030",
+  900: "#111111",
 };
 
-// Green
-export const green = {
-  0: "#E9FAF7",
-  100: "#e0fffc",
-  200: "#b3f0e8",
-  300: "#87e4da",
-  400: "#34dbc4",
-  500: "#2fc4bb",
-  600: "#359d9e",
-  700: "#018a93",
-  800: "#005f6c",
+// bg
+
+const bg = {
+  base: "#ffffff",
+  grey: "#f6f6f6",
+  line: "#dbdbdb",
+  dim: "#00000080",
+  elevated: "#fbfbfb",
+  orange: "#fcf0e8",
+  mint10: "#e9faf7",
+  mint20: "#b3f0e9",
+  mint30: "#2fc4bc",
+};
+
+// primary
+const primary = {
+  900: "#018a93",
+  800: "#359d9e",
+  700: "#2fc4bb",
+  600: "#87e4da",
+  500: "#b3f0e8",
+};
+
+// orange
+const orange = {
+  900: "#e34400",
+  700: "#ff9366",
+};
+
+// icon
+
+const icon = {
+  mint10: "#fbffff",
+  mint20: "#b2f2f2",
+  mint60: "#005f6c",
+  orange10: "#fffcfc",
+  orange50: "#ff6f32",
 };
 
 const colors = {
-  neutral,
-  green,
+  grey,
+  bg,
+  primary,
+  orange,
+  icon,
 };
 
-const Theme = {
+export const theme = {
   colors,
 };
 
-export default Theme;
+export default theme;
