@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 //전역 스타일링
 export const GlobalStyle = createGlobalStyle`
