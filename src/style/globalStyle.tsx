@@ -74,10 +74,10 @@ footer, header, hgroup, main, menu, nav, section {
   box-sizing: border-box;
 }
 html{
+  width: 100%;
+height: 100%;
 }
 body {
-width: 100%;
-height: 100%;
 font-family:"SpoqaRegular"
 }
 h1, h2, h3, h4, h5, h6{
@@ -90,13 +90,31 @@ export const Input = styled.input`
   width: 100%;
   border-radius: 16px;
   border: 0px solid transparent;
-  background-color: #f6f6f6;
+  background-color: ${Theme.colors.bg.grey};
   padding: 23px;
-  outline-color: #34dbc4;
-  caret-color: #34dbc4;
+  outline-color: ${Theme.colors.bg.mint30};
+  caret-color: ${Theme.colors.bg.mint30};
 `;
 
 export const Button = styled.button`
   background-color: ${(props) =>
     props.disabled ? Theme.colors.bg.line : Theme.colors.primary[700]};
+  border-radius: 16px;
+  font-family: "SpoqaBold";
+  color: ${(props) =>
+    props.disabled ? Theme.colors.grey[500] : Theme.colors.bg.base};
+  width: 100%;
+  padding: 16px 0px;
+  border: 0px solid transparent;
+  cursor: ${(props) => (props.disabled ? "default" : "pointer")};
+`;
+
+export const Title = styled.h1`
+  font-size: 1.5rem;
+  word-break: keep-all;
+`;
+
+export const SignInStepButton = styled(Button)`
+  position: absolute;
+  bottom: 16px;
 `;
