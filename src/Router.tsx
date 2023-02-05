@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import DefaultLayout from "./layout/DefaultLayout";
 import LandingGuide from "./layout/LandingGuide";
+import SignInLayout from "./layout/SiginInLayout";
 import { Timer, Chart, AllStudies, MyStudy, More } from "./page";
 import MakeDday from "./page/chart/MakeDday";
 import Login from "./page/login";
@@ -21,6 +22,7 @@ const Router = () => {
         </Route>
         <Route path="login" element={<Login />} />
         <Route path="signin" element={<SignIn />} />
+
         <Route path="makedday" element={<MakeDday />} />
       </Route>
     </Routes>

@@ -45,7 +45,6 @@ const LandingGuide = () => {
 export default LandingGuide;
 
 const LayoutContainer = styled.div`
-  min-height: 100%;
+  min-height: 100vh;
   width: 100%;
-  margin-bottom: 80px;
 `;

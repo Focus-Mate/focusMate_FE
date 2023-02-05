@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import Nickname from "./Nickname";
+import AgreeStep from "../../component/signIn/AgreeStep";
+import Nickname from "../../component/signIn/Nickname";
 
 const SignIn = () => {
+  const [currentStep, setCurrenStep] = useState<string>("agree");
   const [agreeList, setAgreeList] = useState<Array<string | any>>([]);
   const [nextStep, setNextStep] = useState<boolean>(false);
 
@@ -32,46 +34,18 @@ const SignIn = () => {
     console.log(agreeList);
   }, [agreeList]);
 
-  return (
-    <>
-      <h1>간편한 이용을 위해 약관에 동의해주세요</h1>
-      <p>
-        <input type="checkbox" value="SERVICE" onClick={checkAll} />
-        <label>전체 동의</label>
-      </p>
-      <hr />
-      <form>
-        <p>
-          <input
-            type="checkbox"
-            value="SERVICE"
-            onClick={checkboxHandler}
-            checked={agreeList.includes("SERVICE") ? true : false}
-          />
-          <label>서비스 이용약관 (필수)</label>
-        </p>
-        <p>
-          <input
-            type="checkbox"
-            value="PRIVACY"
-            onClick={checkboxHandler}
-            checked={agreeList.includes("PRIVACY") ? true : false}
-          />
-          <label>개인정보 처리방침 (필수)</label>
-        </p>
-        <p>
-          <input
-            type="checkbox"
-            value="MARKETING"
-            onClick={checkboxHandler}
-            checked={agreeList.includes("MARKETING") ? true : false}
-          />
-          <label>E-mail 및 마케팅 정보 수신동의 (선택)</label>
-        </p>
-        <input type="submit" value="다음" disabled={!nextStep} />
-      </form>
-      <Nickname />
-    </>
-  );
+  if (currentStep === "agree")
+    return (
+      <AgreeStep
+        agreeList={agreeList}
+        checkAll={checkAll}
+        nextStep={nextStep}
+        checkboxHandler={checkboxHandler}
+        setCurrenStep={setCurrenStep}
+      />
+    );
+  else if (currentStep === "nickname")
+    return <Nickname setCurrenStep={setCurrenStep} />;
+  else return <>asdasd</>;
 };
 export default SignIn;
