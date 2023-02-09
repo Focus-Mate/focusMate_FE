@@ -13,8 +13,9 @@ if (token) {
   instance.interceptors.request.use(setToken);
 }
 
-instance.interceptors.response.use((response) => {
-  return response;
+instance.interceptors.response.use((response: any) => {
+  if (response.status === 200) return response;
+  else console.log(response);
 });
 
 export default instance;

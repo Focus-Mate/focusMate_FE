@@ -72,17 +72,24 @@ footer, header, hgroup, main, menu, nav, section {
     display: none;
 }
 *{
-
+box-sizing: border-box;
 }
 html{
-  width: 100%;
-  height: 100%;
+width: 100%;
+height: 100%;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none
 }
 body{
+
   line-height: 1;
-  width: 100%;
-  height: 100%;
+
         overflow-x: hidden;
+        -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;  
+    box-sizing: border-box; 
 }
 h1, h2, h3, h4, h5, h6{
   font-family:"SpoqaMedium"
@@ -118,8 +125,11 @@ export const Button = styled.button`
 `;
 
 export const Title = styled.h1`
+  padding-top: 57px;
   font-size: 1.5rem;
   word-break: keep-all;
+  line-height: 32px;
+  margin-bottom: 40px;
 `;
 
 export const SignInStepButton = styled(Button)`

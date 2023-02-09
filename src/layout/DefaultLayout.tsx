@@ -12,5 +12,5 @@ const DefaultLayout = () => {
 export default DefaultLayout;
 
 const DefaultContainer = styled.div`
-  padding: 20px;
+  padding: 0px 20px;
 `;
