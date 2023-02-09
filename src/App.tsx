@@ -1,5 +1,3 @@
-import styled from "styled-components";
-import Navigation from "./Navigation";
 import Router from "./Router";
 import { GlobalStyle } from "./style/globalStyle";
 import { QueryClient, QueryClientProvider } from "react-query";

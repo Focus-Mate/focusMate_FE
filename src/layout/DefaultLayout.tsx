@@ -1,19 +1,16 @@
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
-import Navigation from "../Navigation";
 
 const DefaultLayout = () => {
   return (
-    <>
-      <LayoutContainer>
-        <Outlet />
-      </LayoutContainer>
-      <Navigation />
-    </>
+    <DefaultContainer>
+      <Outlet />
+    </DefaultContainer>
   );
 };
 
 export default DefaultLayout;
-const LayoutContainer = styled.div`
+
+const DefaultContainer = styled.div`
   padding: 20px;
 `;

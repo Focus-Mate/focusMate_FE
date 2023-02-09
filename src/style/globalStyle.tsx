@@ -60,6 +60,7 @@ time, mark, audio, video {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
+  box-sizing: border-box;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -71,19 +72,26 @@ footer, header, hgroup, main, menu, nav, section {
     display: none;
 }
 *{
-  box-sizing: border-box;
+
 }
 html{
   width: 100%;
-height: 100%;
+  height: 100%;
 }
-body {
-font-family:"SpoqaRegular"
+body{
+  line-height: 1;
+  width: 100%;
+  height: 100%;
+        overflow-x: hidden;
 }
 h1, h2, h3, h4, h5, h6{
   font-family:"SpoqaMedium"
 
 }
+a{
+  text-decoration: none;
+}
+
 `;
 
 export const Input = styled.input`

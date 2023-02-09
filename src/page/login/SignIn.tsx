@@ -1,11 +1,18 @@
 import { useEffect, useState } from "react";
 import AgreeStep from "../../component/signIn/AgreeStep";
+import Complete from "../../component/signIn/Complete";
 import Nickname from "../../component/signIn/Nickname";
+
+export interface ISignInInfo {
+  nickname?: string;
+  adCheck?: boolean;
+}
 
 const SignIn = () => {
   const [currentStep, setCurrenStep] = useState<string>("agree");
   const [agreeList, setAgreeList] = useState<Array<string | any>>([]);
   const [nextStep, setNextStep] = useState<boolean>(false);
+  const [signInInfo, setSignInInfo] = useState<ISignInInfo>({});
 
   const checkboxHandler = (e: any) => {
     if (e.target.checked && !agreeList.includes(e.target.value)) {
@@ -31,7 +38,11 @@ const SignIn = () => {
 
   useEffect(() => {
     nextStepCheck();
-    console.log(agreeList);
+    console.log(agreeList, signInInfo);
+  }, [agreeList, signInInfo]);
+
+  useEffect(() => {
+    if (agreeList.includes("MARKETING")) setSignInInfo({ adCheck: true });
   }, [agreeList]);
 
   if (currentStep === "agree")
@@ -45,7 +56,14 @@ const SignIn = () => {
       />
     );
   else if (currentStep === "nickname")
-    return <Nickname setCurrenStep={setCurrenStep} />;
-  else return <>asdasd</>;
+    return (
+      <Nickname
+        setCurrenStep={setCurrenStep}
+        setSignInInfo={setSignInInfo}
+        signInInfo={signInInfo}
+      />
+    );
+  else if (currentStep === "complete") return <Complete />;
+  else return <>asd</>;
 };
 export default SignIn;
