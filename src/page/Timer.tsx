@@ -5,6 +5,27 @@ import playIcon from "../style/icon/timer/play.png";
 import pauseIcon from "../style/icon/timer/pause.png";
 import stopIcon from "../style/icon/timer/stop.png";
 
+import ReactModal from "react-modal";
+
+const modalStyle = {
+	overlay: {
+		backgroundColor: "rgba(0, 0, 0, 0.5)",
+	},
+	content: {
+		width: "300px",
+		height: "200px",
+		top: "50%",
+		left: "50%",
+		border: "none",
+		backgroundColor: "white",
+		transform: "translate(-50%, -50%)",
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "flex-end",
+		gap: "1rem",
+	},
+};
+
 const circleWidth = 300;
 
 enum TimerStatus {
@@ -23,7 +44,7 @@ function Timer() {
 
 	// 시간을 멈추면 stackTime에 저장
 	const [nowTime, setNowTime] = useState(0);
-	const [stackTime, setStackTime] = useState(6000000);
+	const [stackTime, setStackTime] = useState(1000000);
 
 	// 최종 결과 시간
 	const [resultTime, setResultTime] = useState(0);
@@ -98,6 +119,27 @@ function Timer() {
 
 	return (
 		<Container>
+			<ReactModal isOpen={playStatus === TimerStatus.STOP} style={modalStyle}>
+				<SaveButton
+					onClick={() => {
+						// 저장 로직
+					}}
+				>
+					저장
+				</SaveButton>
+				<ResetButton
+					onClick={() => {
+						// 리셋 로직
+						setNowTime(0);
+						setStackTime(0);
+						setResultTime(0);
+						setDashOffset(dashArray - (dashArray * 0) / 100);
+						setPlayStatus(TimerStatus.NONE);
+					}}
+				>
+					취소
+				</ResetButton>
+			</ReactModal>
 			<svg width={circleWidth} height={circleWidth} viewBox={`0 0 ${circleWidth} ${circleWidth}`}>
 				<defs>
 					<linearGradient
@@ -208,7 +250,6 @@ const BackgroundCircle = styled.circle`
 
 const ProgressCircle = styled.circle`
 	fill: none;
-	/* stroke: #12c2e9; */
 	stroke-linecap: round;
 	stroke-linejoin: round;
 `;
@@ -274,4 +315,20 @@ const ButtonWrap = styled.div`
 			background-color: #3c9b95;
 		}
 	}
+`;
+
+const Button = styled.button`
+	width: 100px;
+	height: 40px;
+	background-color: transparent;
+	border: 0;
+`;
+
+const SaveButton = styled(Button)`
+	background-color: #2fc4bb;
+	color: white;
+`;
+
+const ResetButton = styled(Button)`
+	background-color: #f2f2f2;
 `;
