@@ -20,13 +20,9 @@ const Chart = () => {
   ];
 
   const getDday = async () => {
-    try {
-      const response = await instance.get(`/api/calculate/getDDays`);
-      const ddayList = response.data.rows;
-      return ddayList;
-    } catch (error) {
-      console.log(error);
-    }
+    const response = await instance.get(`/api/calculate/getDDays`);
+    const ddayList = response.data.rows;
+    return ddayList;
   };
 
   const { data: ddayList, isLoading } = useQuery("ddayInfo", getDday);
