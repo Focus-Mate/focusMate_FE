@@ -109,6 +109,11 @@ export const Input = styled.input`
   padding: 23px;
   outline-color: ${Theme.colors.bg.mint30};
   caret-color: ${Theme.colors.bg.mint30};
+
+  &.error {
+    outline-color: ${Theme.colors.orange[900]};
+    caret-color: ${Theme.colors.orange[900]};
+  }
 `;
 
 export const Button = styled.button`
