@@ -17,10 +17,12 @@
 		"web-vitals": "^2.1.4"
 	},
 	"dependencies": {
+		"@craco/craco": "^7.0.0",
 		"axios": "^1.2.1",
 		"date-fns": "^2.29.3",
 		"dayjs": "^1.11.7",
 		"react": "^18.2.0",
+		"react-app-alias": "^2.2.2",
 		"react-datepicker": "^4.8.0",
 		"react-dom": "^18.2.0",
 		"react-modal": "^3.16.1",
@@ -44,9 +46,9 @@
 		"workbox-streams": "^6.5.4"
 	},
 	"scripts": {
-		"start": "react-scripts start",
-		"build": "react-scripts build",
-		"test": "react-scripts test",
+		"start": "craco start",
+		"build": "craco build",
+		"test": "craco test",
 		"eject": "react-scripts eject"
 	},
 	"eslintConfig": {
@@ -67,5 +69,6 @@
 			"last 1 safari version"
 		]
 	},
-	"proxy": "http://43.200.27.157"
+	"proxy": "http://localhost:8000",
+	"proxy1": "http://43.200.27.157"
 }

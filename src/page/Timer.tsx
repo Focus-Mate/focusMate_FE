@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import playIcon from "../style/icon/timer/play.png";
 import pauseIcon from "../style/icon/timer/pause.png";
-import stopIcon from "../style/icon/timer/stop.png";
+import stopIcon from "@/style/icon/timer/stop.png";
 
 import ReactModal from "react-modal";
 
