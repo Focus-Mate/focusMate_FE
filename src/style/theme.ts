@@ -1,3 +1,5 @@
+export type ThemeType = typeof theme;
+
 // Grey
 const grey = {
 	400: "#BABABA",
