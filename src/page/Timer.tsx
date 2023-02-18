@@ -213,6 +213,13 @@ const Container = styled.div`
 	svg {
 		margin-top: -120px;
 	}
+
+	@media (max-width: 330px) {
+		svg {
+			width: 100%;
+			height: auto;
+		}
+	}
 `;
 
 const BackgroundCircle = styled.circle`
