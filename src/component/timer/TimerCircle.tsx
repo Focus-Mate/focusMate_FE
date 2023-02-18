@@ -67,6 +67,7 @@ const ProgressCircle = styled.circle`
 `;
 
 const CircleText = styled.div`
+	font-family: "SpoqaMedium";
 	position: absolute;
 	left: 50%;
 	top: 50%;
@@ -74,7 +75,6 @@ const CircleText = styled.div`
 	display: flex;
 	font-size: 1rem;
 	font-weight: medium;
-	font-family: "Spoqa Han Sans Neo", "sans-serif";
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;

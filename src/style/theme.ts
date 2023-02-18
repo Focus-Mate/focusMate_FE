@@ -47,6 +47,7 @@ const icon = {
 	mint60: "#005f6c",
 	orange10: "#fffcfc",
 	orange50: "#ff6f32",
+	white: "#fefefe",
 };
 
 const colors = {
