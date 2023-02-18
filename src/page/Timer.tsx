@@ -5,18 +5,32 @@ import playIcon from "../style/icon/timer/play.png";
 import pauseIcon from "../style/icon/timer/pause.png";
 import stopIcon from "@/style/icon/timer/stop.png";
 import TimerSavePop from "@/component/timer/TimerSavePop";
+import TimerCircle from "@/component/timer/TimerCircle";
+import { useMutation } from "react-query";
+import instance from "@/axios";
+
+const TimerStatus = {
+	NONE: 0,
+	PLAYING: 1,
+	PAUSE: 2,
+	STOP: 3,
+};
 
 const circleWidth = 300;
-
-enum TimerStatus {
-	NONE,
-	PLAYING,
-	PAUSE,
-	STOP,
-}
+const radius = 135;
 
 function Timer() {
-	const radius = 135;
+	// React Query
+	const { mutateAsync: requestTimerStart } = useMutation("timer/start", async () => {
+		const response = await instance.post("/api/calculate/startTime");
+		return response.data;
+	});
+
+	const { mutateAsync: requestTimerStop } = useMutation("timer/stop", async (time: number) => {
+		const response = await instance.put("/api/calculate/endTime", { studyTime: time });
+		return response.data;
+	});
+
 	const dashArray = radius * Math.PI * 2;
 	const [dashOffset, setDashOffset] = useState(0);
 
@@ -108,56 +122,37 @@ function Timer() {
 					setDashOffset(dashArray - (dashArray * 0) / 100);
 					setPlayStatus(TimerStatus.NONE);
 				}}
-				onConfirmClick={() => {
+				onConfirmClick={async () => {
 					// 저장 로직
+					const result = await requestTimerStop(Math.floor(resultTime / 1000));
+					setNowTime(0);
+					setStackTime(0);
+					setResultTime(0);
+					setDashOffset(dashArray - (dashArray * 0) / 100);
+					setPlayStatus(TimerStatus.NONE);
+					console.log(result);
 				}}
 			/>
-			<svg width={circleWidth} height={circleWidth} viewBox={`0 0 ${circleWidth} ${circleWidth}`}>
-				<defs>
-					<linearGradient
-						id="gradient"
-						x1="0%"
-						y1="50%"
-						x2="100%"
-						y2="50%"
-						gradientUnits="userSpaceOnUse"
-						gradientTransform="rotate(0, 90, 90)"
-					>
-						<stop offset="0%" stopColor="#87E4DA" />
-						<stop offset="100%" stopColor="#018A93" />
-					</linearGradient>
-				</defs>
-				<BackgroundCircle cx={circleWidth / 2} cy={circleWidth / 2} strokeWidth="15px" r={radius} />
-				<ProgressCircle
-					cx={circleWidth / 2}
-					cy={circleWidth / 2}
-					strokeWidth="15px"
-					r={radius}
-					style={{
-						strokeDasharray: dashArray,
-						strokeDashoffset: dashOffset,
-						transition: "stroke-dashoffset 0.3s",
-					}}
-					transform={`rotate(-90 ${circleWidth / 2} ${circleWidth / 2})`}
-					stroke="url(#gradient)"
-				/>
-				{/* <CircleText x="50%" y="50%" dy="0.3em" textAnchor="middle">
-					1
-				</CircleText> */}
-			</svg>
-			<CircleText>
+			<TimerCircle
+				circleWidth={circleWidth}
+				radius={radius}
+				dashArray={dashArray}
+				dashOffset={dashOffset}
+			>
 				<TimeText>공부시간 기록하기</TimeText>
 				<Time>
 					{hourText}:{minuteText}:{secondText}
 				</Time>
-			</CircleText>
+			</TimerCircle>
 			<Controller>
 				<ButtonWrap>
 					{playStatus === TimerStatus.NONE && (
 						<button
-							onClick={() => {
+							onClick={async () => {
 								setPlayStatus(TimerStatus.PLAYING);
 								startTimer();
+								const result = await requestTimerStart();
+								console.log(result);
 							}}
 						>
 							<img src={playIcon} alt="play" />
@@ -182,7 +177,7 @@ function Timer() {
 								<img src={playIcon} alt="play" />
 							</button>
 							<button
-								onClick={() => {
+								onClick={async () => {
 									setPlayStatus(TimerStatus.STOP);
 								}}
 							>
@@ -213,35 +208,12 @@ const Container = styled.div`
 	svg {
 		margin-top: -120px;
 	}
-`;
-
-const BackgroundCircle = styled.circle`
-	fill: none;
-	stroke: #ddd;
-`;
-
-const ProgressCircle = styled.circle`
-	fill: none;
-	stroke-linecap: round;
-	stroke-linejoin: round;
-`;
-
-const CircleText = styled.div`
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	display: flex;
-	font-size: 1rem;
-	font-weight: medium;
-	font-family: "Spoqa Han Sans Neo", "sans-serif";
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	margin-top: -60px;
 
 	@media (max-width: 330px) {
-		font-size: 4.75vw;
+		svg {
+			width: 100%;
+			height: auto;
+		}
 	}
 `;
 
@@ -249,6 +221,7 @@ const TimeText = styled.div`
 	margin-bottom: 6px;
 	color: #2fc4bb;
 `;
+
 const Time = styled.div`
 	font-size: 2.25rem;
 	font-weight: bold;
