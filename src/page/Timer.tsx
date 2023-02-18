@@ -6,18 +6,31 @@ import pauseIcon from "../style/icon/timer/pause.png";
 import stopIcon from "@/style/icon/timer/stop.png";
 import TimerSavePop from "@/component/timer/TimerSavePop";
 import TimerCircle from "@/component/timer/TimerCircle";
+import { useMutation } from "react-query";
+import instance from "@/axios";
 
-enum TimerStatus {
-	NONE,
-	PLAYING,
-	PAUSE,
-	STOP,
-}
+const TimerStatus = {
+	NONE: 0,
+	PLAYING: 1,
+	PAUSE: 2,
+	STOP: 3,
+};
 
 const circleWidth = 300;
 const radius = 135;
 
 function Timer() {
+	// React Query
+	const { mutateAsync: requestTimerStart } = useMutation("timer/start", async () => {
+		const response = await instance.post("/api/calculate/startTime");
+		return response.data;
+	});
+
+	const { mutateAsync: requestTimerStop } = useMutation("timer/stop", async (time: number) => {
+		const response = await instance.put("/api/calculate/endTime", { studyTime: time });
+		return response.data;
+	});
+
 	const dashArray = radius * Math.PI * 2;
 	const [dashOffset, setDashOffset] = useState(0);
 
@@ -109,8 +122,15 @@ function Timer() {
 					setDashOffset(dashArray - (dashArray * 0) / 100);
 					setPlayStatus(TimerStatus.NONE);
 				}}
-				onConfirmClick={() => {
+				onConfirmClick={async () => {
 					// 저장 로직
+					const result = await requestTimerStop(Math.floor(resultTime / 1000));
+					setNowTime(0);
+					setStackTime(0);
+					setResultTime(0);
+					setDashOffset(dashArray - (dashArray * 0) / 100);
+					setPlayStatus(TimerStatus.NONE);
+					console.log(result);
 				}}
 			/>
 			<TimerCircle
@@ -128,9 +148,11 @@ function Timer() {
 				<ButtonWrap>
 					{playStatus === TimerStatus.NONE && (
 						<button
-							onClick={() => {
+							onClick={async () => {
 								setPlayStatus(TimerStatus.PLAYING);
 								startTimer();
+								const result = await requestTimerStart();
+								console.log(result);
 							}}
 						>
 							<img src={playIcon} alt="play" />
@@ -155,7 +177,7 @@ function Timer() {
 								<img src={playIcon} alt="play" />
 							</button>
 							<button
-								onClick={() => {
+								onClick={async () => {
 									setPlayStatus(TimerStatus.STOP);
 								}}
 							>
