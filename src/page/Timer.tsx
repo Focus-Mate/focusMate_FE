@@ -5,8 +5,7 @@ import playIcon from "../style/icon/timer/play.png";
 import pauseIcon from "../style/icon/timer/pause.png";
 import stopIcon from "@/style/icon/timer/stop.png";
 import TimerSavePop from "@/component/timer/TimerSavePop";
-
-const circleWidth = 300;
+import TimerCircle from "@/component/timer/TimerCircle";
 
 enum TimerStatus {
 	NONE,
@@ -15,8 +14,10 @@ enum TimerStatus {
 	STOP,
 }
 
+const circleWidth = 300;
+const radius = 135;
+
 function Timer() {
-	const radius = 135;
 	const dashArray = radius * Math.PI * 2;
 	const [dashOffset, setDashOffset] = useState(0);
 
@@ -112,45 +113,17 @@ function Timer() {
 					// 저장 로직
 				}}
 			/>
-			<svg width={circleWidth} height={circleWidth} viewBox={`0 0 ${circleWidth} ${circleWidth}`}>
-				<defs>
-					<linearGradient
-						id="gradient"
-						x1="0%"
-						y1="50%"
-						x2="100%"
-						y2="50%"
-						gradientUnits="userSpaceOnUse"
-						gradientTransform="rotate(0, 90, 90)"
-					>
-						<stop offset="0%" stopColor="#87E4DA" />
-						<stop offset="100%" stopColor="#018A93" />
-					</linearGradient>
-				</defs>
-				<BackgroundCircle cx={circleWidth / 2} cy={circleWidth / 2} strokeWidth="15px" r={radius} />
-				<ProgressCircle
-					cx={circleWidth / 2}
-					cy={circleWidth / 2}
-					strokeWidth="15px"
-					r={radius}
-					style={{
-						strokeDasharray: dashArray,
-						strokeDashoffset: dashOffset,
-						transition: "stroke-dashoffset 0.3s",
-					}}
-					transform={`rotate(-90 ${circleWidth / 2} ${circleWidth / 2})`}
-					stroke="url(#gradient)"
-				/>
-				{/* <CircleText x="50%" y="50%" dy="0.3em" textAnchor="middle">
-					1
-				</CircleText> */}
-			</svg>
-			<CircleText>
+			<TimerCircle
+				circleWidth={circleWidth}
+				radius={radius}
+				dashArray={dashArray}
+				dashOffset={dashOffset}
+			>
 				<TimeText>공부시간 기록하기</TimeText>
 				<Time>
 					{hourText}:{minuteText}:{secondText}
 				</Time>
-			</CircleText>
+			</TimerCircle>
 			<Controller>
 				<ButtonWrap>
 					{playStatus === TimerStatus.NONE && (
@@ -222,40 +195,11 @@ const Container = styled.div`
 	}
 `;
 
-const BackgroundCircle = styled.circle`
-	fill: none;
-	stroke: #ddd;
-`;
-
-const ProgressCircle = styled.circle`
-	fill: none;
-	stroke-linecap: round;
-	stroke-linejoin: round;
-`;
-
-const CircleText = styled.div`
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	display: flex;
-	font-size: 1rem;
-	font-weight: medium;
-	font-family: "Spoqa Han Sans Neo", "sans-serif";
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	margin-top: -60px;
-
-	@media (max-width: 330px) {
-		font-size: 4.75vw;
-	}
-`;
-
 const TimeText = styled.div`
 	margin-bottom: 6px;
 	color: #2fc4bb;
 `;
+
 const Time = styled.div`
 	font-size: 2.25rem;
 	font-weight: bold;
