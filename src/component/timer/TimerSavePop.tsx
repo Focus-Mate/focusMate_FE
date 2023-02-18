@@ -58,7 +58,7 @@ const Container = styled.div`
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-	font-family: "Spoqa Han Sans Neo", "sans-serif";
+	font-family: "SpoqaMedium";
 `;
 
 const Text = styled.div`
