@@ -6,6 +6,10 @@ import { Timer, Chart, AllStudies, MyStudy, More } from "./page";
 import MakeDday from "./page/chart/MakeDday";
 import Login from "./page/login";
 import SignIn from "./page/login/SignIn";
+import License from "./page/more/License";
+import Notice from "./page/more/Notice";
+import Personal from "./page/more/Personal";
+import Service from "./page/more/Service";
 
 const Router = () => {
 	return (
@@ -25,6 +29,10 @@ const Router = () => {
 					<Route path="mystudy" element={<MyStudy />} />;
 					<Route path="more" element={<More />} />;
 				</Route>
+				<Route path="more/notice" element={<Notice />} />
+				<Route path="more/service" element={<Service />} />
+				<Route path="more/personal" element={<Personal />} />
+				<Route path="more/license" element={<License />} />
 			</Route>
 		</Routes>
 	);
