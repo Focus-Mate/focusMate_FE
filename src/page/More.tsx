@@ -1,6 +1,12 @@
-import MenuBox from "@/component/more/MenuBox";
+// Library
+import { useState } from "react";
 import styled, { css } from "styled-components";
+import { useNavigate } from "react-router-dom";
 
+// Components
+import MenuBox from "@/component/more/MenuBox";
+
+// Icons
 import iconNotice from "@/style/icon/more/notice.png";
 import iconDelete from "@/style/icon/more/delete.png";
 import iconFolder from "@/style/icon/more/folder.png";
@@ -8,10 +14,10 @@ import iconMoon from "@/style/icon/more/moon.png";
 import iconOut from "@/style/icon/more/out.png";
 import iconPc from "@/style/icon/more/pc.png";
 import iconTerms from "@/style/icon/more/terms.png";
-import { useState } from "react";
 
 function Setting() {
 	const [darkMode, setDarkMode] = useState(false);
+	const navigate = useNavigate();
 
 	return (
 		<Container>
@@ -26,15 +32,15 @@ function Setting() {
 						title: "이용 안내",
 					}}
 					items={[
-						<Item>
+						<Item onClick={() => navigate("/more/notice")}>
 							<ItemIcon src={iconNotice} alt="notice" />
 							공지사항
 						</Item>,
-						<Item>
+						<Item onClick={() => navigate("/more/service")}>
 							<ItemIcon src={iconTerms} alt="terms" />
 							서비스 이용약관
 						</Item>,
-						<Item>
+						<Item onClick={() => navigate("/more/personal")}>
 							<ItemIcon src={iconTerms} alt="info" />
 							개인정보 처리방침
 						</Item>,
@@ -59,7 +65,7 @@ function Setting() {
 							<ItemText>버전 정보</ItemText>
 							<ItemContent style={{ marginRight: "5px" }}>1.0.0</ItemContent>
 						</Item>,
-						<Item>
+						<Item onClick={() => navigate("/more/license")}>
 							<ItemIcon src={iconFolder} alt="notice" />
 							<ItemText>오픈소스 라이선스</ItemText>
 						</Item>,
@@ -118,6 +124,7 @@ const Item = styled.div`
 	height: 30px;
 	width: 100%;
 	position: relative;
+	cursor: pointer;
 `;
 
 const ItemIcon = styled.img`
