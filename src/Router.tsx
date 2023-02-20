@@ -13,32 +13,6 @@ import Personal from "./page/more/Personal";
 import Service from "./page/more/Service";
 
 const Router = () => {
-<<<<<<< HEAD
-	return (
-		<Routes>
-			{/* NOTE LandingGuide = 랜딩 분기점 (추후에 로그인/게스트 분기점) */}
-			<Route path="/" element={<LandingGuide />}>
-				{/* NOTE DefaultLayout = 하단에 Navigation 붙어있는 layout component */}
-				<Route element={<DefaultLayout />}>
-					<Route path="login" element={<Login />} />
-					<Route path="signin" element={<SignIn />} />
-					<Route path="makedday" element={<MakeDday />} />
-				</Route>
-				<Route element={<NavLayout />}>
-					<Route path="timer" element={<Timer />} index />;
-					<Route path="chart" element={<Chart />} />
-					<Route path="allstudies" element={<AllStudies />} />;
-					<Route path="mystudy" element={<MyStudy />} />;
-					<Route path="more" element={<More />} />;
-				</Route>
-				<Route path="more/notice" element={<Notice />} />
-				<Route path="more/service" element={<Service />} />
-				<Route path="more/personal" element={<Personal />} />
-				<Route path="more/license" element={<License />} />
-			</Route>
-		</Routes>
-	);
-=======
   return (
     <Routes>
       {/* NOTE LandingGuide = 랜딩 분기점 (추후에 로그인/게스트 분기점) */}
@@ -57,10 +31,13 @@ const Router = () => {
           <Route path="mystudy" element={<MyStudy />} />;
           <Route path="more" element={<More />} />;
         </Route>
+        <Route path="more/notice" element={<Notice />} />
+        <Route path="more/service" element={<Service />} />
+        <Route path="more/personal" element={<Personal />} />
+        <Route path="more/license" element={<License />} />
       </Route>
     </Routes>
   );
->>>>>>> feature/chart_dailyChart
 };
 
 export default Router;
