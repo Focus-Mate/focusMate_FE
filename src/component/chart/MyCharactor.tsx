@@ -2,8 +2,10 @@ import styled from "styled-components";
 import { Button, Title } from "../../style/globalStyle";
 import theme from "../../style/theme";
 import MyCharactorPng from "../../style/charactor/character_size_area.png";
+import { useNavigate } from "react-router-dom";
 
 export default function MyCharactor() {
+  const navigate = useNavigate();
   return (
     <Container>
       <CharactorTitle>
@@ -15,7 +17,9 @@ export default function MyCharactor() {
       <CharactorWrapper>
         <MyCharactorImg src={MyCharactorPng} />
       </CharactorWrapper>
-      <Button>모은 캐릭터 보러가기 ❯ </Button>
+      <Button onClick={() => navigate("/charactor")}>
+        모은 캐릭터 보러가기 ❯
+      </Button>
     </Container>
   );
 }

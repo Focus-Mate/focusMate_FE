@@ -1,9 +1,14 @@
 import { useEffect } from "react";
 import axios from "axios";
+import MyCharactor from "../component/chart/MyCharactor";
 
 function AllStudies() {
   useEffect(() => {}, []);
-  return <>스터디 찾기</>;
+  return (
+    <>
+      <MyCharactor />
+    </>
+  );
 }
 
 export default AllStudies;

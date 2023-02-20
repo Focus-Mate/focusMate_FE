@@ -9,6 +9,7 @@ import axios from "axios";
 import instance from "../../axios";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
+import MyCharactor from "../../component/chart/MyCharactor";
 
 const Chart = () => {
   const [currentTab, setCurrentTab] = useState(1);
@@ -21,24 +22,24 @@ const Chart = () => {
 
   const getDday = async () => {
     const response = await instance.get(`/api/calculate/getDDays`);
-    const ddayList = response.data.rows;
-    return ddayList;
+    console.log(response);
+    return response;
   };
 
   const { data: ddayList, isLoading } = useQuery("ddayInfo", getDday);
 
-  if (isLoading) {
-    return <>loading...</>;
-  }
+  // if (isLoading) {
+  //   return <>loading...</>;
+  // }
   return (
     <>
-      <Header>
+      {/* <Header>
         {ddayList}
         <h1>공부 차트</h1>
         <AlarmIcon />
-      </Header>
+      </Header> */}
 
-      {ddayList.length === 0 ? (
+      {/* {ddayList.length === 0 ? (
         <DDayWrapper
           onClick={() => {
             navigate("/makedday");
@@ -77,9 +78,9 @@ const Chart = () => {
             </IconWrapper>
           </Wrapper>
         </DDayWrapper>
-      )}
+      )} */}
 
-      <CharacterBadge>캐릭터 div</CharacterBadge>
+      <MyCharactor />
       <PeriodTabs>
         {chartPeriod.map((item) => {
           return (
@@ -174,6 +175,7 @@ const CharacterBadge = styled.div`
 `;
 
 const PeriodTabs = styled.div`
+  margin-top: 40px;
   background-color: #f6f6f6;
   display: flex;
   justify-content: space-between;
