@@ -26,6 +26,9 @@ function Setting() {
 				<User>
 					<PictureBox></PictureBox>
 					<Nickname>태정태세비욘세</Nickname>
+					<ButtonArea onClick={() => navigate("/more/nick")}>
+						<Button>닉네임 수정</Button>
+					</ButtonArea>
 				</User>
 				<MenuBox
 					options={{
@@ -101,6 +104,21 @@ const User = styled.div`
 	display: flex;
 	align-items: center;
 	margin-top: 1.5rem;
+	justify-content: space-between;
+`;
+
+const ButtonArea = styled.div`
+	padding: 8px;
+	flex-shrink: 0;
+	cursor: pointer;
+`;
+
+const Button = styled.button`
+	padding: 7px 8px;
+	border-radius: 50px;
+	border: 1px solid ${({ theme }) => theme.colors.grey[400]};
+	background-color: white;
+	cursor: pointer;
 `;
 
 const PictureBox = styled.div`
@@ -108,11 +126,13 @@ const PictureBox = styled.div`
 	height: 4rem;
 	border-radius: 1.25rem;
 	background-color: ${({ theme }) => theme.colors.bg.mint10};
+	flex-shrink: 0;
 `;
 
 const Nickname = styled.div`
 	margin-left: 0.5rem;
 	font-family: "SpoqaMedium";
+	width: 100%;
 `;
 
 const Item = styled.div`
