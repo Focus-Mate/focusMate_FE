@@ -1,5 +1,5 @@
 import SlideBox from "@/component/more/SlideBox";
-import StackHeader from "@/component/more/StackHeader";
+import StackHeader from "@/component/common/StackHeader";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -9,6 +9,7 @@ const Notice = () => {
 		<Container>
 			<StackHeader
 				options={{
+					line: true,
 					before: {
 						iconOptions: {
 							onClick: () => navigate("/more"),

@@ -58,8 +58,19 @@ const colors = {
 	icon,
 };
 
+const fonts = {
+	spoqa: {
+		thin: "SpoqaThin",
+		light: "SpoqaLight",
+		regular: "SpoqaRegular",
+		medium: "SpoqaMedium",
+		bold: "SpoqaBold",
+	},
+};
+
 export const theme = {
 	colors,
+	fonts,
 };
 
 export default theme;

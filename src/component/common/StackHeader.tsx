@@ -1,10 +1,11 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import iconArrowBack from "@/style/icon/more/arrow_back.png";
 import { useNavigate } from "react-router-dom";
 
 interface StackHeaderProps {
 	options?: {
+		line?: boolean;
 		before?: {
 			iconOptions?: {
 				icon?: string;
@@ -18,7 +19,7 @@ interface StackHeaderProps {
 const StackHeader: React.FC<StackHeaderProps> = ({ options, children }): React.ReactElement => {
 	const navigate = useNavigate();
 	return (
-		<Header>
+		<Header line={options?.line}>
 			<HeaderBefore>
 				<BackIcon
 					src={iconArrowBack}
@@ -39,12 +40,19 @@ const StackHeader: React.FC<StackHeaderProps> = ({ options, children }): React.R
 
 export default StackHeader;
 
-const Header = styled.div`
+const Header = styled.div<{
+	line?: boolean;
+}>`
 	width: 100%;
 	height: 50px;
-	border-bottom: 1px solid ${({ theme }) => theme.colors.bg.line};
 	display: flex;
 	align-items: center;
+	background-color: white;
+	${({ line }) =>
+		line &&
+		css`
+			border-bottom: 1px solid ${({ theme }) => theme.colors.bg.line};
+		`}
 `;
 
 const HeaderSide = styled.div`
