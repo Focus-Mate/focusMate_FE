@@ -47,7 +47,8 @@ const Header = styled.div<{
 	height: 50px;
 	display: flex;
 	align-items: center;
-	background-color: white;
+	background-color: ${({ theme }) => theme.colors.bg.base};
+	color: ${({ theme }) => theme.colors.grey[800]};
 	${({ line }) =>
 		line &&
 		css`
