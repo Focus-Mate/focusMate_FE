@@ -1,4 +1,4 @@
-export type ThemeType = typeof theme;
+export type ThemeType = typeof lightTheme;
 
 // Grey
 const grey = {
@@ -68,9 +68,9 @@ const fonts = {
 	},
 };
 
-export const theme = {
+export const lightTheme = {
 	colors,
 	fonts,
 };
 
-export default theme;
+export default lightTheme as ThemeType;

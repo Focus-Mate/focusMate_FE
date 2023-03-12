@@ -2,10 +2,10 @@ import styled from "styled-components";
 import CharacterItem from "./CharacterItem";
 import characterSizeArea from "@/style/charactor/character_size_area.png";
 import { useState } from "react";
-import BottomSlideBox from "./BottomSlideBox";
+import BottomSlideBox from "../common/pop/BottomSlideBox";
 
 const CharacterGroup = () => {
-	const [slideState, setSlideState] = useState(true);
+	const [slideState, setSlideState] = useState(false);
 	return (
 		<Container>
 			<BottomSlideBox isOpen={slideState} setOpen={setSlideState} />

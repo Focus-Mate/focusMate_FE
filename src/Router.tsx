@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import NicknameChange from "./component/more/NicknameChange";
+import NicknameChange from "./page/more/NicknameChange";
 import DefaultLayout from "./layout/DefaultLayout";
 import LandingGuide from "./layout/LandingGuide";
 import NavLayout from "./layout/NavLayout";

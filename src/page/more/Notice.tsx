@@ -34,7 +34,7 @@ const Notice = () => {
 					date: "2023.03.01",
 				},
 			].map((item) => {
-				return <SlideBox item={item} />;
+				return <SlideBox key={item.id} item={item} />;
 			})}
 		</Container>
 	);

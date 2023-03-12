@@ -27,7 +27,10 @@ function Timer() {
 	});
 
 	const { mutateAsync: requestTimerStop } = useMutation("timer/stop", async (time: number) => {
-		const response = await instance.put("/api/calculate/endTime", { studyTime: time });
+		const response = await instance.put("/api/calculate/endTime", {
+			split: false,
+			studyTime: time,
+		});
 		return response.data;
 	});
 
