@@ -1,4 +1,3 @@
-import theme from "@/style/theme";
 import styled from "styled-components";
 import StudyTime from "./StudyTime";
 import { BestRecordIcon, WorstRecordIcon } from "@/style/icon/chartPage/index";
@@ -87,18 +86,18 @@ const RecordContainer = styled.div`
   gap: 20px;
 
   span {
-    color: ${theme.colors.grey[800]};
+    color: ${({ theme }) => theme.colors.grey[800]};
     font-size: 1.5rem;
   }
 
   &.best {
-    background-color: ${theme.colors.bg.mint10};
-    color: ${theme.colors.primary[900]};
+    background-color: ${({ theme }) => theme.colors.bg.mint10};
+    color: ${({ theme }) => theme.colors.primary[900]};
   }
 
   &.worst {
-    background-color: ${theme.colors.bg.orange};
-    color: ${theme.colors.icon.orange50};
+    background-color: ${({ theme }) => theme.colors.bg.orange};
+    color: ${({ theme }) => theme.colors.icon.orange50};
   }
 `;
 
@@ -116,10 +115,10 @@ const IconBase = styled.div`
   justify-content: center;
   align-items: center;
   &.best {
-    background-color: ${theme.colors.icon.mint10};
+    background-color: ${({ theme }) => theme.colors.icon.mint10};
   }
 
   &.worst {
-    background-color: ${theme.colors.icon.orange10};
+    background-color: ${({ theme }) => theme.colors.icon.orange10};
   }
 `;

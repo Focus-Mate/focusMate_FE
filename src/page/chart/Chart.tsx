@@ -2,7 +2,6 @@ import styled from "styled-components";
 import {
   DDayIcon,
   AlarmIcon,
-  LeftArrowIcon,
   RightArrowIcon,
 } from "../../style/icon/chartPage";
 import { ReactComponent as ViewMoreIcon } from "../../style/icon/viewmore_icon.svg";
@@ -10,15 +9,11 @@ import DayChart from "../../component/chart/DayChart";
 import WeekChart from "../../component/chart/WeekChart";
 import MonthChart from "../../component/chart/MonthChart";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import instance from "../../axios";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import MyCharactor from "../../component/chart/MyCharactor";
-import theme from "@/style/theme";
-import { IconContainer } from "@/component/signIn/Nickname";
-import { DeleteBtn } from "@/style/icon/agreeStep";
-import { setInputClear } from "@/util/input";
+
 import BottomModal, { SelectedDday } from "@/component/chart/BottomModal";
 
 export default function Chart() {
@@ -67,7 +62,7 @@ export default function Chart() {
               <DDayContainer key={item.exam}>
                 <Wrapper className="left">
                   <IconWrapper className="calender">
-                    <DDayIcon fill={theme.colors.primary[800]} />
+                    <CalenderIcon />
                   </IconWrapper>
                   <DDayTitle>
                     <h2> {item.exam} </h2>
@@ -101,7 +96,7 @@ export default function Chart() {
         >
           <Wrapper>
             <IconWrapper className="calender">
-              <DDayIcon fill={theme.colors.primary[800]} />
+              <CalenderIcon />
             </IconWrapper>
             D-DAY 추가하기
           </Wrapper>
@@ -134,6 +129,9 @@ export default function Chart() {
   );
 }
 
+const CalenderIcon = styled(DDayIcon)`
+  fill: ${({ theme }) => theme.colors.primary[800]};
+`;
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
@@ -146,7 +144,7 @@ const Header = styled.div`
 `;
 
 const DDayContainer = styled.div`
-  color: ${theme.colors.grey[600]};
+  color: ${({ theme }) => theme.colors.grey[600]};
   font-size: 0.875rem;
   cursor: pointer;
   background-color: #f6f6f6;
@@ -197,7 +195,7 @@ const SubTitle = styled.span`
 `;
 
 const DDay = styled.div`
-  color: ${theme.colors.primary[900]};
+  color: ${({ theme }) => theme.colors.primary[900]};
   font-weight: 700;
   font-size: 1.5rem;
 `;
