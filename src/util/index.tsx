@@ -22,3 +22,17 @@ export const getTodayDate = () => {
   const today = date.getDate();
   return `${month}/${today}`;
 };
+
+export const setDateFormat = (data: number) => {
+  if (data < 10) return "0" + data;
+  else return data;
+};
+
+export const getDate = (dateData: Date) => {
+  const date = new Date(dateData);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+
+  const today = date.getDate();
+  return `${year}-${setDateFormat(month)}-${setDateFormat(today)}`;
+};

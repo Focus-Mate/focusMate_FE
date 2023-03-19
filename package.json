@@ -18,12 +18,12 @@
   },
   "dependencies": {
     "@craco/craco": "^7.0.0",
+    "antd-mobile": "^5.28.1",
     "axios": "^1.2.1",
     "date-fns": "^2.29.3",
     "dayjs": "^1.11.7",
     "react": "^18.2.0",
     "react-app-alias": "^2.2.2",
-    "react-datepicker": "^4.8.0",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
     "react-query": "^3.39.2",
