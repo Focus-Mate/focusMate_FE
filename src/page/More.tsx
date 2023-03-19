@@ -18,9 +18,11 @@ import { useQuery } from "react-query";
 import instance from "@/axios";
 import { useRecoilState } from "recoil";
 import { isThemeDark } from "@/App";
+import ConfirmPop from "@/component/common/pop/ConfirmPop";
 
 function Setting() {
 	const [darkMode, setDarkMode] = useRecoilState(isThemeDark);
+	const [isLogoutPop, setLogoutPop] = useState(false);
 	const navigate = useNavigate();
 
 	const { data: response } = useQuery(["GetUser"], async () => {
@@ -31,6 +33,23 @@ function Setting() {
 
 	return (
 		<Wrapper>
+			<ConfirmPop
+				options={{
+					message: "정말 로그아웃 하시나요?",
+					onCancel: () => {
+						setLogoutPop(false);
+					},
+					onConfirm: () => {
+						localStorage.removeItem("token");
+						navigate("/login");
+						setLogoutPop(false);
+					},
+					onCancelText: "아니요",
+					onConfirmText: "로그아웃하기",
+					isOpen: isLogoutPop,
+					setOpen: setLogoutPop,
+				}}
+			/>
 			<Container>
 				<Header>
 					<Title>설정</Title>
@@ -83,7 +102,11 @@ function Setting() {
 								<ItemIcon src={iconFolder} alt="notice" />
 								<ItemText>오픈소스 라이선스</ItemText>
 							</Item>,
-							<Item>
+							<Item
+								onClick={() => {
+									setLogoutPop(true);
+								}}
+							>
 								<ItemIcon src={iconOut} alt="notice" />
 								로그아웃
 							</Item>,
