@@ -1,4 +1,4 @@
-export type ThemeType = typeof theme;
+export type ThemeType = typeof lightTheme;
 
 // Grey
 const grey = {
@@ -58,8 +58,19 @@ const colors = {
 	icon,
 };
 
-export const theme = {
-	colors,
+const fonts = {
+	spoqa: {
+		thin: "SpoqaThin",
+		light: "SpoqaLight",
+		regular: "SpoqaRegular",
+		medium: "SpoqaMedium",
+		bold: "SpoqaBold",
+	},
 };
 
-export default theme;
+export const lightTheme = {
+	colors,
+	fonts,
+};
+
+export default lightTheme as ThemeType;

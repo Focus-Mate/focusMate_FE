@@ -15,49 +15,48 @@ const modalStyle = {
 		backgroundColor: "white",
 		transform: "translate(-50%, -50%)",
 		justifyContent: "center",
-		alignItems: "flex-end",
+		alignItems: "center",
 		gap: "1rem",
+		padding: "24px 20px 16px",
 	},
 };
 
-enum TimerStatus {
-	NONE,
-	PLAYING,
-	PAUSE,
-	STOP,
+interface ConfirmPopProps {
+	options: {
+		message: string;
+		onCancel: () => void;
+		onConfirm: () => void;
+		onCancelText: string;
+		onConfirmText: string;
+		isOpen: boolean;
+		setOpen: (isOpen: boolean) => void;
+	};
 }
 
-interface TimerSavePopProps {
-	playStatus: TimerStatus;
-	onResetClick: () => void;
-	onConfirmClick: () => void;
-}
-
-const TimerSavePop: React.FC<TimerSavePopProps> = ({
-	playStatus,
-	onResetClick,
-	onConfirmClick,
-}) => {
+const ConfirmPop: React.FC<ConfirmPopProps> = ({ options }) => {
+	console.log(options?.isOpen);
 	return (
-		<ReactModal isOpen={playStatus === TimerStatus.STOP} style={modalStyle}>
+		<ReactModal isOpen={options.isOpen} style={modalStyle}>
 			<Container>
-				<Text>공부시간을 저장할까요?</Text>
+				<Text>{options.message}</Text>
 				<ButtonGroup>
-					<ResetButton onClick={onResetClick}>계속 기록하기</ResetButton>
-					<ConfirmButton onClick={onConfirmClick}>네, 저장할게요</ConfirmButton>
+					<CancelButton onClick={() => options.onCancel()}>{options.onCancelText}</CancelButton>
+					<ConfirmButton onClick={() => options.onConfirm()}>{options.onConfirmText}</ConfirmButton>
 				</ButtonGroup>
 			</Container>
 		</ReactModal>
 	);
 };
 
-export default TimerSavePop;
+export default ConfirmPop;
 
 const Container = styled.div`
 	width: 100%;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 	font-family: "SpoqaMedium";
 `;
 
@@ -66,6 +65,8 @@ const Text = styled.div`
 	width: 100%;
 	display: flex;
 	justify-content: center;
+	font-family: ${({ theme }) => theme.fonts.spoqa.regular};
+	font-size: 16px;
 `;
 
 const ButtonGroup = styled.div`
@@ -83,7 +84,7 @@ const Button = styled.button`
 	border-radius: 0.75rem;
 `;
 
-const ResetButton = styled(Button)`
+const CancelButton = styled(Button)`
 	background-color: #f2f2f2;
 	background-color: ${({ theme }) => theme.colors.bg.mint20};
 	color: ${({ theme }) => theme.colors.primary[900]};

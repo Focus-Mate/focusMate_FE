@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Input, SignInStepButton, Title } from "../../style/globalStyle";
 import { ReactComponent as BackArrow } from "../../style/icon/backArrow.svg";
 import { DDayIcon } from "../../style/icon/chartPage";
-import theme from "../../style/theme";
+import theme from "../../style/lightTheme";
 import { DatePicker, ConfigProvider } from "antd-mobile";
 import koKR from "antd-mobile/es/locales/ko-KR";
 

@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router-dom";
-import NicknameChange from "./component/more/NicknameChange";
+import NicknameChange from "./page/more/NicknameChange";
 import DefaultLayout from "./layout/DefaultLayout";
 import LandingGuide from "./layout/LandingGuide";
 import NavLayout from "./layout/NavLayout";
 import { Timer, Chart, AllStudies, MyStudy, More } from "./page";
-import CharactorList from "./page/CharactorList";
+import Characters from "./page/Characters";
 import MakeDday from "./page/chart/MakeDday";
 import Login from "./page/login";
 import SignIn from "./page/login/SignIn";
@@ -12,6 +12,7 @@ import License from "./page/more/License";
 import Notice from "./page/more/Notice";
 import Personal from "./page/more/Personal";
 import Service from "./page/more/Service";
+import UserRemove from "./page/more/UserRemove";
 
 const Router = () => {
   return (
@@ -25,7 +26,6 @@ const Router = () => {
           <Route path="makedday" element={<MakeDday />}>
             <Route path=":exam/:dday" />
           </Route>
-          <Route path="charactor" element={<CharactorList />} />
         </Route>
         <Route element={<NavLayout />}>
           <Route path="timer" element={<Timer />} index />;
@@ -34,11 +34,13 @@ const Router = () => {
           <Route path="mystudy" element={<MyStudy />} />;
           <Route path="more" element={<More />} />;
         </Route>
+        <Route path="characters" element={<Characters />} />
         <Route path="more/nick" element={<NicknameChange />} />
         <Route path="more/notice" element={<Notice />} />
         <Route path="more/service" element={<Service />} />
         <Route path="more/personal" element={<Personal />} />
         <Route path="more/license" element={<License />} />
+        <Route path="more/remove" element={<UserRemove />} />;
       </Route>
     </Routes>
   );

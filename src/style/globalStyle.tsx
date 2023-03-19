@@ -1,5 +1,5 @@
 import styled, { createGlobalStyle } from "styled-components";
-import Theme from "./theme";
+import Theme from "./lightTheme";
 import { SpoqaRegular, SpoqaLight, SpoqaMedium, SpoqaThin, SpoqaBold } from "./fonts/index";
 
 //전역 스타일링

@@ -14,82 +14,129 @@ import iconMoon from "@/style/icon/more/moon.png";
 import iconOut from "@/style/icon/more/out.png";
 import iconPc from "@/style/icon/more/pc.png";
 import iconTerms from "@/style/icon/more/terms.png";
+import { useQuery } from "react-query";
+import instance from "@/axios";
+import { useRecoilState } from "recoil";
+import { isThemeDark } from "@/App";
+import ConfirmPop from "@/component/common/pop/ConfirmPop";
 
 function Setting() {
-	const [darkMode, setDarkMode] = useState(false);
+	const [darkMode, setDarkMode] = useRecoilState(isThemeDark);
+	const [isLogoutPop, setLogoutPop] = useState(false);
 	const navigate = useNavigate();
 
+	const { data: response } = useQuery(["GetUser"], async () => {
+		const response = await instance.get("/api/user/me");
+
+		return response;
+	});
+
 	return (
-		<Container>
-			<Header>
-				<Title>설정</Title>
-				<User>
-					<PictureBox></PictureBox>
-					<Nickname>태정태세비욘세</Nickname>
-					<ButtonArea onClick={() => navigate("/more/nick")}>
-						<Button>닉네임 수정</Button>
-					</ButtonArea>
-				</User>
-				<MenuBox
-					options={{
-						title: "이용 안내",
-					}}
-					items={[
-						<Item onClick={() => navigate("/more/notice")}>
-							<ItemIcon src={iconNotice} alt="notice" />
-							공지사항
-						</Item>,
-						<Item onClick={() => navigate("/more/service")}>
-							<ItemIcon src={iconTerms} alt="terms" />
-							서비스 이용약관
-						</Item>,
-						<Item onClick={() => navigate("/more/personal")}>
-							<ItemIcon src={iconTerms} alt="info" />
-							개인정보 처리방침
-						</Item>,
-					]}
-				/>
-				<MenuBox
-					options={{
-						title: "공지사항",
-					}}
-					items={[
-						<Item>
-							<ItemIcon src={iconMoon} alt="notice" />
-							<ItemText>다크모드 설정</ItemText>
-							<ItemContent>
-								<SwitchBox onClick={() => setDarkMode((mode) => !mode)} isDark={darkMode}>
-									<SwitchCircle isDark={darkMode} />
-								</SwitchBox>
-							</ItemContent>
-						</Item>,
-						<Item>
-							<ItemIcon src={iconPc} alt="notice" />
-							<ItemText>버전 정보</ItemText>
-							<ItemContent style={{ marginRight: "5px" }}>1.0.0</ItemContent>
-						</Item>,
-						<Item onClick={() => navigate("/more/license")}>
-							<ItemIcon src={iconFolder} alt="notice" />
-							<ItemText>오픈소스 라이선스</ItemText>
-						</Item>,
-						<Item>
-							<ItemIcon src={iconOut} alt="notice" />
-							로그아웃
-						</Item>,
-						<Item>
-							<ItemIcon src={iconDelete} alt="notice" />
-							탈퇴하기
-						</Item>,
-					]}
-				/>
-			</Header>
-		</Container>
+		<Wrapper>
+			<ConfirmPop
+				options={{
+					message: "정말 로그아웃 하시나요?",
+					onCancel: () => {
+						setLogoutPop(false);
+					},
+					onConfirm: () => {
+						localStorage.removeItem("token");
+						navigate("/login");
+						setLogoutPop(false);
+					},
+					onCancelText: "아니요",
+					onConfirmText: "로그아웃하기",
+					isOpen: isLogoutPop,
+					setOpen: setLogoutPop,
+				}}
+			/>
+			<Container>
+				<Header>
+					<Title>설정</Title>
+					<User>
+						<PictureBox></PictureBox>
+						<Nickname>{response?.data?.nicknmae}</Nickname>
+						<ButtonArea onClick={() => navigate("/more/nick")}>
+							<Button>닉네임 수정</Button>
+						</ButtonArea>
+					</User>
+					<MenuBox
+						options={{
+							title: "이용 안내",
+						}}
+						items={[
+							<Item onClick={() => navigate("/more/notice")}>
+								<ItemIcon src={iconNotice} alt="notice" />
+								공지사항
+							</Item>,
+							<Item onClick={() => navigate("/more/service")}>
+								<ItemIcon src={iconTerms} alt="terms" />
+								서비스 이용약관
+							</Item>,
+							<Item onClick={() => navigate("/more/personal")}>
+								<ItemIcon src={iconTerms} alt="info" />
+								개인정보 처리방침
+							</Item>,
+						]}
+					/>
+					<MenuBox
+						options={{
+							title: "공지사항",
+						}}
+						items={[
+							<Item>
+								<ItemIcon src={iconMoon} alt="notice" />
+								<ItemText>다크모드 설정</ItemText>
+								<ItemContent>
+									<SwitchBox onClick={() => setDarkMode((mode) => !mode)} isDark={darkMode}>
+										<SwitchCircle isDark={darkMode} />
+									</SwitchBox>
+								</ItemContent>
+							</Item>,
+							<Item>
+								<ItemIcon src={iconPc} alt="notice" />
+								<ItemText>버전 정보</ItemText>
+								<ItemContent style={{ marginRight: "5px" }}>1.0.0</ItemContent>
+							</Item>,
+							<Item onClick={() => navigate("/more/license")}>
+								<ItemIcon src={iconFolder} alt="notice" />
+								<ItemText>오픈소스 라이선스</ItemText>
+							</Item>,
+							<Item
+								onClick={() => {
+									setLogoutPop(true);
+								}}
+							>
+								<ItemIcon src={iconOut} alt="notice" />
+								로그아웃
+							</Item>,
+							<Item>
+								<ItemIcon src={iconDelete} alt="notice" />
+								탈퇴하기
+							</Item>,
+						]}
+					/>
+				</Header>
+			</Container>
+		</Wrapper>
 	);
 }
 export default Setting;
 
+const Wrapper = styled.div`
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100vh;
+	background-color: ${({ theme }) => theme.colors.bg.base};
+	padding: 20px;
+	color: ${({ theme }) => theme.colors.grey[800]};
+`;
+
 const Container = styled.div`
 	padding-bottom: 80px;
+	background-color: ${({ theme }) => theme.colors.bg.base};
 `;
 
 const Header = styled.div`
@@ -117,7 +164,8 @@ const Button = styled.button`
 	padding: 7px 8px;
 	border-radius: 50px;
 	border: 1px solid ${({ theme }) => theme.colors.grey[400]};
-	background-color: white;
+	background-color: ${({ theme }) => theme.colors.bg.base};
+	color: ${({ theme }) => theme.colors.grey[600]};
 	cursor: pointer;
 `;
 
@@ -175,7 +223,7 @@ const SwitchBox = styled.div<hasIsDark>`
 	${({ isDark }) =>
 		isDark &&
 		css`
-			background-color: ${({ theme }) => theme.colors.icon.orange50};
+			background-color: ${({ theme }) => theme.colors.bg.mint30};
 		`}
 `;
 

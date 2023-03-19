@@ -5,7 +5,7 @@ import instance from "../../axios";
 import { ISignInInfo } from "../../page/login/SignIn";
 import { Input, SignInStepButton, Title } from "../../style/globalStyle";
 import { DeleteBtn } from "../../style/icon/agreeStep";
-import theme from "../../style/theme";
+import theme from "../../style/lightTheme";
 
 interface INicknameProps {
   setCurrenStep: React.Dispatch<React.SetStateAction<string>>;
