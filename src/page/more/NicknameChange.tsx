@@ -92,11 +92,13 @@ const Content = styled.div`
 	flex-direction: column;
 	padding: 70px 20px 0;
 	height: calc(100vh - 50px);
+	background-color: ${({ theme }) => theme.colors.bg.base};
 `;
 
 const Header2 = styled.h2`
 	font-size: 1.5rem;
 	line-height: 1.5;
+	color: ${({ theme }) => theme.colors.grey[900]};
 `;
 
 const InputBox = styled.div`
@@ -107,10 +109,11 @@ const Input = styled.input`
 	width: 100%;
 	height: 62px;
 	border: 0;
-	background: #f6f6f6;
+	background: ${({ theme }) => theme.colors.bg.grey};
 	border-radius: 20px;
 	padding: 0 20px;
 	outline: none;
+	color: ${({ theme }) => theme.colors.grey[500]};
 `;
 
 const ButtonBox = styled.div`

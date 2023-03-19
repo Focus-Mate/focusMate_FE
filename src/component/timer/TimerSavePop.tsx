@@ -43,8 +43,8 @@ const TimerSavePop: React.FC<TimerSavePopProps> = ({
 			<Container>
 				<Text>공부시간을 저장할까요?</Text>
 				<ButtonGroup>
-					<ResetButton onClick={onResetClick}>아니요 삭제~</ResetButton>
-					<ConfirmButton onClick={onConfirmClick}>저장</ConfirmButton>
+					<ResetButton onClick={onResetClick}>계속 기록하기</ResetButton>
+					<ConfirmButton onClick={onConfirmClick}>네, 저장할게요</ConfirmButton>
 				</ButtonGroup>
 			</Container>
 		</ReactModal>

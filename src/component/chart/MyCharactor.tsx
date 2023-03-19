@@ -17,7 +17,7 @@ export default function MyCharactor() {
 			<CharactorWrapper>
 				<MyCharactorImg src={MyCharactorPng} />
 			</CharactorWrapper>
-			<Button onClick={() => navigate("/charactor")}>모은 캐릭터 보러가기 ❯</Button>
+			<Button onClick={() => navigate("/characters")}>모은 캐릭터 보러가기 ❯</Button>
 		</Container>
 	);
 }

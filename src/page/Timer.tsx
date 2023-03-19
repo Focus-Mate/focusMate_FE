@@ -20,16 +20,19 @@ const circleWidth = 300;
 const radius = 135;
 
 function Timer() {
+	const [serverId, setServerId] = useState("");
+
 	// React Query
 	const { mutateAsync: requestTimerStart } = useMutation("timer/start", async () => {
 		const response = await instance.post("/api/calculate/startTime");
+
 		return response.data;
 	});
 
 	const { mutateAsync: requestTimerStop } = useMutation("timer/stop", async (time: number) => {
+		console.log(serverId);
 		const response = await instance.put("/api/calculate/endTime", {
-			split: false,
-			studyTime: time,
+			startTime: serverId,
 		});
 		return response.data;
 	});
@@ -119,11 +122,11 @@ function Timer() {
 			<TimerSavePop
 				playStatus={playStatus}
 				onResetClick={() => {
-					setNowTime(0);
-					setStackTime(0);
-					setResultTime(0);
-					setDashOffset(dashArray - (dashArray * 0) / 100);
-					setPlayStatus(TimerStatus.NONE);
+					// setNowTime(0);
+					// setStackTime(0);
+					// setResultTime(0);
+					// setDashOffset(dashArray - (dashArray * 0) / 100);
+					setPlayStatus(TimerStatus.PAUSE);
 				}}
 				onConfirmClick={async () => {
 					// 저장 로직
@@ -155,7 +158,8 @@ function Timer() {
 								setPlayStatus(TimerStatus.PLAYING);
 								startTimer();
 								const result = await requestTimerStart();
-								console.log(result);
+
+								setServerId(result.startTime);
 							}}
 						>
 							<img src={playIcon} alt="play" />
