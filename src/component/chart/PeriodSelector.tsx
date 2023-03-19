@@ -1,11 +1,7 @@
 import styled from "styled-components";
 import { LeftArrowIcon, RightArrowIcon } from "../../style/icon/chartPage";
-import { useEffect, useRef, useState } from "react";
-import ReactDatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import "react-datepicker/dist/react-datepicker-cssmodules.css";
+import { useEffect, useState } from "react";
 import { getTodayDate } from "../../util";
-import ko from "date-fns/locale/ko";
 import format from "date-fns/format";
 import { add, sub } from "date-fns";
 
@@ -50,13 +46,13 @@ const PeriodSelector = () => {
         <LeftArrowIcon />
       </PeriodSelectBtn>
 
-      <PeriodPicker
+      {/* <PeriodPicker
         selected={startDate}
         onChange={(date: Date) => setStartDate(date)}
         dateFormat="MM/dd (eee)"
         locale={ko}
         showPopperArrow={false}
-      />
+      /> */}
 
       <PeriodSelectBtn
         onClick={dateAdd}
@@ -108,15 +104,15 @@ const PeriodSelectWrapper = styled.div`
   }
 `;
 
-const PeriodPicker = styled(ReactDatePicker)`
-  border: 0px solid transparent;
-  text-align: center;
-  cursor: pointer;
-  caret-color: transparent;
-  ::placeholder {
-    color: red;
-  }
-  :focus {
-    outline: none;
-  }
-`;
+// const PeriodPicker = styled(ReactDatePicker)`
+//   border: 0px solid transparent;
+//   text-align: center;
+//   cursor: pointer;
+//   caret-color: transparent;
+//   ::placeholder {
+//     color: red;
+//   }
+//   :focus {
+//     outline: none;
+//   }
+// `;

@@ -1,5 +1,10 @@
 import styled from "styled-components";
-import { DDayIcon, AlarmIcon } from "../../style/icon/chartPage";
+import {
+  DDayIcon,
+  AlarmIcon,
+  LeftArrowIcon,
+  RightArrowIcon,
+} from "../../style/icon/chartPage";
 import { ReactComponent as ViewMoreIcon } from "../../style/icon/viewmore_icon.svg";
 import DayChart from "../../component/chart/DayChart";
 import WeekChart from "../../component/chart/WeekChart";
@@ -10,8 +15,18 @@ import instance from "../../axios";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import MyCharactor from "../../component/chart/MyCharactor";
+import theme from "@/style/theme";
+import { IconContainer } from "@/component/signIn/Nickname";
+import { DeleteBtn } from "@/style/icon/agreeStep";
+import { setInputClear } from "@/util/input";
+import BottomModal, { SelectedDday } from "@/component/chart/BottomModal";
 
-const Chart = () => {
+export default function Chart() {
+  const [visible, setVisible] = useState(false);
+  const [selectedDday, selectDday] = useState<SelectedDday>({
+    exam: "",
+    dday: "",
+  });
   const [currentTab, setCurrentTab] = useState(1);
   const navigate = useNavigate();
   const chartPeriod = [
@@ -22,65 +37,83 @@ const Chart = () => {
 
   const getDday = async () => {
     const response = await instance.get(`/api/calculate/getDDays`);
-    console.log(response);
-    return response;
+    if (response.data.message === "success") {
+      return response.data.rows;
+    }
   };
 
-  const { data: ddayList, isLoading } = useQuery("ddayInfo", getDday);
+  const { data: ddayList } = useQuery("ddayInfo", getDday);
+
+  useEffect(() => {
+    console.log(ddayList);
+  }, [ddayList]);
 
   // if (isLoading) {
   //   return <>loading...</>;
   // }
   return (
     <>
-      {/* <Header>
-        {ddayList}
+      <BottomModal visible={visible} selecteExam={selectedDday} />
+      <Header>
         <h1>공부 차트</h1>
         <AlarmIcon />
-      </Header> */}
-
-      {/* {ddayList.length === 0 ? (
-        <DDayWrapper
+      </Header>
+      {ddayList?.length !== 0 ? (
+        <>
+          {ddayList?.map((item: any) => {
+            const dDateData = item.eday;
+            const dDate = dDateData.split("T")[0];
+            return (
+              <DDayContainer key={item.exam}>
+                <Wrapper className="left">
+                  <IconWrapper className="calender">
+                    <DDayIcon fill={theme.colors.primary[800]} />
+                  </IconWrapper>
+                  <DDayTitle>
+                    <h2> {item.exam} </h2>
+                    <SubTitle>{dDate}</SubTitle>
+                  </DDayTitle>
+                </Wrapper>
+                <Wrapper className="right">
+                  <DDay>
+                    D-
+                    {item.dday === 0 ? "DAY" : item.dday}
+                  </DDay>
+                  <IconWrapper
+                    className="viewMore"
+                    onClick={() => {
+                      setVisible(true);
+                      selectDday({ exam: item.exam, dday: dDate });
+                    }}
+                  >
+                    <ViewMoreIcon />
+                  </IconWrapper>
+                </Wrapper>
+              </DDayContainer>
+            );
+          })}
+        </>
+      ) : (
+        <DDayContainer
           onClick={() => {
             navigate("/makedday");
           }}
         >
-          <Wrapper className="left">
-            <IconWrapper>
-              <DDayIcon />
+          <Wrapper>
+            <IconWrapper className="calender">
+              <DDayIcon fill={theme.colors.primary[800]} />
             </IconWrapper>
             D-DAY 추가하기
           </Wrapper>
-          <Wrapper className="right">
-            <IconWrapper className="viewMore">
-              <ViewMoreIcon />
+          <Wrapper>
+            <IconWrapper className="arrow">
+              <RightArrowIcon />
             </IconWrapper>
           </Wrapper>
-        </DDayWrapper>
-      ) : (
-        <DDayWrapper>
-          <Wrapper className="left">
-            <IconWrapper>
-              <DDayIcon />
-            </IconWrapper>
-            <DDayTitle>
-              <h2> {ddayList[0].exam} </h2>
-              <SubTitle>2022.10.20 (일)</SubTitle>
-            </DDayTitle>
-          </Wrapper>
-          <Wrapper className="right">
-            <DDay>
-              D-
-              {ddayList[0].dday === 0 ? "DAY" : ddayList[0].dday}
-            </DDay>
-            <IconWrapper className="viewMore">
-              <ViewMoreIcon />
-            </IconWrapper>
-          </Wrapper>
-        </DDayWrapper>
-      )} */}
-
+        </DDayContainer>
+      )}
       <MyCharactor />
+
       <PeriodTabs>
         {chartPeriod.map((item) => {
           return (
@@ -99,9 +132,7 @@ const Chart = () => {
       {chartPeriod[currentTab - 1]?.content}
     </>
   );
-};
-
-export default Chart;
+}
 
 const Header = styled.div`
   display: flex;
@@ -110,11 +141,13 @@ const Header = styled.div`
   padding: 24px 0px;
   h1 {
     font-weight: 600;
-    font-size: 20px;
+    font-size: 1.25rem;
   }
 `;
 
-const DDayWrapper = styled.div`
+const DDayContainer = styled.div`
+  color: ${theme.colors.grey[600]};
+  font-size: 0.875rem;
   cursor: pointer;
   background-color: #f6f6f6;
   width: 100%;
@@ -125,19 +158,16 @@ const DDayWrapper = styled.div`
   padding: 15px;
   padding-right: 0px;
   gap: 12px;
+  margin-bottom: 22px;
 `;
 
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-
-  &.left {
-    gap: 12px;
-  }
+  gap: 12px;
 `;
 
 const IconWrapper = styled.div`
-  background-color: #fff;
   width: 30px;
   height: 30px;
   display: flex;
@@ -146,8 +176,11 @@ const IconWrapper = styled.div`
   height: 30px;
   border-radius: 8px;
 
-  &.viewMore {
-    background-color: transparent;
+  &.calender {
+    background-color: #fff;
+  }
+
+  &.arrow {
     width: 42px;
   }
 `;
@@ -164,6 +197,7 @@ const SubTitle = styled.span`
 `;
 
 const DDay = styled.div`
+  color: ${theme.colors.primary[900]};
   font-weight: 700;
   font-size: 1.5rem;
 `;
@@ -175,7 +209,7 @@ const CharacterBadge = styled.div`
 `;
 
 const PeriodTabs = styled.div`
-  margin-top: 40px;
+  margin: 40px 0px 20px;
   background-color: #f6f6f6;
   display: flex;
   justify-content: space-between;
