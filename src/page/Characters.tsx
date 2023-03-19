@@ -36,7 +36,8 @@ const Characters = () => {
 				<Box>
 					<PickCounter>
 						모은캐릭터 <PickNow>1</PickNow>
-						<PickAll>/ 10</PickAll>
+						<Split>/</Split>
+						<PickAll>10</PickAll>
 					</PickCounter>
 					<Comments>주어진 목표를 달성하고 캐릭터를 모아봐요</Comments>
 					<CharacterGroup />
@@ -49,7 +50,11 @@ const Characters = () => {
 export default Characters;
 
 const Container = styled.div`
-	background-color: #f6f6f6;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
 `;
 const Content = styled.div`
 	display: flex;
@@ -59,6 +64,7 @@ const Content = styled.div`
 const Box = styled.div`
 	background-color: white;
 	padding: 24px 20px;
+	background-color: ${({ theme }) => theme.colors.bg.base};
 `;
 
 const MainText = styled.div`
@@ -119,6 +125,10 @@ const PickCounter = styled.div`
 const PickNow = styled.div`
 	font-family: ${({ theme }) => theme.fonts.spoqa.bold};
 	color: ${({ theme }) => theme.colors.primary[900]};
+`;
+
+const Split = styled.div`
+	color: ${({ theme }) => theme.colors.grey[500]};
 `;
 
 const PickAll = styled.div`

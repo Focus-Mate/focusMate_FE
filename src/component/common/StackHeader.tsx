@@ -19,30 +19,38 @@ interface StackHeaderProps {
 const StackHeader: React.FC<StackHeaderProps> = ({ options, children }): React.ReactElement => {
 	const navigate = useNavigate();
 	return (
-		<Header line={options?.line}>
-			<HeaderBefore>
-				<BackIcon
-					src={iconArrowBack}
-					alt="back"
-					onClick={
-						// onClick이 있을 경우 onClick을 실행하고, 없을 경우 뒤로가기를 실행한다.
-						options?.before?.iconOptions?.onClick
-							? options?.before?.iconOptions?.onClick
-							: () => navigate(-1)
-					}
-				/>
-			</HeaderBefore>
-			<HeaderCenter>{children}</HeaderCenter>
-			<HeaderAfter></HeaderAfter>
-		</Header>
+		<>
+			<Header line={options?.line}>
+				<HeaderBefore>
+					<BackIcon
+						src={iconArrowBack}
+						alt="back"
+						onClick={
+							// onClick이 있을 경우 onClick을 실행하고, 없을 경우 뒤로가기를 실행한다.
+							options?.before?.iconOptions?.onClick
+								? options?.before?.iconOptions?.onClick
+								: () => navigate(-1)
+						}
+					/>
+				</HeaderBefore>
+				<HeaderCenter>{children}</HeaderCenter>
+				<HeaderAfter></HeaderAfter>
+			</Header>
+			<SizedBox />
+		</>
 	);
 };
 
 export default StackHeader;
 
+const SizedBox = styled.div`
+	height: 50px;
+`;
+
 const Header = styled.div<{
 	line?: boolean;
 }>`
+	position: fixed;
 	width: 100%;
 	height: 50px;
 	display: flex;

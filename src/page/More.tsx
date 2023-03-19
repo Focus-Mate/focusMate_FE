@@ -23,10 +23,8 @@ function Setting() {
 	const [darkMode, setDarkMode] = useRecoilState(isThemeDark);
 	const navigate = useNavigate();
 
-	const { isLoading, data } = useQuery(["GetUser"], async () => {
+	const { data: response } = useQuery(["GetUser"], async () => {
 		const response = await instance.get("/api/user/me");
-
-		console.log(response);
 
 		return response;
 	});
@@ -38,7 +36,7 @@ function Setting() {
 					<Title>설정</Title>
 					<User>
 						<PictureBox></PictureBox>
-						<Nickname>태정태세비욘세</Nickname>
+						<Nickname>{response?.data?.nicknmae}</Nickname>
 						<ButtonArea onClick={() => navigate("/more/nick")}>
 							<Button>닉네임 수정</Button>
 						</ButtonArea>
