@@ -22,7 +22,9 @@ const Router = () => {
         <Route element={<DefaultLayout />}>
           <Route path="login" element={<Login />} />
           <Route path="signin" element={<SignIn />} />
-          <Route path="makedday" element={<MakeDday />} />
+          <Route path="makedday" element={<MakeDday />}>
+            <Route path=":exam/:dday" />
+          </Route>
           <Route path="charactor" element={<CharactorList />} />
         </Route>
         <Route element={<NavLayout />}>
@@ -32,7 +34,7 @@ const Router = () => {
           <Route path="mystudy" element={<MyStudy />} />;
           <Route path="more" element={<More />} />;
         </Route>
-				<Route path="more/nick" element={<NicknameChange />} />
+        <Route path="more/nick" element={<NicknameChange />} />
         <Route path="more/notice" element={<Notice />} />
         <Route path="more/service" element={<Service />} />
         <Route path="more/personal" element={<Personal />} />
