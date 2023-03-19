@@ -1,3 +1,4 @@
+import { setInputClear } from "@/util/input";
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import instance from "../../axios";
@@ -57,11 +58,6 @@ const Nickname = ({
     inputFocus.current && inputFocus.current.focus();
   };
 
-  const setNicknameClear = () => {
-    setNickname("");
-    inputFocus.current && inputFocus.current.focus();
-  };
-
   const checkNickname = async () => {
     const response = await instance.get(
       `api/user/checknickname?nickname=${signInInfo.nickname}`
@@ -92,7 +88,11 @@ const Nickname = ({
             onChange={(e) => nickNameHandler(e, setNickname)}
             className={nicknameValid ? "" : "error"}
           />
-          <IconContainer onClick={setNicknameClear}>
+          <IconContainer
+            onClick={() =>
+              setInputClear(setNickname, setSubmitValid, inputFocus)
+            }
+          >
             <DeleteBtn />
           </IconContainer>
         </div>
@@ -123,7 +123,7 @@ const NicknameErrorMsg = styled.div`
   color: ${theme.colors.orange[900]};
 `;
 
-const IconContainer = styled.div`
+export const IconContainer = styled.div`
   width: 24px;
   height: 24px;
   display: flex;
