@@ -48,7 +48,11 @@ export default function Chart() {
   // }
   return (
     <>
-      <BottomModal visible={visible} selecteExam={selectedDday} />
+      <BottomModal
+        visible={visible}
+        selecteExam={selectedDday}
+        setVisible={setVisible}
+      />
       <Header>
         <h1>공부 차트</h1>
         <AlarmIcon />
