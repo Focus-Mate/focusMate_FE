@@ -1,6 +1,12 @@
 import styled, { createGlobalStyle } from "styled-components";
 import Theme from "./lightTheme";
-import { SpoqaRegular, SpoqaLight, SpoqaMedium, SpoqaThin, SpoqaBold } from "./fonts/index";
+import {
+  SpoqaRegular,
+  SpoqaLight,
+  SpoqaMedium,
+  SpoqaThin,
+  SpoqaBold,
+} from "./fonts/index";
 
 //전역 스타일링
 export const GlobalStyle = createGlobalStyle`
@@ -92,11 +98,12 @@ export const GlobalStyle = createGlobalStyle`
     -moz-box-sizing: border-box;  
     box-sizing: border-box;
     font-family: "SpoqaRegular";
+    font-weight: 400;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  /* h1, h2, h3, h4, h5, h6 {
     font-family:"SpoqaMedium"
-  }
+  } */
 
   a {
     text-decoration: none;
@@ -104,41 +111,42 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 export const Input = styled.input`
-	width: 100%;
-	border-radius: 16px;
-	border: 0px solid transparent;
-	background-color: ${Theme.colors.bg.grey};
-	padding: 23px;
-	outline-color: ${Theme.colors.bg.mint30};
-	caret-color: ${Theme.colors.bg.mint30};
+  width: 100%;
+  border-radius: 16px;
+  border: 0px solid transparent;
+  background-color: ${Theme.colors.bg.grey};
+  padding: 23px;
+  outline-color: ${Theme.colors.bg.mint30};
+  caret-color: ${Theme.colors.bg.mint30};
 
-	&.error {
-		outline-color: ${Theme.colors.orange[900]};
-		caret-color: ${Theme.colors.orange[900]};
-	}
+  &.error {
+    outline-color: ${Theme.colors.orange[900]};
+    caret-color: ${Theme.colors.orange[900]};
+  }
 `;
 
 export const Button = styled.button`
-	background-color: ${(props) =>
-		props.disabled ? Theme.colors.bg.line : Theme.colors.primary[700]};
-	border-radius: 16px;
-	font-family: "SpoqaBold";
-	color: ${(props) => (props.disabled ? Theme.colors.grey[500] : Theme.colors.bg.base)};
-	width: 100%;
-	padding: 16px 0px;
-	border: 0px solid transparent;
-	cursor: ${(props) => (props.disabled ? "default" : "pointer")};
+  background-color: ${(props) =>
+    props.disabled ? Theme.colors.bg.line : Theme.colors.primary[700]};
+  border-radius: 16px;
+  font-family: "SpoqaBold";
+  color: ${(props) =>
+    props.disabled ? Theme.colors.grey[500] : Theme.colors.bg.base};
+  width: 100%;
+  padding: 16px 0px;
+  border: 0px solid transparent;
+  cursor: ${(props) => (props.disabled ? "default" : "pointer")};
 `;
 
 export const Title = styled.h1`
-	padding-top: 57px;
-	font-size: 1.5rem;
-	word-break: keep-all;
-	line-height: 32px;
-	margin-bottom: 40px;
+  padding-top: 57px;
+  font-size: 1.5rem;
+  word-break: keep-all;
+  line-height: 32px;
+  margin-bottom: 40px;
 `;
 
 export const SignInStepButton = styled(Button)`
-	position: absolute;
-	bottom: 16px;
+  position: absolute;
+  bottom: 16px;
 `;

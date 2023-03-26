@@ -75,8 +75,12 @@ export default function Chart() {
                 </Wrapper>
                 <Wrapper className="right">
                   <DDay>
-                    D-
-                    {item.dday === 0 ? "DAY" : item.dday}
+                    D
+                    {item.dday === 0
+                      ? "-DAY"
+                      : item.dday < 0
+                      ? `+${Math.abs(item.dday)}`
+                      : `-${item.dday}`}
                   </DDay>
                   <IconWrapper
                     className="viewMore"
