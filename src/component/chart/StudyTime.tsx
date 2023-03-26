@@ -1,5 +1,4 @@
-import axios from "axios";
-import { useEffect } from "react";
+import { msToTime } from "@/util";
 import styled from "styled-components";
 
 type StudyTimeProps = {
@@ -13,13 +12,13 @@ const studyTimeTable = [
   { title: "month", period: "한 달", total: "평균" },
 ];
 
-const StudyTime = (props: StudyTimeProps) => {
-  const index = studyTimeTable.findIndex((item) => item.title === props.period);
+const StudyTime = ({ period, studyTime }: StudyTimeProps) => {
+  const index = studyTimeTable.findIndex((item) => item.title === period);
 
   return (
     <StudyTimeWrapper>
       {studyTimeTable[index].period} {studyTimeTable[index].total} 공부시간
-      <h1>{props.studyTime}</h1>
+      <h1>{msToTime(studyTime)}</h1>
     </StudyTimeWrapper>
   );
 };
@@ -28,13 +27,11 @@ export default StudyTime;
 
 const StudyTimeWrapper = styled.div`
   text-align: center;
-  color: #555;
   margin-bottom: 44px;
 
   h1 {
-    margin-top: 5px;
-    color: #111;
-    font-weight: 700;
-    font-size: 36px;
+    margin-top: 16px;
+    font-weight: 500;
+    font-size: 2.25rem;
   }
 `;

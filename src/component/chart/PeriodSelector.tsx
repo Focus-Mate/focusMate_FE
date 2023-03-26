@@ -1,13 +1,17 @@
 import styled from "styled-components";
 import { LeftArrowIcon, RightArrowIcon } from "../../style/icon/chartPage";
 import { useEffect, useState } from "react";
-import { getTodayDate } from "../../util";
+import { getToday, getTodayDate } from "../../util";
 import format from "date-fns/format";
 import { add, sub } from "date-fns";
+import { useSetRecoilState } from "recoil";
+import { ChartDateState } from "@/store/ChartDateState";
 
 const PeriodSelector = () => {
+  // note: startdate = Date 객체 원본
   const [startDate, setStartDate] = useState(new Date());
   const [isToday, setIsToday] = useState(true);
+  const setRequestDay = useSetRecoilState(ChartDateState);
 
   useEffect(() => {
     todayCheck();
@@ -29,15 +33,14 @@ const PeriodSelector = () => {
     const selectedDate = format(startDate, "MM/dd");
     if (today === selectedDate) {
       setIsToday(true);
-    } else {
+    } else if (today !== selectedDate) {
       setIsToday(false);
     }
   };
 
   const dailyChartRequest = () => {
     const day = startDate.toISOString();
-    const requestDay = day.substring(0, day.length - 14);
-    console.log(requestDay);
+    return setRequestDay(day.substring(0, day.length - 14));
   };
 
   return (
@@ -46,20 +49,14 @@ const PeriodSelector = () => {
         <LeftArrowIcon />
       </PeriodSelectBtn>
 
-      {/* <PeriodPicker
-        selected={startDate}
-        onChange={(date: Date) => setStartDate(date)}
-        dateFormat="MM/dd (eee)"
-        locale={ko}
-        showPopperArrow={false}
-      /> */}
+      {`${format(startDate, "MM/dd")} (${getToday(startDate)})`}
 
       <PeriodSelectBtn
         onClick={dateAdd}
         className={isToday ? "isToday" : ""}
-        disabled={isToday ? true : false}
+        disabled={isToday}
       >
-        <RightArrowIcon />
+        <RightArrowIcon fill={isToday ? "#ececec" : "#949494"} />
       </PeriodSelectBtn>
     </PeriodSelectWrapper>
   );
@@ -83,9 +80,7 @@ const PeriodSelectBtn = styled.button`
 
   &.isToday {
     cursor: default;
-    :hover {
-      background-color: #f6f6f6;
-    }
+    background-color: #e2e2e2;
   }
 `;
 
@@ -103,16 +98,3 @@ const PeriodSelectWrapper = styled.div`
   .react-datepicker {
   }
 `;
-
-// const PeriodPicker = styled(ReactDatePicker)`
-//   border: 0px solid transparent;
-//   text-align: center;
-//   cursor: pointer;
-//   caret-color: transparent;
-//   ::placeholder {
-//     color: red;
-//   }
-//   :focus {
-//     outline: none;
-//   }
-// `;

@@ -1,14 +1,40 @@
+import { Button } from "@/style/globalStyle";
+import { msToTime } from "@/util";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { StudyHistoryIcon } from "../../style/icon/chartPage";
+import { RightArrowIcon, StudyHistoryIcon } from "../../style/icon/chartPage";
+import { StudySession } from "./DayChart";
 
-const StudyHistory = () => {
+interface StudyHistoryProps {
+  dayRecord?: StudySession;
+  needStudy?: boolean;
+}
+
+const StudyHistory = ({ dayRecord, needStudy }: StudyHistoryProps) => {
+  const navigate = useNavigate();
+  console.log(dayRecord, needStudy);
   return (
     <HistoryContainer>
-      <IconWrapper>
-        <StudyHistoryIcon />
+      <IconWrapper needStudy={needStudy}>
+        <StudyHistoryIcon fill={!needStudy ? "#359D9E" : "#fff"} />
       </IconWrapper>
-      <HistoryWrapper>
-        <p>00:30:30</p>오전 5:18 ~ 오전 6:23
+      <HistoryWrapper needStudy={needStudy}>
+        <StudyTime>
+          {!needStudy && dayRecord ? msToTime(dayRecord.studyTime) : "00:00:00"}
+        </StudyTime>
+        <StartToEnd>
+          {!needStudy && dayRecord ? (
+            `${dayRecord.startTime} ~ ${dayRecord.endTime}`
+          ) : (
+            <NeedStudy>
+              앗, 오늘은 아직 공부 기록이 없어요.
+              <NeedStudyBtn onClick={() => navigate("/timer")}>
+                바로 공부하러 가기
+                <RightArrowIcon fill={"#fff"} />
+              </NeedStudyBtn>
+            </NeedStudy>
+          )}
+        </StartToEnd>
       </HistoryWrapper>
     </HistoryContainer>
   );
@@ -23,8 +49,12 @@ const HistoryContainer = styled.div`
   margin-bottom: 16px;
 `;
 
-const IconWrapper = styled.div`
-  background-color: #e9faf7;
+interface IconWrapperProps {
+  needStudy?: boolean;
+}
+
+const IconWrapper = styled.div<IconWrapperProps>`
+  background-color: ${(props) => (props.needStudy ? "#bababa" : "#e9faf7")};
   width: 40px;
   height: 40px;
   border-radius: 20px;
@@ -33,10 +63,36 @@ const IconWrapper = styled.div`
   align-items: center;
 `;
 
-const HistoryWrapper = styled.div`
+const HistoryWrapper = styled.div<IconWrapperProps>`
   width: 100%;
   background-color: #f8fafa;
-  border-left: 4px solid #b3f0e8;
+  border-left: ${(props) =>
+    props.needStudy ? " 4px solid #bababa;" : " 4px solid #b3f0e8;"};
   border-radius: 0px 16px 16px 0px;
   padding: 20px;
+`;
+
+const StudyTime = styled.div`
+  margin-bottom: 8px;
+  color: ${({ theme }) => theme.colors.grey[800]};
+`;
+
+const StartToEnd = styled.div`
+  margin-top: 8px;
+  color: ${({ theme }) => theme.colors.grey[600]};
+`;
+
+const NeedStudy = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+const NeedStudyBtn = styled(Button)`
+  padding: 12px 16px;
+  display: inline-block;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: fit-content;
 `;
