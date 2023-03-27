@@ -1,46 +1,102 @@
-import styled from "styled-components";
-import { LeftArrowIcon, RightArrowIcon } from "../../style/icon/chartPage";
-import { useEffect, useState } from "react";
-import { getToday, getTodayDate } from "../../util";
-import format from "date-fns/format";
-import { add, sub } from "date-fns";
-import { useSetRecoilState } from "recoil";
-import { ChartDateState } from "@/store/ChartDateState";
+import styled from 'styled-components';
+import { LeftArrowIcon, RightArrowIcon } from '../../style/icon/chartPage';
+import { useEffect, useState } from 'react';
+import { getMondayAndSundayDates, getToday, getTodayDate } from '../../util';
+import format from 'date-fns/format';
+import { add, sub } from 'date-fns';
+import { useSetRecoilState } from 'recoil';
+import { ChartDateState } from '@/store/ChartDateState';
 
-const PeriodSelector = () => {
+type Period = 'day' | 'week' | 'month';
+
+interface PeriodSelectorProps {
+  period: Period;
+}
+
+const PeriodSelector = ({ period }: PeriodSelectorProps) => {
   // note: startdate = Date 객체 원본
   const [startDate, setStartDate] = useState(new Date());
   const [isToday, setIsToday] = useState(true);
   const setRequestDay = useSetRecoilState(ChartDateState);
+  const { monday, sunday } = getMondayAndSundayDates(startDate);
+
+  useEffect(() => {
+    if (period === 'day') {
+      dailyChartRequest();
+    } else if (period === 'week') {
+      weeklyChartRequest();
+      // setStartDate(monday);
+    }
+  }, [startDate]);
 
   useEffect(() => {
     todayCheck();
-    dailyChartRequest();
   }, [startDate]);
 
   const dateAdd = () => {
-    const result = add(startDate, { days: 1 });
-    setStartDate(result);
+    switch (period) {
+      case 'day':
+        const dayResult = add(startDate, { days: 1 });
+        setStartDate(dayResult);
+        break;
+      case 'week':
+        const weekResult = add(startDate, { days: 7 });
+        setStartDate(weekResult);
+        break;
+    }
   };
 
   const dateSub = () => {
-    const result = sub(startDate, { days: 1 });
-    setStartDate(result);
+    switch (period) {
+      case 'day':
+        const dayResult = sub(startDate, { days: 1 });
+        setStartDate(dayResult);
+        break;
+      case 'week':
+        const weekResult = sub(startDate, { days: 7 });
+        setStartDate(weekResult);
+        break;
+    }
   };
 
   const todayCheck = () => {
-    const today = getTodayDate();
-    const selectedDate = format(startDate, "MM/dd");
-    if (today === selectedDate) {
-      setIsToday(true);
-    } else if (today !== selectedDate) {
-      setIsToday(false);
+    switch (period) {
+      case 'day':
+        const today = getTodayDate();
+        const selectedDate = format(startDate, 'MM/dd');
+        if (today === selectedDate) {
+          setIsToday(true);
+        } else if (today !== selectedDate) {
+          setIsToday(false);
+        }
+        break;
+      case 'week':
+        const todayDate = new Date();
+        const thisMonday = format(
+          getMondayAndSundayDates(todayDate).monday,
+          'MM/dd',
+        );
+        if (thisMonday === format(monday, 'MM/dd')) {
+          setIsToday(true);
+        } else if (thisMonday !== format(monday, 'MM/dd')) {
+          setIsToday(false);
+        }
+        break;
     }
   };
 
   const dailyChartRequest = () => {
     const day = startDate.toISOString();
-    return setRequestDay(day.substring(0, day.length - 14));
+    return setRequestDay({ theDay: day.substring(0, day.length - 14) });
+  };
+
+  const weeklyChartRequest = () => {
+    const mondayString = monday.toISOString();
+    const sundayString = sunday.toISOString();
+    return setRequestDay({
+      firstDay: mondayString.substring(0, mondayString.length - 14),
+      lastDay: sundayString.substring(0, sundayString.length - 14),
+    });
   };
 
   return (
@@ -49,14 +105,19 @@ const PeriodSelector = () => {
         <LeftArrowIcon />
       </PeriodSelectBtn>
 
-      {`${format(startDate, "MM/dd")} (${getToday(startDate)})`}
+      {period === 'day'
+        ? `${format(startDate, 'MM/dd')} (${getToday(startDate)})`
+        : `${format(monday, 'MM/dd')}(${getToday(monday)}) ~ ${format(
+            sunday,
+            'MM/dd',
+          )}(${getToday(sunday)})`}
 
       <PeriodSelectBtn
         onClick={dateAdd}
-        className={isToday ? "isToday" : ""}
+        className={isToday ? 'isToday' : ''}
         disabled={isToday}
       >
-        <RightArrowIcon fill={isToday ? "#ececec" : "#949494"} />
+        <RightArrowIcon fill={isToday ? '#ececec' : '#949494'} />
       </PeriodSelectBtn>
     </PeriodSelectWrapper>
   );

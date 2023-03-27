@@ -1,12 +1,12 @@
-import instance from "@/axios";
-import { ChartDateState } from "@/store/ChartDateState";
-import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
-import { useRecoilValue } from "recoil";
-import styled from "styled-components";
-import PeriodSelector from "./PeriodSelector";
-import StudyHistory from "./StudyHistory";
-import StudyTime from "./StudyTime";
+import instance from '@/axios';
+import { ChartDateState } from '@/store/ChartDateState';
+import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
+import { useRecoilValue } from 'recoil';
+import styled from 'styled-components';
+import PeriodSelector from './PeriodSelector';
+import StudyHistory from './StudyHistory';
+import StudyTime from './StudyTime';
 
 export interface StudySession {
   startTime: string;
@@ -18,12 +18,15 @@ const DayChart = () => {
   const [allStudyTime, setAllStudyTime] = useState<number>(0);
   const requestDay = useRecoilValue(ChartDateState);
 
-  const { data: dayRecord } = useQuery(["dayRecord", requestDay], async () => {
-    const response = await instance.get(
-      `api/calculate/dayRecord?theDay=${requestDay}`
-    );
-    return response.data;
-  });
+  const { data: dayRecord } = useQuery(
+    ['dayRecord', requestDay.theDay],
+    async () => {
+      const response = await instance.get(
+        `api/calculate/dayRecord?theDay=${requestDay.theDay}`,
+      );
+      return response.data;
+    },
+  );
 
   function sumStudyTime(arr: StudySession[]) {
     return arr.reduce((acc, cur) => acc + cur.studyTime, 0);
@@ -47,7 +50,7 @@ const DayChart = () => {
 
   return (
     <>
-      <PeriodSelector />
+      <PeriodSelector period="day" />
       <StudyTime period="day" studyTime={allStudyTime} />
       <SubTitle>공부 기록</SubTitle>
       <DayRecordContainer>

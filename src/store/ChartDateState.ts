@@ -1,6 +1,12 @@
-import { atom } from "recoil";
+import { atom } from 'recoil';
 
-export const ChartDateState = atom({
-  key: "ChartDateState",
-  default: "",
+interface ChartDate {
+  theDay?: string;
+  firstDay?: string;
+  lastDay?: string;
+}
+
+export const ChartDateState = atom<ChartDate>({
+  key: 'ChartDateState',
+  default: {},
 });
