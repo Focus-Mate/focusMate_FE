@@ -35,8 +35,21 @@ export const getToday = (date: Date) => {
   return day;
 };
 
+export function getMondayAndSundayDates(date: Date): {
+  monday: Date;
+  sunday: Date;
+} {
+  const monday = new Date(
+    date.getTime() + (1 - date.getDay()) * 24 * 60 * 60 * 1000,
+  );
+  const sunday = new Date(
+    date.getTime() + (7 - date.getDay()) * 24 * 60 * 60 * 1000,
+  );
+  return { monday, sunday };
+}
+
 export const setDateFormat = (data: number) => {
-  if (data < 10) return "0" + data;
+  if (data < 10) return '0' + data;
   else return data;
 };
 

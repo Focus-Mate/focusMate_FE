@@ -1,70 +1,136 @@
-import styled from "styled-components";
-import StudyTime from "./StudyTime";
-import { BestRecordIcon, WorstRecordIcon } from "@/style/icon/chartPage/index";
+import styled from 'styled-components';
+import StudyTime from './StudyTime';
+import { BestRecordIcon, WorstRecordIcon } from '@/style/icon/chartPage/index';
+import PeriodSelector from './PeriodSelector';
+import { useQuery } from 'react-query';
+import { useRecoilValue } from 'recoil';
+import { ChartDateState } from '@/store/ChartDateState';
+import instance from '@/axios';
+import { msToTime } from '@/util';
+import { useState } from 'react';
+
+interface WeekRecord {
+  avg: number;
+  max: number;
+  message: string;
+  min: number;
+  result: RecordResult[];
+}
+
+interface RecordResult {
+  studyDate: string;
+  total: string;
+}
 
 const WeekChart = () => {
-  const week = ["월", "화", "수", "목", "금", "토", "일"];
-  return (
-    <GraphContainer>
-      <StudyTime period="week" studyTime={125346} />
-      <GraphDayContainer>
-        {week.map((day) => {
-          return (
-            <GraphWrapper>
-              <Graph />
-              <div>{day}</div>
-            </GraphWrapper>
-          );
-        })}
-      </GraphDayContainer>
-      <RecordWrapper>
-        <RecordContainer className={"best"}>
-          <RecordTitle>
-            <IconBase className={"best"}>
-              <BestRecordIcon />
-            </IconBase>
-            주 최고기록
-          </RecordTitle>
+  const week = ['월', '화', '수', '목', '금', '토', '일'];
+  const requestDay = useRecoilValue(ChartDateState);
 
-          <span>09:12:05</span>
-        </RecordContainer>
-        <RecordContainer className={"worst"}>
-          <RecordTitle>
-            <IconBase className={"worst"}>
-              <WorstRecordIcon />
-            </IconBase>
-            주 최저 기록
-          </RecordTitle>
-          <span>00:14:40</span>
-        </RecordContainer>
-      </RecordWrapper>
-    </GraphContainer>
-  );
+  const { data: weekRecord, isLoading: isWeekRecordLoading } =
+    useQuery<WeekRecord>(['weekRecord', requestDay.firstDay], async () => {
+      const response = await instance.get(
+        `/api/calculate/getRecord?firstDay=${requestDay.firstDay}&lastDay=${requestDay.lastDay}`,
+      );
+      console.log(response);
+      return response.data;
+    });
+
+  function calculateHeight(studyTime: number): number {
+    if (weekRecord && studyTime !== 0 && studyTime) {
+      console.log(studyTime, 'studyTime');
+      const maxHeight = 130;
+      const minHeight = 30;
+
+      const sum = weekRecord.result.reduce(
+        (acc, cur) => acc + parseInt(cur.total),
+        0,
+      );
+      console.log(sum, 'sum');
+      console.log(typeof sum);
+      const ratio = studyTime / sum;
+      console.log(ratio, 'ratio');
+      const height = Math.max(minHeight, maxHeight * ratio);
+      console.log(height, 'height');
+      return height;
+    } else {
+      const height = 6;
+      return height;
+    }
+  }
+
+  if (!isWeekRecordLoading && weekRecord) {
+    return (
+      <GraphContainer>
+        <PeriodSelector period="week" />
+        <StudyTime period="week" studyTime={weekRecord?.avg} />
+        <GraphDayContainer>
+          {weekRecord.result?.map((day, index) => {
+            const height = calculateHeight(parseInt(day.total));
+            console.log(height);
+            return (
+              <GraphWrapper>
+                <Graph graphHeight={height} />
+                <div>{week[index]}</div>
+              </GraphWrapper>
+            );
+          })}
+        </GraphDayContainer>
+        <RecordWrapper>
+          <RecordContainer className={'best'}>
+            <RecordTitle>
+              <IconBase className={'best'}>
+                <BestRecordIcon />
+              </IconBase>
+              주 최고기록
+            </RecordTitle>
+
+            <span>{msToTime(weekRecord?.max)}</span>
+          </RecordContainer>
+          <RecordContainer className={'worst'}>
+            <RecordTitle>
+              <IconBase className={'worst'}>
+                <WorstRecordIcon />
+              </IconBase>
+              주 최저 기록
+            </RecordTitle>
+            <span>{msToTime(weekRecord?.min)}</span>
+          </RecordContainer>
+        </RecordWrapper>
+      </GraphContainer>
+    );
+  } else return <>loading ... </>;
 };
 
 export default WeekChart;
 
 const GraphContainer = styled.div`
   width: 100%;
+  margin-bottom: 100px;
 `;
 
 const GraphDayContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  align-items: flex-end;
 `;
 
 const GraphWrapper = styled.div`
-  text-align: center;
   gap: 16px;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 `;
 
-const Graph = styled.div`
+interface GraphHeight {
+  graphHeight: number;
+}
+
+const Graph = styled.div<GraphHeight>`
   border-radius: 12px;
   width: 28px;
-  height: 50px;
+  height: ${props => `${props.graphHeight}px`};
   background-color: rebeccapurple;
 `;
 
@@ -77,7 +143,7 @@ const RecordWrapper = styled.div`
 
 const RecordContainer = styled.div`
   border-radius: 16px;
-  font-family: "SpoqaMedium";
+  font-family: 'SpoqaMedium';
   display: flex;
   flex-direction: column;
   justify-content: center;
