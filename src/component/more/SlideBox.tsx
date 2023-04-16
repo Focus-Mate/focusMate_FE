@@ -1,7 +1,7 @@
-import styled, { css, keyframes } from "styled-components";
+import styled, { css } from 'styled-components';
 
-import iconArrowDown from "@/style/icon/more/arrow_down.png";
-import { useState } from "react";
+import iconArrowDown from '@/style/icon/more/arrow_down.png';
+import { useState } from 'react';
 
 interface SlideBoxProps {
   item: { title: string; description: string; date: string };
@@ -11,7 +11,7 @@ const SlideBox: React.FC<SlideBoxProps> = ({ item }): React.ReactElement => {
   const [isShown, setShown] = useState(false);
 
   return (
-    <Container onClick={() => setShown((isShown) => !isShown)}>
+    <Container onClick={() => setShown(isShown => !isShown)}>
       <Alway>
         <DownIcon src={iconArrowDown} alt="show" isShown={isShown} />
         <Subject>{item.title}</Subject>
@@ -62,20 +62,6 @@ const Day = styled.div`
   font-size: 0.875rem;
   color: ${({ theme }) => theme.colors.grey[700]};
   margin-top: 12px;
-`;
-
-const FontAnimation = keyframes`
-  0% {
-    font-size: 0;
-  }
-
-  99% {
-    font-size: 0;
-  }
-
-  100% {
-    font-size: 0.875rem;
-  }
 `;
 
 const Description = styled.div<hasIsShown>(({ isShown }) => [

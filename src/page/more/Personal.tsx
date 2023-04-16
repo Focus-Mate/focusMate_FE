@@ -1,25 +1,25 @@
-import StackHeader from "@/component/common/StackHeader";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import StackHeader from '@/component/common/StackHeader';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 const Personal = () => {
-	const navigate = useNavigate();
-	return (
-		<Container>
-			<StackHeader
-				options={{
-					line: true,
-					before: {
-						iconOptions: {
-							onClick: () => navigate("/more"),
-						},
-					},
-				}}
-			>
-				개인정보 처리방침
-			</StackHeader>
-			<Content>
-				<pre>{`< 포커스메이트 >('임시'이하 '임시')은(는) 「개인정보 보호법」 제30조에 따라 정보주체의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리방침을 수립·공개합니다.
+  const navigate = useNavigate();
+  return (
+    <Container>
+      <StackHeader
+        options={{
+          line: true,
+          before: {
+            iconOptions: {
+              onClick: () => navigate('/more'),
+            },
+          },
+        }}
+      >
+        개인정보 처리방침
+      </StackHeader>
+      <Content>
+        <pre>{`< 포커스메이트 >('임시'이하 '임시')은(는) 「개인정보 보호법」 제30조에 따라 정보주체의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리방침을 수립·공개합니다.
 ○ 이 개인정보처리방침은 2023년 2월 1부터 적용됩니다.
 
 제1조(개인정보의 처리 목적)
@@ -45,20 +45,25 @@ const Personal = () => {
 <홈페이지 회원가입 및 관리>와 관련한 개인정보는 수집.이용에 관한 동의일로부터<1년>까지 위 이용목적을 위하여 보유.이용됩니다.
 보유근거 :
 관련법령 :`}</pre>
-			</Content>
-		</Container>
-	);
+      </Content>
+    </Container>
+  );
 };
 
 export default Personal;
 
-const Container = styled.div``;
+const Container = styled.div`
+  width: 100%;
+  min-height: 100vh;
+  background-color: ${({ theme }) => theme.colors.bg.base};
+`;
 const Content = styled.div`
-	padding: 20px;
-	font-size: 0.875rem;
-	line-height: 25px;
+  padding: 20px;
+  font-size: 0.875rem;
+  line-height: 25px;
+  color: ${({ theme }) => theme.colors.grey[600]};
 
-	pre {
-		white-space: pre-wrap;
-	}
+  pre {
+    white-space: pre-wrap;
+  }
 `;
