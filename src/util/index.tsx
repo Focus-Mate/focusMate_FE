@@ -1,4 +1,4 @@
-enum WeekDay {
+export enum WeekDay {
   일,
   월,
   화,
@@ -7,6 +7,8 @@ enum WeekDay {
   금,
   토,
 }
+
+export const week = ['월', '화', '수', '목', '금', '토', '일'];
 
 export function msToSec(milliseconds: number): number {
   const seconds: number = milliseconds / 1000;
@@ -39,6 +41,7 @@ export function getMondayAndSundayDates(date: Date): {
   monday: Date;
   sunday: Date;
 } {
+  // todo: getDay()의 0이 일요일이어서 일요일에는 다음주 월요일부터 보임
   const monday = new Date(
     date.getTime() + (1 - date.getDay()) * 24 * 60 * 60 * 1000,
   );

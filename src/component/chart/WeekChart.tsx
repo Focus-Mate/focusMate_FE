@@ -6,7 +6,7 @@ import { useQuery } from 'react-query';
 import { useRecoilValue } from 'recoil';
 import { ChartDateState } from '@/store/ChartDateState';
 import instance from '@/axios';
-import { msToTime } from '@/util';
+import { msToTime, week } from '@/util';
 import { useState } from 'react';
 
 interface WeekRecord {
@@ -23,17 +23,17 @@ interface RecordResult {
 }
 
 const WeekChart = () => {
-  const week = ['월', '화', '수', '목', '금', '토', '일'];
   const requestDay = useRecoilValue(ChartDateState);
 
-  const { data: weekRecord, isLoading: isWeekRecordLoading } =
-    useQuery<WeekRecord>(['weekRecord', requestDay.firstDay], async () => {
+  const { data: weekRecord } = useQuery<WeekRecord>(
+    ['weekRecord', requestDay],
+    async () => {
       const response = await instance.get(
         `/api/calculate/getRecord?firstDay=${requestDay.firstDay}&lastDay=${requestDay.lastDay}`,
       );
-      console.log(response);
       return response.data;
-    });
+    },
+  );
 
   function calculateHeight(studyTime: number): number {
     if (weekRecord && studyTime !== 0 && studyTime) {
@@ -58,7 +58,7 @@ const WeekChart = () => {
     }
   }
 
-  if (!isWeekRecordLoading && weekRecord) {
+  if (weekRecord) {
     return (
       <GraphContainer>
         <PeriodSelector period="week" />
@@ -68,7 +68,7 @@ const WeekChart = () => {
             const height = calculateHeight(parseInt(day.total));
             console.log(height);
             return (
-              <GraphWrapper>
+              <GraphWrapper key={index}>
                 <Graph graphHeight={height} />
                 <div>{week[index]}</div>
               </GraphWrapper>

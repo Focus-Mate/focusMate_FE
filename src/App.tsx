@@ -17,7 +17,14 @@ export const isThemeDark = atom({
 // 모달 사용을 위한 최상위 컴포넌트 등록
 ReactModal.setAppElement('#root');
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
 function App() {
   const isDark = useRecoilValue(isThemeDark);
 

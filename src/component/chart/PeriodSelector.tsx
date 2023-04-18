@@ -21,16 +21,13 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
   const { monday, sunday } = getMondayAndSundayDates(startDate);
 
   useEffect(() => {
+    todayCheck();
     if (period === 'day') {
       dailyChartRequest();
     } else if (period === 'week') {
       weeklyChartRequest();
       // setStartDate(monday);
     }
-  }, [startDate]);
-
-  useEffect(() => {
-    todayCheck();
   }, [startDate]);
 
   const dateAdd = () => {
