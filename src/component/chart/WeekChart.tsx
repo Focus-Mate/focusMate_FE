@@ -7,7 +7,7 @@ import { useRecoilValue } from 'recoil';
 import { ChartDateState } from '@/store/ChartDateState';
 import instance from '@/axios';
 import { msToTime, week } from '@/util';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface WeekRecord {
   avg: number;
@@ -24,6 +24,25 @@ interface RecordResult {
 
 const WeekChart = () => {
   const requestDay = useRecoilValue(ChartDateState);
+  const [isOffDay, setIsOffDay] = useState<boolean>(false);
+  const [minTime, setMinTime] = useState<string>();
+  const [maxTime, setMaxTime] = useState<string>();
+
+  const checkMinMax = () => {
+    let weekTotalArray = [];
+    if (weekRecord && weekRecord.result) {
+      for (const element of weekRecord.result) {
+        if (element.total !== '0') {
+          weekTotalArray.push(Number(element.total));
+        }
+      }
+      if (weekTotalArray.length < 7) {
+        setIsOffDay(true);
+      }
+      setMaxTime(String(Math.max(...weekTotalArray)));
+      setMinTime(String(Math.min(...weekTotalArray)));
+    }
+  };
 
   const { data: weekRecord } = useQuery<WeekRecord>(
     ['weekRecord', requestDay],
@@ -35,22 +54,22 @@ const WeekChart = () => {
     },
   );
 
+  useEffect(() => {
+    weekRecord && checkMinMax();
+  }, [weekRecord]);
+
   function calculateHeight(studyTime: number): number {
     if (weekRecord && studyTime !== 0 && studyTime) {
-      console.log(studyTime, 'studyTime');
       const maxHeight = 130;
-      const minHeight = 30;
+      const minHeight = 34;
 
       const sum = weekRecord.result.reduce(
         (acc, cur) => acc + parseInt(cur.total),
         0,
       );
-      console.log(sum, 'sum');
-      console.log(typeof sum);
+
       const ratio = studyTime / sum;
-      console.log(ratio, 'ratio');
       const height = Math.max(minHeight, maxHeight * ratio);
-      console.log(height, 'height');
       return height;
     } else {
       const height = 6;
@@ -58,47 +77,62 @@ const WeekChart = () => {
     }
   }
 
-  if (weekRecord) {
-    return (
-      <GraphContainer>
-        <PeriodSelector period="week" />
-        <StudyTime period="week" studyTime={weekRecord?.avg} />
-        <GraphDayContainer>
-          {weekRecord.result?.map((day, index) => {
-            const height = calculateHeight(parseInt(day.total));
-            console.log(height);
+  return (
+    <GraphContainer>
+      <PeriodSelector period="week" />
+
+      <StudyTime period="week" studyTime={weekRecord ? weekRecord?.avg : 0} />
+      <GraphDayContainer>
+        {weekRecord ? (
+          weekRecord.result?.map((day, index) => {
+            const graphHeight = calculateHeight(Number(day.total));
             return (
               <GraphWrapper key={index}>
-                <Graph graphHeight={height} />
+                <Graph
+                  graphHeight={graphHeight}
+                  className={
+                    day.total === maxTime
+                      ? 'max'
+                      : day.total === minTime
+                      ? isOffDay
+                        ? 'withOff min'
+                        : 'min'
+                      : day.total === '0'
+                      ? 'zero'
+                      : ''
+                  }
+                />
                 <div>{week[index]}</div>
               </GraphWrapper>
             );
-          })}
-        </GraphDayContainer>
-        <RecordWrapper>
-          <RecordContainer className={'best'}>
-            <RecordTitle>
-              <IconBase className={'best'}>
-                <BestRecordIcon />
-              </IconBase>
-              주 최고기록
-            </RecordTitle>
+          })
+        ) : (
+          <GraphWrapper></GraphWrapper>
+        )}
+      </GraphDayContainer>
+      <RecordWrapper>
+        <RecordContainer className={'best'}>
+          <RecordTitle>
+            <IconBase className={'best'}>
+              <BestRecordIcon />
+            </IconBase>
+            주 최고기록
+          </RecordTitle>
 
-            <span>{msToTime(weekRecord?.max)}</span>
-          </RecordContainer>
-          <RecordContainer className={'worst'}>
-            <RecordTitle>
-              <IconBase className={'worst'}>
-                <WorstRecordIcon />
-              </IconBase>
-              주 최저 기록
-            </RecordTitle>
-            <span>{msToTime(weekRecord?.min)}</span>
-          </RecordContainer>
-        </RecordWrapper>
-      </GraphContainer>
-    );
-  } else return <>loading ... </>;
+          <span>{weekRecord ? msToTime(weekRecord?.max) : '00:00:00'}</span>
+        </RecordContainer>
+        <RecordContainer className={'worst'}>
+          <RecordTitle>
+            <IconBase className={'worst'}>
+              <WorstRecordIcon />
+            </IconBase>
+            주 최저 기록
+          </RecordTitle>
+          <span>{weekRecord ? msToTime(weekRecord?.min) : '00:00:00'}</span>
+        </RecordContainer>
+      </RecordWrapper>
+    </GraphContainer>
+  );
 };
 
 export default WeekChart;
@@ -124,14 +158,33 @@ const GraphWrapper = styled.div`
 `;
 
 interface GraphHeight {
-  graphHeight: number;
+  graphHeight?: number;
 }
 
 const Graph = styled.div<GraphHeight>`
   border-radius: 12px;
   width: 28px;
   height: ${props => `${props.graphHeight}px`};
-  background-color: rebeccapurple;
+  background-color: ${({ theme }) => theme.colors.primary[500]};
+
+  &.max {
+    background-color: ${({ theme }) => theme.colors.primary[700]};
+    height: 130px;
+  }
+
+  &.min {
+    background-color: ${({ theme }) => theme.colors.orange[700]};
+    height: 34px;
+  }
+
+  &.zero {
+    background-color: ${({ theme }) => theme.colors.orange[700]};
+    height: 6px;
+  }
+
+  &.withOff {
+    background-color: ${({ theme }) => theme.colors.primary[500]};
+  }
 `;
 
 const RecordWrapper = styled.div`
