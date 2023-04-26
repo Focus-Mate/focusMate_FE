@@ -6,7 +6,7 @@ import { useQuery } from 'react-query';
 import { useRecoilValue } from 'recoil';
 import { ChartDateState } from '@/store/ChartDateState';
 import instance from '@/axios';
-import { msToTime, week } from '@/util';
+import { isFuture, msToTime, week } from '@/util';
 import { useEffect, useState } from 'react';
 
 interface WeekRecord {
@@ -27,6 +27,15 @@ const WeekChart = () => {
   const [isOffDay, setIsOffDay] = useState<boolean>(false);
   const [minTime, setMinTime] = useState<string>();
   const [maxTime, setMaxTime] = useState<string>();
+  const [chartArray, setChartArray] = useState<number[]>([]);
+
+  const toArray = () => {
+    if (weekRecord && weekRecord.result) {
+      for (const element of weekRecord.result) {
+        chartArray.push(Number(element.total));
+      }
+    }
+  };
 
   const checkMinMax = () => {
     let weekTotalArray = [];
@@ -35,6 +44,7 @@ const WeekChart = () => {
         if (element.total !== '0') {
           weekTotalArray.push(Number(element.total));
         }
+        // weekTotalArray.push(Number(element.total));
       }
       if (weekTotalArray.length < 7) {
         setIsOffDay(true);
@@ -56,26 +66,15 @@ const WeekChart = () => {
 
   useEffect(() => {
     weekRecord && checkMinMax();
+    if (chartArray.length !== 0) {
+      setChartArray([]);
+    }
+    toArray();
   }, [weekRecord]);
 
-  function calculateHeight(studyTime: number): number {
-    if (weekRecord && studyTime !== 0 && studyTime) {
-      const maxHeight = 130;
-      const minHeight = 34;
-
-      const sum = weekRecord.result.reduce(
-        (acc, cur) => acc + parseInt(cur.total),
-        0,
-      );
-
-      const ratio = studyTime / sum;
-      const height = Math.max(minHeight, maxHeight * ratio);
-      return height;
-    } else {
-      const height = 6;
-      return height;
-    }
-  }
+  useEffect(() => {
+    console.log(chartArray);
+  });
 
   return (
     <GraphContainer>
@@ -85,18 +84,21 @@ const WeekChart = () => {
       <GraphDayContainer>
         {weekRecord ? (
           weekRecord.result?.map((day, index) => {
-            const graphHeight = calculateHeight(Number(day.total));
+            // const graphHeight = calculateHeight(Number(day.total));
             return (
               <GraphWrapper key={index}>
                 <Graph
-                  graphHeight={graphHeight}
+                  // graphHeight={graphHeight}
                   className={
                     day.total === maxTime
                       ? 'max'
                       : day.total === minTime
                       ? isOffDay
-                        ? 'withOff min'
+                        ? // NOTE withOff = 공부 안한 날이 있는 주 (공부안한 날이 없다면 0이 아니고 && minTime 인 그래프가 최소로 표시됨)
+                          'withOff min'
                         : 'min'
+                      : isFuture(day.studyDate)
+                      ? 'future'
                       : day.total === '0'
                       ? 'zero'
                       : ''
@@ -147,6 +149,7 @@ const GraphDayContainer = styled.div`
   flex-direction: row;
   justify-content: space-around;
   align-items: flex-end;
+  height: 130px;
 `;
 
 const GraphWrapper = styled.div`
@@ -184,6 +187,11 @@ const Graph = styled.div<GraphHeight>`
 
   &.withOff {
     background-color: ${({ theme }) => theme.colors.primary[500]};
+  }
+
+  &.future {
+    height: 6px;
+    background-color: ${({ theme }) => theme.colors.bg.grey};
   }
 `;
 

@@ -72,3 +72,9 @@ export const getDate = (dateData: Date) => {
   const today = date.getDate();
   return `${year}-${setDateFormat(month)}-${setDateFormat(today)}`;
 };
+
+export const isFuture = (dateString: string): boolean => {
+  const today = new Date().setHours(0, 0, 0, 0);
+  const date = new Date(dateString).setHours(0, 0, 0, 0);
+  return date > today;
+};
