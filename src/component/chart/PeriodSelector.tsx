@@ -19,6 +19,7 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
   const [isToday, setIsToday] = useState(true);
   const setRequestDay = useSetRecoilState(ChartDateState);
   const { monday, sunday } = getMondayAndSundayDates(startDate);
+  const [isSunday, setIsSunday] = useState<boolean>();
 
   useEffect(() => {
     todayCheck();
@@ -27,6 +28,12 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
     } else if (period === 'week') {
       weeklyChartRequest();
       // setStartDate(monday);
+    }
+  }, [startDate]);
+
+  useEffect(() => {
+    if (startDate.getDay() === 0) {
+      startDate.setDate(startDate.getDate() - 1);
     }
   }, [startDate]);
 
@@ -88,8 +95,13 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
   };
 
   const weeklyChartRequest = () => {
+    const todayDate = new Date();
+    if (todayDate.getDay() === 0) {
+      const pastWeek = new Date(todayDate.setDate(todayDate.getDate() - 1));
+    }
     const mondayString = monday.toISOString();
     const sundayString = sunday.toISOString();
+
     return setRequestDay({
       firstDay: mondayString.substring(0, mondayString.length - 14),
       lastDay: sundayString.substring(0, sundayString.length - 14),
