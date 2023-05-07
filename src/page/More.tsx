@@ -19,7 +19,6 @@ import instance from '@/axios';
 import { useRecoilState } from 'recoil';
 import { isThemeDark } from '@/App';
 import ConfirmPop from '@/component/common/pop/ConfirmPop';
-import { snackBarStatus } from '@/component/common/bar/StatusSnackBar';
 
 function Setting() {
   const [darkMode, setDarkMode] = useRecoilState(isThemeDark);
@@ -31,8 +30,6 @@ function Setting() {
 
     return response;
   });
-
-  const [statusSnackBar, setStatusSnackBar] = useRecoilState(snackBarStatus);
 
   return (
     <Wrapper>
@@ -116,21 +113,10 @@ function Setting() {
                 <ItemIcon src={iconOut} alt="notice" />
                 로그아웃
               </Item>,
-              <Item>
+              <Item onClick={() => navigate('/more/remove')}>
                 <ItemIcon src={iconDelete} alt="notice" />
                 탈퇴하기
               </Item>,
-              <button
-                onClick={() => {
-                  setStatusSnackBar({
-                    isOpen: true,
-                    timer: 2500,
-                    message: '공부시간을 저장했어요',
-                  });
-                }}
-              >
-                임시버튼
-              </button>,
             ]}
           />
         </Header>

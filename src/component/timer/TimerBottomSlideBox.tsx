@@ -1,19 +1,15 @@
 import { useEffect, useState } from 'react';
 import ReactModal from 'react-modal';
-import { atom, useRecoilState } from 'recoil';
+import { atom, useRecoilState, useSetRecoilState } from 'recoil';
 import styled, { css, keyframes } from 'styled-components';
-import rabbit from '@/style/icon/character/rabbit.svg';
+import { snackBarStatus } from '../common/bar/StatusSnackBar';
 
-export const bottomSlider = atom({
-  key: 'bottomSlider',
+export const timerBottomSlider = atom({
+  key: 'timerBottomSlider',
   default: {
-    isRepresentative: false,
     isActive: false,
     icon: '',
-    title: '',
-    description: '',
-    tips: '',
-    hasCharacter: true,
+    mission: '',
   },
 });
 
@@ -41,9 +37,10 @@ const modalStyle = {
   },
 };
 
-const BottomSlideBox: React.FC<BottomSlideBoxProps> = () => {
-  const [slider, setSlider] = useRecoilState(bottomSlider);
+const TimerBottomSlideBox: React.FC<BottomSlideBoxProps> = () => {
+  const [slider, setSlider] = useRecoilState(timerBottomSlider);
   const [isClose, setClose] = useState(false);
+  const setStatusSnackBar = useSetRecoilState(snackBarStatus);
 
   const onClose = () => {
     setClose(true);
@@ -55,13 +52,19 @@ const BottomSlideBox: React.FC<BottomSlideBoxProps> = () => {
       timeout = setTimeout(() => {
         setSlider(current => ({ ...current, isActive: false }));
         setClose(false);
+
+        setStatusSnackBar({
+          isOpen: true,
+          timer: 2500,
+          message: '공부시간을 저장했어요',
+        });
       }, 300);
     }
 
     return () => {
       clearTimeout(timeout);
     };
-  }, [slider, isClose, setSlider]);
+  }, [slider, isClose, setSlider, setStatusSnackBar]);
 
   return (
     <ReactModal
@@ -71,33 +74,22 @@ const BottomSlideBox: React.FC<BottomSlideBoxProps> = () => {
       <Background onClick={onClose} isClose={isClose}></Background>
       <Slider isClose={isClose}>
         <SliderWrapper>
+          <Title>{'짠, 미션을 완료하여 캐릭터가 등장했어요!'}</Title>
+          <Mission>
+            <MissionBox>달성한 미션</MissionBox>
+            {slider.mission}
+          </Mission>
           <Picture>
-            {slider.hasCharacter ? (
-              <img src={slider.icon} alt="icon" />
-            ) : (
-              <img src={rabbit} alt="icon" />
-            )}
+            <img src={slider.icon} alt="icon" />
           </Picture>
-          <Title>{slider.title}</Title>
-          {slider.isRepresentative && (
-            <Representative>현재 나의 대표 프로필이에요.</Representative>
-          )}
-          {!slider.isRepresentative && slider.hasCharacter && (
-            <Button>내 대표 프로필로 설정하기</Button>
-          )}
-          {!slider.hasCharacter && (
-            <>
-              <Description>현재 연속 출석 3일째</Description>
-              <Tips>TIPS: 10일 연속 출석 달성 시 캐릭터 부여</Tips>
-            </>
-          )}
+          <Button onClick={onClose}>획득하기</Button>
         </SliderWrapper>
       </Slider>
     </ReactModal>
   );
 };
 
-export default BottomSlideBox;
+export default TimerBottomSlideBox;
 
 const BackgroundFadeIn = keyframes`
 	0% {
@@ -156,7 +148,7 @@ const Slider = styled.div<{
   isClose: boolean;
 }>`
   width: 100%;
-  height: 300px;
+  height: 360px;
   background-color: ${({ theme }) => theme.colors.bg.elevated};
   position: absolute;
   z-index: 10;
@@ -184,37 +176,39 @@ const SliderWrapper = styled.div`
   height: 100%;
 `;
 
-const Representative = styled.div`
-  font-size: 16px;
-  color: ${({ theme }) => theme.colors.grey[500]};
-  margin-top: 12px;
-`;
-
 const Picture = styled.div``;
 const Title = styled.div`
-  margin-top: 20px;
+  margin-bottom: 20px;
   font-size: 20px;
-  font-family: ${({ theme }) => theme.fonts.spoqa.bold};
+  line-height: 28px;
+  width: 180px;
+  text-align: center;
+  font-family: ${({ theme }) => theme.fonts.spoqa.regular};
+  color: ${({ theme }) => theme.colors.grey[800]};
 `;
+
+const Mission = styled.div`
+  display: flex;
+  align-items: center;
+  color: ${({ theme }) => theme.colors.grey[800]};
+  margin-bottom: 12px;
+`;
+
+const MissionBox = styled.div`
+  background-color: ${({ theme }) => theme.colors.bg.grey};
+  padding: 5px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-right: 8px;
+  color: ${({ theme }) => theme.colors.grey[600]};
+`;
+
 const Button = styled.button`
   width: 320px;
   height: 48px;
   background-color: ${({ theme }) => theme.colors.primary[700]};
+  color: ${({ theme }) => theme.colors.bg.base};
   border: 0;
   border-radius: 16px;
-  font-size: 16px;
-  color: ${({ theme }) => theme.colors.bg.base};
-  font-family: ${({ theme }) => theme.fonts.spoqa.bold};
   margin-top: 28px;
-`;
-
-const Description = styled.div`
-  margin-top: 12px;
-  color: ${({ theme }) => theme.colors.primary[900]};
-  font-size: 16px;
-`;
-const Tips = styled.div`
-  font-size: 16px;
-  margin-top: 20px;
-  color: ${({ theme }) => theme.colors.grey[500]};
 `;

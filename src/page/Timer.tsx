@@ -8,6 +8,11 @@ import TimerSavePop from '@/component/timer/TimerSavePop';
 import TimerCircle from '@/component/timer/TimerCircle';
 import { useMutation } from 'react-query';
 import instance from '@/axios';
+import TimerBottomSlideBox, {
+  timerBottomSlider,
+} from '@/component/timer/TimerBottomSlideBox';
+import koalaPng from '@/component/timer/images/koala.png';
+import { useSetRecoilState } from 'recoil';
 
 const TimerStatus = {
   NONE: 0,
@@ -26,21 +31,19 @@ function Timer() {
     const api = async () => {
       const response = await instance.get('/api/calculate/dayrecord', {
         params: {
-          theDay: '2023-03-26',
+          theDay: '2023-04-02',
         },
       });
       console.log(response);
     };
     api();
-  });
+  }, []);
 
   // React Query
   const { mutateAsync: requestTimerStart } = useMutation(
     'timer/start',
     async () => {
       const response = await instance.post('/api/calculate/startTime');
-
-      console.log(response.data);
 
       return response.data;
     },
@@ -49,9 +52,8 @@ function Timer() {
   const { mutateAsync: requestTimerStop } = useMutation(
     'timer/stop',
     async (time: number) => {
-      console.log(serverId);
       const response = await instance.put('/api/calculate/endTime', {
-        startTime: serverId,
+        startPoint: serverId,
       });
       return response.data;
     },
@@ -99,8 +101,6 @@ function Timer() {
     timeout();
   }, []);
 
-  console.log();
-
   // 전부 milliseconds로 변환하여 사용하기 위해 nowTime에 변환하여 저장
   useEffect(() => {
     const hourToMilliSeconds = hours * 3600000;
@@ -145,8 +145,11 @@ function Timer() {
   const minuteText = milliSecondsToMinute.toString().padStart(2, '0');
   const secondText = milliSecondsToSecond.toString().padStart(2, '0');
 
+  const setBottomSlideBox = useSetRecoilState(timerBottomSlider);
+
   return (
     <Container>
+      <TimerBottomSlideBox />
       <TimerSavePop
         playStatus={playStatus}
         onResetClick={() => {
@@ -154,7 +157,7 @@ function Timer() {
           // setStackTime(0);
           // setResultTime(0);
           // setDashOffset(dashArray - (dashArray * 0) / 100);
-          setPlayStatus(TimerStatus.PAUSE);
+          setPlayStatus(TimerStatus.PLAYING);
         }}
         onConfirmClick={async () => {
           // 저장 로직
@@ -164,7 +167,12 @@ function Timer() {
           setResultTime(0);
           setDashOffset(dashArray - (dashArray * 0) / 100);
           setPlayStatus(TimerStatus.NONE);
-          console.log(result);
+
+          setBottomSlideBox({
+            isActive: true,
+            icon: koalaPng,
+            mission: '타이머 사용',
+          });
         }}
       />
       <TimerCircle
@@ -187,7 +195,7 @@ function Timer() {
                 startTimer();
                 const result = await requestTimerStart();
 
-                setServerId(result.startTime);
+                setServerId(result.startPoint);
               }}
             >
               <img src={playIcon} alt="play" />
@@ -196,13 +204,22 @@ function Timer() {
           {playStatus === TimerStatus.PLAYING && (
             <button
               onClick={() => {
-                setPlayStatus(TimerStatus.PAUSE);
+                setPlayStatus(TimerStatus.STOP);
               }}
             >
-              <img src={pauseIcon} alt="pause" />
+              <img src={stopIcon} alt="stop" />
             </button>
           )}
-          {playStatus === TimerStatus.PAUSE && (
+          {playStatus === TimerStatus.STOP && (
+            <button
+              onClick={() => {
+                setPlayStatus(TimerStatus.STOP);
+              }}
+            >
+              <img src={stopIcon} alt="stop" />
+            </button>
+          )}
+          {/* {playStatus === TimerStatus.PAUSE && (
             <>
               <button
                 onClick={() => {
@@ -219,7 +236,7 @@ function Timer() {
                 <img src={stopIcon} alt="stop" />
               </button>
             </>
-          )}
+          )} */}
         </ButtonWrap>
       </Controller>
     </Container>
@@ -239,6 +256,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  background-color: ${({ theme }) => theme.colors.bg.base};
 
   svg {
     margin-top: -120px;
@@ -254,13 +272,13 @@ const Container = styled.div`
 
 const TimeText = styled.div`
   margin-bottom: 6px;
-  color: #2fc4bb;
+  color: ${({ theme }) => theme.colors.primary[700]};
 `;
 
 const Time = styled.div`
   font-size: 2.25rem;
   font-weight: bold;
-  color: #018a93;
+  color: ${({ theme }) => theme.colors.primary[900]};
   @media (max-width: 330px) {
     font-size: 11vw;
   }
