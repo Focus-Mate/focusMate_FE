@@ -22,20 +22,15 @@ interface RecordResult {
   total: string;
 }
 
+type NumberMap = { [key: number]: number };
+
 const WeekChart = () => {
   const requestDay = useRecoilValue(ChartDateState);
   const [isOffDay, setIsOffDay] = useState<boolean>(false);
   const [minTime, setMinTime] = useState<string>();
   const [maxTime, setMaxTime] = useState<string>();
   const [chartArray, setChartArray] = useState<number[]>([]);
-
-  const toArray = () => {
-    if (weekRecord && weekRecord.result) {
-      for (const element of weekRecord.result) {
-        chartArray.push(Number(element.total));
-      }
-    }
-  };
+  const [ratioArray, setRatioArray] = useState<NumberMap[]>([]);
 
   const checkMinMax = () => {
     let weekTotalArray = [];
@@ -64,17 +59,58 @@ const WeekChart = () => {
     },
   );
 
+  function calculateValues(numbers: number[]): { [key: number]: number }[] {
+    const nonZeroNumbers = numbers.filter(num => num !== 0);
+
+    const maxNumber = Math.max(...nonZeroNumbers);
+    const minNumber = Math.min(...nonZeroNumbers);
+
+    const sum = nonZeroNumbers.reduce((acc, num) => acc + num, 0);
+    const ratios = nonZeroNumbers.map(num => Math.floor((num / sum) * 97) + 33);
+
+    const result: { [key: number]: number }[] = [];
+
+    for (let i = 0; i < numbers.length; i++) {
+      const num = numbers[i];
+      if (num === 0) {
+        result.push({ [num]: 6 });
+      } else if (num === maxNumber) {
+        result.push({ [num]: 130 });
+      } else if (num === minNumber) {
+        result.push({ [num]: 32 });
+      } else {
+        const ratio = ratios[nonZeroNumbers.indexOf(num)];
+        result.push({ [num]: ratio });
+      }
+    }
+    return result;
+  }
+
   useEffect(() => {
     weekRecord && checkMinMax();
-    if (chartArray.length !== 0) {
-      setChartArray([]);
+    setChartArray([]);
+    if (weekRecord && weekRecord.result) {
+      for (const element of weekRecord.result) {
+        chartArray.push(Number(element.total));
+      }
+      setRatioArray(calculateValues(chartArray));
     }
-    toArray();
   }, [weekRecord]);
 
   useEffect(() => {
     console.log(chartArray);
-  });
+    console.log(ratioArray);
+  }, [weekRecord, ratioArray]);
+
+  function getValueByKey(num: number): number | undefined {
+    for (let i = 0; i < ratioArray.length; i++) {
+      const map = ratioArray[i];
+      if (num in map) {
+        return map[num];
+      }
+    }
+    return undefined;
+  }
 
   return (
     <GraphContainer>
@@ -84,11 +120,11 @@ const WeekChart = () => {
       <GraphDayContainer>
         {weekRecord ? (
           weekRecord.result?.map((day, index) => {
-            // const graphHeight = calculateHeight(Number(day.total));
+            const graphHeight = getValueByKey(Number(day.total));
             return (
               <GraphWrapper key={index}>
                 <Graph
-                  // graphHeight={graphHeight}
+                  graphHeight={graphHeight}
                   className={
                     day.total === maxTime
                       ? 'max'
