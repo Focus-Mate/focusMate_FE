@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { ReactComponent as KakaoLogo } from "../../style/icon/kakaoLogo.svg";
+import styled from 'styled-components';
+import { ReactComponent as KakaoLogo } from '../../style/icon/kakaoLogo.svg';
 
 const Login = () => {
   const kakaoURL = process.env.REACT_APP_SOCIAL_URL;

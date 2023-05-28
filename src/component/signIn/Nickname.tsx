@@ -1,11 +1,11 @@
-import { setInputClear } from "@/util/input";
-import React, { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
-import instance from "../../axios";
-import { ISignInInfo } from "../../page/login/SignIn";
-import { Input, SignInStepButton, Title } from "../../style/globalStyle";
-import { DeleteBtn } from "../../style/icon/agreeStep";
-import theme from "../../style/lightTheme";
+import { setInputClear } from '@/util/input';
+import React, { useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
+import instance from '../../instance';
+import { ISignInInfo } from '../../page/login/SignIn';
+import { Input, SignInStepButton, Title } from '../../style/globalStyle';
+import { DeleteBtn } from '../../style/icon/agreeStep';
+import theme from '../../style/lightTheme';
 
 interface INicknameProps {
   setCurrenStep: React.Dispatch<React.SetStateAction<string>>;
@@ -18,18 +18,18 @@ const Nickname = ({
   setSignInInfo,
   signInInfo,
 }: INicknameProps) => {
-  const [checkMessage, setCheckMessage] = useState<any>("");
-  const [nickname, setNickname] = useState<string>("");
+  const [checkMessage, setCheckMessage] = useState<any>('');
+  const [nickname, setNickname] = useState<string>('');
   const [nicknameValid, setNicknameValid] = useState<boolean>(true);
   const [submitValid, setSubmitValid] = useState<boolean>(false);
   const inputFocus = useRef<HTMLInputElement>(null);
 
   const nickNameHandler = (
     event: React.ChangeEvent<HTMLInputElement>,
-    setState: React.Dispatch<React.SetStateAction<string>>
+    setState: React.Dispatch<React.SetStateAction<string>>,
   ) => {
     const { value } = event.target;
-    setCheckMessage("");
+    setCheckMessage('');
     if (value.length >= 1) {
       setSubmitValid(true);
       setNicknameValid(true);
@@ -38,7 +38,7 @@ const Nickname = ({
   };
 
   useEffect(() => {
-    setSignInInfo((prev) => {
+    setSignInInfo(prev => {
       return {
         ...prev,
         nickname,
@@ -48,11 +48,11 @@ const Nickname = ({
 
   const setNewprofile = async () => {
     if (await checkNickname()) {
-      setCurrenStep("complete");
-      instance.put("api/user/nickname", { nickname: signInInfo.nickname });
-      instance.put("api/user/ad-check", { adCheck: signInInfo.adCheck });
+      setCurrenStep('complete');
+      instance.put('api/user/nickname', { nickname: signInInfo.nickname });
+      instance.put('api/user/ad-check', { adCheck: signInInfo.adCheck });
     } else {
-      console.log("false");
+      console.log('false');
       setNicknameValid(false);
     }
     inputFocus.current && inputFocus.current.focus();
@@ -60,7 +60,7 @@ const Nickname = ({
 
   const checkNickname = async () => {
     const response = await instance.get(
-      `api/user/checknickname?nickname=${signInInfo.nickname}`
+      `api/user/checknickname?nickname=${signInInfo.nickname}`,
     );
     if (response.status === 200) return true;
     else {
@@ -75,7 +75,7 @@ const Nickname = ({
         사용하실 닉네임을 <br />
         입력해주세요.
       </Title>
-      <div style={{ position: "relative" }}>
+      <div style={{ position: 'relative' }}>
         <div>
           <Input
             name="nickname"
@@ -85,8 +85,8 @@ const Nickname = ({
             value={nickname}
             autoFocus
             placeholder="8자 이내 한글이나 영어로 입력해주세요."
-            onChange={(e) => nickNameHandler(e, setNickname)}
-            className={nicknameValid ? "" : "error"}
+            onChange={e => nickNameHandler(e, setNickname)}
+            className={nicknameValid ? '' : 'error'}
           />
           <IconContainer
             onClick={() =>

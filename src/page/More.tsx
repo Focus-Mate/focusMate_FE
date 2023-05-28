@@ -15,7 +15,7 @@ import iconOut from '@/style/icon/more/out.png';
 import iconPc from '@/style/icon/more/pc.png';
 import iconTerms from '@/style/icon/more/terms.png';
 import { useQuery } from 'react-query';
-import instance from '@/axios';
+import instance from '@/instance';
 import { useRecoilState } from 'recoil';
 import { isThemeDark } from '@/App';
 import ConfirmPop from '@/component/common/pop/ConfirmPop';
@@ -89,7 +89,19 @@ function Setting() {
                 <ItemText>다크모드 설정</ItemText>
                 <ItemContent>
                   <SwitchBox
-                    onClick={() => setDarkMode(mode => !mode)}
+                    onClick={async () => {
+                      try {
+                        const response = await instance.put(
+                          '/api/user/onDark',
+                          {
+                            dark: !darkMode,
+                          },
+                        );
+
+                        console.log(response);
+                        setDarkMode(mode => !mode);
+                      } catch (e) {}
+                    }}
                     isDark={darkMode}
                   >
                     <SwitchCircle isDark={darkMode} />

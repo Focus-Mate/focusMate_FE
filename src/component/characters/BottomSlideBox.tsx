@@ -72,23 +72,22 @@ const BottomSlideBox: React.FC<BottomSlideBoxProps> = () => {
       <Slider isClose={isClose}>
         <SliderWrapper>
           <Picture>
-            {slider.hasCharacter ? (
-              <img src={slider.icon} alt="icon" />
-            ) : (
-              <img src={rabbit} alt="icon" />
-            )}
+            <img src={slider.icon} alt="icon" />
           </Picture>
           <Title>{slider.title}</Title>
+          {/* 대표 이미지일 경우 */}
           {slider.isRepresentative && (
             <Representative>현재 나의 대표 프로필이에요.</Representative>
           )}
+          {/* 대표 이미지가 아닐 경우 */}
           {!slider.isRepresentative && slider.hasCharacter && (
             <Button>내 대표 프로필로 설정하기</Button>
           )}
+          {/* 캐릭터를 가지고 있지 않을 경우 정보 출력 */}
           {!slider.hasCharacter && (
             <>
-              <Description>현재 연속 출석 3일째</Description>
-              <Tips>TIPS: 10일 연속 출석 달성 시 캐릭터 부여</Tips>
+              <Description>{slider.description}</Description>
+              <Tips>{slider.tips}</Tips>
             </>
           )}
         </SliderWrapper>
@@ -190,7 +189,12 @@ const Representative = styled.div`
   margin-top: 12px;
 `;
 
-const Picture = styled.div``;
+const Picture = styled.div`
+  img {
+    width: 136px;
+    height: 136px;
+  }
+`;
 const Title = styled.div`
   margin-top: 20px;
   font-size: 20px;
@@ -206,6 +210,7 @@ const Button = styled.button`
   color: ${({ theme }) => theme.colors.bg.base};
   font-family: ${({ theme }) => theme.fonts.spoqa.bold};
   margin-top: 28px;
+  flex-shrink: 0;
 `;
 
 const Description = styled.div`
