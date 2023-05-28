@@ -5,7 +5,7 @@ import PeriodSelector from './PeriodSelector';
 import { useQuery } from 'react-query';
 import { useRecoilValue } from 'recoil';
 import { ChartDateState } from '@/store/ChartDateState';
-import instance from '@/axios';
+import instance from '@/instance';
 import { msToTime } from '@/util';
 import { useState } from 'react';
 

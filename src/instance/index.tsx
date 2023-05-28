@@ -1,12 +1,12 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
 const baseURL = process.env.REACT_APP_BASE_URL;
-const instance: any = axios.create({ baseURL });
+const instance = axios.create({ baseURL });
 
-const setToken = (config: any) => {
+const setToken = (config: AxiosRequestConfig<any>) => {
   const token = localStorage.getItem('token');
   if (token) {
-    config.headers['Authorization'] = `Bearer ${token}`;
+    config!.headers!['Authorization'] = `Bearer ${token}`;
   }
   return config;
 };
@@ -14,10 +14,10 @@ const setToken = (config: any) => {
 instance.interceptors.request.use(setToken);
 
 instance.interceptors.response.use(
-  (response: any) => {
+  response => {
     return response;
   },
-  async (error: any) => {
+  async error => {
     // const { response, config } = error;
     // const originalRequest = config;
     const { response } = error;

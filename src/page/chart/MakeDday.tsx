@@ -1,33 +1,33 @@
-import { useNavigate, useParams } from "react-router-dom";
-import styled from "styled-components";
-import { Input, SignInStepButton, Title } from "../../style/globalStyle";
-import { ReactComponent as BackArrow } from "../../style/icon/backArrow.svg";
-import { DDayIcon } from "../../style/icon/chartPage";
-import theme from "../../style/lightTheme";
-import { DatePicker, ConfigProvider } from "antd-mobile";
-import koKR from "antd-mobile/es/locales/ko-KR";
+import { useNavigate, useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import { Input, SignInStepButton, Title } from '../../style/globalStyle';
+import { ReactComponent as BackArrow } from '../../style/icon/backArrow.svg';
+import { DDayIcon } from '../../style/icon/chartPage';
+import theme from '../../style/lightTheme';
+import { DatePicker, ConfigProvider } from 'antd-mobile';
+import koKR from 'antd-mobile/es/locales/ko-KR';
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { IconContainer } from "@/component/signIn/Nickname";
-import { DeleteBtn } from "@/style/icon/agreeStep";
-import { setInputClear } from "@/util/input";
-import { getDate } from "@/util";
-import instance from "@/axios";
-import { useMutation } from "react-query";
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { IconContainer } from '@/component/signIn/Nickname';
+import { DeleteBtn } from '@/style/icon/agreeStep';
+import { setInputClear } from '@/util/input';
+import { getDate } from '@/util';
+import instance from '@/instance';
+import { useMutation } from 'react-query';
 
 export default function MakeDday() {
   const now = new Date();
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
   const [ddate, setDdate] = useState<string>(getDate(now));
-  const [ddayTitle, setDdayTitle] = useState<string>("");
+  const [ddayTitle, setDdayTitle] = useState<string>('');
   const [submitValid, setSubmitValid] = useState<boolean>(false);
 
   const inputFocus = useRef<HTMLInputElement>(null);
   const { exam, dday } = useParams();
   const ddayHandler = (
     event: React.ChangeEvent<HTMLInputElement>,
-    setState: React.Dispatch<React.SetStateAction<string>>
+    setState: React.Dispatch<React.SetStateAction<string>>,
   ) => {
     const { value } = event.target;
     if (value.length >= 1) {
@@ -46,12 +46,12 @@ export default function MakeDday() {
 
   const labelRenderer = useCallback((type: string, data: number) => {
     switch (type) {
-      case "year":
-        return data + "년";
-      case "month":
-        return data + "월";
-      case "day":
-        return data + "일";
+      case 'year':
+        return data + '년';
+      case 'month':
+        return data + '월';
+      case 'day':
+        return data + '일';
       default:
         return data;
     }
@@ -73,12 +73,12 @@ export default function MakeDday() {
 
   const { mutateAsync: postDdayMutate } = useMutation(postDday, {
     onSuccess: () => {
-      navigate("/chart");
+      navigate('/chart');
     },
   });
   const { mutateAsync: updateDdayMutate } = useMutation(updateDday, {
     onSuccess: () => {
-      navigate("/chart");
+      navigate('/chart');
     },
   });
 
@@ -110,7 +110,7 @@ export default function MakeDday() {
           autoFocus
           ref={inputFocus}
           value={ddayTitle}
-          onChange={(e) => ddayHandler(e, setDdayTitle)}
+          onChange={e => ddayHandler(e, setDdayTitle)}
         />
         <IconContainer
           onClick={() =>
@@ -142,7 +142,7 @@ export default function MakeDday() {
             setVisible(false);
           }}
           defaultValue={now}
-          onConfirm={(val) => setDdate(getDate(val))}
+          onConfirm={val => setDdate(getDate(val))}
           renderLabel={labelRenderer}
           precision="day"
         />

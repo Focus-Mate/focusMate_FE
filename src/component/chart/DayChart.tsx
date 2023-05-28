@@ -1,4 +1,4 @@
-import instance from '@/axios';
+import instance from '@/instance';
 import { ChartDateState } from '@/store/ChartDateState';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';

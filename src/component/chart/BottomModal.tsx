@@ -1,13 +1,13 @@
-import instance from "@/axios";
-import { Title } from "@/style/globalStyle";
-import React, { Dispatch, useState } from "react";
-import ReactModal from "react-modal";
-import { useMutation, useQueryClient } from "react-query";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { ReactComponent as CloseIcon } from "@/style/icon/close.svg";
-import { AddIcon, DeleteIcon, EditIcon } from "@/style/icon/dday";
-import FloatingModal from "../FloatingModal";
+import instance from '@/instance';
+import { Title } from '@/style/globalStyle';
+import React, { Dispatch, useState } from 'react';
+import ReactModal from 'react-modal';
+import { useMutation, useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { ReactComponent as CloseIcon } from '@/style/icon/close.svg';
+import { AddIcon, DeleteIcon, EditIcon } from '@/style/icon/dday';
+import FloatingModal from '../FloatingModal';
 export interface SelectedDday {
   exam: string;
   dday: string;
@@ -21,22 +21,22 @@ interface ModalProps {
 
 export const customStyles = {
   overlay: {
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
     zIndex: 10,
-    overflow: "hidden",
+    overflow: 'hidden',
   },
   content: {
-    width: "100%",
+    width: '100%',
     top: 0,
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: "transparent",
-    height: "100%",
+    backgroundColor: 'transparent',
+    height: '100%',
     borderRadius: 0,
     border: 0,
     padding: 0,
-    overflow: "hidden",
+    overflow: 'hidden',
   },
 };
 
@@ -54,9 +54,9 @@ export default function BottomModal({
   };
 
   const { mutateAsync: deleteDdayMutate } = useMutation(deleteDday, {
-    mutationKey: "ddayInfo",
+    mutationKey: 'ddayInfo',
     onSuccess: () => {
-      queryClient.invalidateQueries("ddayInfo");
+      queryClient.invalidateQueries('ddayInfo');
       setVisible(false);
     },
   });
@@ -71,11 +71,11 @@ export default function BottomModal({
       <FloatingModal
         isOpen={isOpen}
         modalContent={{
-          comment: "D-DAY를 삭제할까요?",
+          comment: 'D-DAY를 삭제할까요?',
           options: [
             {
               id: 1,
-              guide: "아니요",
+              guide: '아니요',
               action: () => {
                 setVisible(true);
                 setIsOpen(false);
@@ -83,7 +83,7 @@ export default function BottomModal({
             },
             {
               id: 2,
-              guide: "네, 삭제할게요",
+              guide: '네, 삭제할게요',
               action: () => {
                 deleteDdayMutate(selecteExam.exam);
                 setIsOpen(false);
@@ -102,7 +102,7 @@ export default function BottomModal({
             <SettingDday onClick={onClickDeleteDday} className="delete">
               <DeleteIcon /> 삭제하기
             </SettingDday>
-            <SettingDday onClick={() => navigate("/makedday")}>
+            <SettingDday onClick={() => navigate('/makedday')}>
               <AddIcon /> 추가하기
             </SettingDday>
             <SettingDday
