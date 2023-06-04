@@ -37,7 +37,7 @@ const DayChart = () => {
       const studyTime = sumStudyTime(dayRecord);
       setAllStudyTime(studyTime);
     }
-  }, [requestDay]);
+  }, [requestDay, dayRecord]);
 
   useEffect(() => {
     console.log(dayRecord);
