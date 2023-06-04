@@ -1,9 +1,14 @@
 import styled from 'styled-components';
 import { LeftArrowIcon, RightArrowIcon } from '../../style/icon/chartPage';
 import { useEffect, useState } from 'react';
-import { getMondayAndSundayDates, getToday, getTodayDate } from '../../util';
+import {
+  getMondayAndSundayDates,
+  getToday,
+  getTodayDate,
+  setDateFormat,
+} from '../../util';
 import format from 'date-fns/format';
-import { add, sub } from 'date-fns';
+import { add, setDate, sub } from 'date-fns';
 import { useSetRecoilState } from 'recoil';
 import { ChartDateState } from '@/store/ChartDateState';
 
@@ -19,6 +24,8 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
   const [isToday, setIsToday] = useState(true);
   const setRequestDay = useSetRecoilState(ChartDateState);
   const { monday, sunday } = getMondayAndSundayDates(startDate);
+  const [startMonth, setStartMonth] = useState(new Date());
+  const [mondayState, setMondayState] = useState();
   const [isSunday, setIsSunday] = useState<boolean>();
 
   useEffect(() => {
@@ -28,11 +35,14 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
     } else if (period === 'week') {
       weeklyChartRequest();
       // setStartDate(monday);
+    } else if (period === 'month') {
+      monthChartRequest();
     }
-  }, [startDate]);
+  }, [startDate, startMonth]);
 
+  const dateFormat = 'YYYY MMMM';
   useEffect(() => {
-    if (startDate.getDay() === 0) {
+    if (period === 'week' && startDate.getDay() === 0) {
       startDate.setDate(startDate.getDate() - 1);
     }
   }, [startDate]);
@@ -47,6 +57,10 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
         const weekResult = add(startDate, { days: 7 });
         setStartDate(weekResult);
         break;
+      case 'month':
+        const monthResult = add(startMonth, { months: 1 });
+        setStartMonth(monthResult);
+        break;
     }
   };
 
@@ -57,8 +71,12 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
         setStartDate(dayResult);
         break;
       case 'week':
-        const weekResult = sub(startDate, { days: 7 });
+        const weekResult = sub(startDate, { weeks: 1 });
         setStartDate(weekResult);
+        break;
+      case 'month':
+        const monthResult = sub(startMonth, { months: 1 });
+        setStartMonth(monthResult);
         break;
     }
   };
@@ -80,12 +98,17 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
           getMondayAndSundayDates(todayDate).monday,
           'MM/dd',
         );
+
         if (thisMonday === format(monday, 'MM/dd')) {
           setIsToday(true);
         } else if (thisMonday !== format(monday, 'MM/dd')) {
           setIsToday(false);
         }
         break;
+      case 'month':
+        if (startMonth.getMonth() === new Date().getMonth()) {
+          return setIsToday(true);
+        } else return setIsToday(false);
     }
   };
 
@@ -94,11 +117,44 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
     return setRequestDay({ theDay: day.substring(0, day.length - 14) });
   };
 
-  const weeklyChartRequest = () => {
-    const todayDate = new Date();
-    if (todayDate.getDay() === 0) {
-      const pastWeek = new Date(todayDate.setDate(todayDate.getDate() - 1));
+  const monthChartRequest = () => {
+    const today = new Date();
+    const year = startMonth.getFullYear();
+    const month = startMonth.getMonth() + 1;
+
+    if (today.getMonth() === startMonth.getMonth()) {
+      const thisMonth = today.toISOString();
+      const lastDay = thisMonth.substring(0, thisMonth.length - 14);
+      return setRequestDay({
+        firstDay: `${year}-${setDateFormat(month)}-01`,
+        lastDay,
+      });
+    } else {
+      const lastDate = new Date(
+        startMonth.getFullYear(),
+        startMonth.getMonth() + 1,
+        1,
+      ).toISOString();
+
+      return setRequestDay({
+        firstDay: `${year}-${setDateFormat(month)}-01`,
+        lastDay: lastDate.substring(0, lastDate.length - 14),
+      });
     }
+  };
+
+  const weeklyChartRequest = () => {
+    // const todayDate = new Date();
+    // if (todayDate.getDay() === 0) {
+    //   const pastWeek = new Date(todayDate.setDate(todayDate.getDate() - 1));
+    //   const { monday, sunday } = getMondayAndSundayDates(pastWeek);
+    //   const pastMondayString = monday.toISOString();
+    //   const pastSundayString = sunday.toISOString();
+    //   return setRequestDay({
+    //     firstDay: pastMondayString.substring(0, pastMondayString.length - 14),
+    //     lastDay: pastSundayString.substring(0, pastSundayString.length - 14),
+    //   });
+    // } else {
     const mondayString = monday.toISOString();
     const sundayString = sunday.toISOString();
 
@@ -116,10 +172,12 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
 
       {period === 'day'
         ? `${format(startDate, 'MM/dd')} (${getToday(startDate)})`
-        : `${format(monday, 'MM/dd')}(${getToday(monday)}) ~ ${format(
+        : period === 'week'
+        ? `${format(monday, 'MM/dd')}(${getToday(monday)}) ~ ${format(
             sunday,
             'MM/dd',
-          )}(${getToday(sunday)})`}
+          )}(${getToday(sunday)})`
+        : `${startMonth.getFullYear()}년 ${startMonth.getMonth() + 1}월`}
 
       <PeriodSelectBtn
         onClick={dateAdd}

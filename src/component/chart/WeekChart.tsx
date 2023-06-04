@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 import StudyTime from './StudyTime';
-import { BestRecordIcon, WorstRecordIcon } from '@/style/icon/chartPage/index';
 import PeriodSelector from './PeriodSelector';
 import { useQuery } from 'react-query';
 import { useRecoilValue } from 'recoil';
 import { ChartDateState } from '@/store/ChartDateState';
 import instance from '@/axios';
-import { isFuture, msToTime, week } from '@/util';
+import { formatSeconds, isFuture, msToTime, week } from '@/util';
 import { useEffect, useState } from 'react';
+import Record from './Record';
 
-interface WeekRecord {
+export interface WeekRecord {
   avg: number;
   max: number;
   message: string;
@@ -39,7 +39,6 @@ const WeekChart = () => {
         if (element.total !== '0') {
           weekTotalArray.push(Number(element.total));
         }
-        // weekTotalArray.push(Number(element.total));
       }
       if (weekTotalArray.length < 7) {
         setIsOffDay(true);
@@ -77,7 +76,7 @@ const WeekChart = () => {
       } else if (num === maxNumber) {
         result.push({ [num]: 130 });
       } else if (num === minNumber) {
-        result.push({ [num]: 32 });
+        result.push({ [num]: 34 });
       } else {
         const ratio = ratios[nonZeroNumbers.indexOf(num)];
         result.push({ [num]: ratio });
@@ -88,6 +87,7 @@ const WeekChart = () => {
 
   useEffect(() => {
     weekRecord && checkMinMax();
+    weekRecord && console.log(weekRecord);
     setChartArray([]);
     if (weekRecord && weekRecord.result) {
       for (const element of weekRecord.result) {
@@ -116,7 +116,7 @@ const WeekChart = () => {
     <GraphContainer>
       <PeriodSelector period="week" />
 
-      <StudyTime period="week" studyTime={weekRecord ? weekRecord?.avg : 0} />
+      <StudyTime period="week" studyTime={weekRecord ? weekRecord.avg : 0} />
       <GraphDayContainer>
         {weekRecord ? (
           weekRecord.result?.map((day, index) => {
@@ -148,34 +148,18 @@ const WeekChart = () => {
           <GraphWrapper></GraphWrapper>
         )}
       </GraphDayContainer>
-      <RecordWrapper>
-        <RecordContainer className={'best'}>
-          <RecordTitle>
-            <IconBase className={'best'}>
-              <BestRecordIcon />
-            </IconBase>
-            주 최고기록
-          </RecordTitle>
-
-          <span>{weekRecord ? msToTime(weekRecord?.max) : '00:00:00'}</span>
-        </RecordContainer>
-        <RecordContainer className={'worst'}>
-          <RecordTitle>
-            <IconBase className={'worst'}>
-              <WorstRecordIcon />
-            </IconBase>
-            주 최저 기록
-          </RecordTitle>
-          <span>{weekRecord ? msToTime(weekRecord?.min) : '00:00:00'}</span>
-        </RecordContainer>
-      </RecordWrapper>
+      <Record
+        period="주"
+        min={weekRecord && weekRecord.min ? weekRecord.min : 0}
+        max={weekRecord && weekRecord.min ? weekRecord.max : 0}
+      />
     </GraphContainer>
   );
 };
 
 export default WeekChart;
 
-const GraphContainer = styled.div`
+export const GraphContainer = styled.div`
   width: 100%;
   margin-bottom: 100px;
 `;
@@ -208,17 +192,14 @@ const Graph = styled.div<GraphHeight>`
 
   &.max {
     background-color: ${({ theme }) => theme.colors.primary[700]};
-    height: 130px;
   }
 
   &.min {
     background-color: ${({ theme }) => theme.colors.orange[700]};
-    height: 34px;
   }
 
   &.zero {
     background-color: ${({ theme }) => theme.colors.orange[700]};
-    height: 6px;
   }
 
   &.withOff {
@@ -228,60 +209,5 @@ const Graph = styled.div<GraphHeight>`
   &.future {
     height: 6px;
     background-color: ${({ theme }) => theme.colors.bg.grey};
-  }
-`;
-
-const RecordWrapper = styled.div`
-  margin-top: 44px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-`;
-
-const RecordContainer = styled.div`
-  border-radius: 16px;
-  font-family: 'SpoqaMedium';
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  gap: 20px;
-
-  span {
-    color: ${({ theme }) => theme.colors.grey[800]};
-    font-size: 1.5rem;
-  }
-
-  &.best {
-    background-color: ${({ theme }) => theme.colors.bg.mint10};
-    color: ${({ theme }) => theme.colors.primary[900]};
-  }
-
-  &.worst {
-    background-color: ${({ theme }) => theme.colors.bg.orange};
-    color: ${({ theme }) => theme.colors.icon.orange50};
-  }
-`;
-
-const RecordTitle = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`;
-
-const IconBase = styled.div`
-  width: 30px;
-  height: 30px;
-  border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  &.best {
-    background-color: ${({ theme }) => theme.colors.icon.mint10};
-  }
-
-  &.worst {
-    background-color: ${({ theme }) => theme.colors.icon.orange10};
   }
 `;

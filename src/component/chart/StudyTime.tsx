@@ -1,5 +1,5 @@
-import { msToTime } from "@/util";
-import styled from "styled-components";
+import { formatSeconds, msToTime } from '@/util';
+import styled from 'styled-components';
 
 type StudyTimeProps = {
   period: string;
@@ -7,18 +7,19 @@ type StudyTimeProps = {
 };
 
 const studyTimeTable = [
-  { title: "day", period: "하루", total: "총" },
-  { title: "week", period: "일주일", total: "평균" },
-  { title: "month", period: "한 달", total: "평균" },
+  { title: 'day', period: '하루', total: '총' },
+  { title: 'week', period: '일주일', total: '평균' },
+  { title: 'month', period: '한 달', total: '평균' },
 ];
 
 const StudyTime = ({ period, studyTime }: StudyTimeProps) => {
-  const index = studyTimeTable.findIndex((item) => item.title === period);
+  console.log(studyTime);
+  const index = studyTimeTable.findIndex(item => item.title === period);
 
   return (
     <StudyTimeWrapper>
       {studyTimeTable[index].period} {studyTimeTable[index].total} 공부시간
-      <h1>{msToTime(studyTime)}</h1>
+      <h1>{formatSeconds(studyTime)}</h1>
     </StudyTimeWrapper>
   );
 };

@@ -31,6 +31,20 @@ export function msToTime(milliseconds: number): string {
   return `${hourStr}:${minStr}:${secStr}`;
 }
 
+export function formatSeconds(seconds: number): string {
+  seconds = Math.floor(seconds);
+
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
+
+  const hoursString = hours.toString().padStart(2, '0');
+  const minutesString = minutes.toString().padStart(2, '0');
+  const secondsString = remainingSeconds.toString().padStart(2, '0');
+
+  return `${hoursString}:${minutesString}:${secondsString}`;
+}
+
 //요일 구하기
 export const getToday = (date: Date) => {
   const day = WeekDay[date.getDay()];
@@ -79,3 +93,23 @@ export const isFuture = (dateString: string): boolean => {
   const date = new Date(dateString).setHours(0, 0, 0, 0);
   return date > today;
 };
+
+export function findMinMax(numbers: number[]): { min: number; max: number } {
+  if (numbers.length === 0) {
+    throw new Error('배열이 비어있습니다.');
+  }
+
+  let min = numbers[0];
+  let max = numbers[0];
+
+  for (let i = 1; i < numbers.length; i++) {
+    if (numbers[i] < min) {
+      min = numbers[i];
+    }
+    if (numbers[i] > max) {
+      max = numbers[i];
+    }
+  }
+
+  return { min, max };
+}

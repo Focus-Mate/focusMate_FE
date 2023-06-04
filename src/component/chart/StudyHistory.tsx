@@ -1,9 +1,9 @@
-import { Button } from "@/style/globalStyle";
-import { msToTime } from "@/util";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { RightArrowIcon, StudyHistoryIcon } from "../../style/icon/chartPage";
-import { StudySession } from "./DayChart";
+import { Button } from '@/style/globalStyle';
+import { formatSeconds, msToTime } from '@/util';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { RightArrowIcon, StudyHistoryIcon } from '../../style/icon/chartPage';
+import { StudySession } from './DayChart';
 
 interface StudyHistoryProps {
   dayRecord?: StudySession;
@@ -16,11 +16,13 @@ const StudyHistory = ({ dayRecord, needStudy }: StudyHistoryProps) => {
   return (
     <HistoryContainer>
       <IconWrapper needStudy={needStudy}>
-        <StudyHistoryIcon fill={!needStudy ? "#359D9E" : "#fff"} />
+        <StudyHistoryIcon fill={!needStudy ? '#359D9E' : '#fff'} />
       </IconWrapper>
       <HistoryWrapper needStudy={needStudy}>
         <StudyTime>
-          {!needStudy && dayRecord ? msToTime(dayRecord.studyTime) : "00:00:00"}
+          {!needStudy && dayRecord
+            ? formatSeconds(dayRecord.studyTime)
+            : '00:00:00'}
         </StudyTime>
         <StartToEnd>
           {!needStudy && dayRecord ? (
@@ -28,9 +30,9 @@ const StudyHistory = ({ dayRecord, needStudy }: StudyHistoryProps) => {
           ) : (
             <NeedStudy>
               앗, 오늘은 아직 공부 기록이 없어요.
-              <NeedStudyBtn onClick={() => navigate("/timer")}>
+              <NeedStudyBtn onClick={() => navigate('/timer')}>
                 바로 공부하러 가기
-                <RightArrowIcon fill={"#fff"} />
+                <RightArrowIcon fill={'#fff'} />
               </NeedStudyBtn>
             </NeedStudy>
           )}
@@ -54,7 +56,7 @@ interface IconWrapperProps {
 }
 
 const IconWrapper = styled.div<IconWrapperProps>`
-  background-color: ${(props) => (props.needStudy ? "#bababa" : "#e9faf7")};
+  background-color: ${props => (props.needStudy ? '#bababa' : '#e9faf7')};
   width: 40px;
   height: 40px;
   border-radius: 20px;
@@ -66,8 +68,8 @@ const IconWrapper = styled.div<IconWrapperProps>`
 const HistoryWrapper = styled.div<IconWrapperProps>`
   width: 100%;
   background-color: #f8fafa;
-  border-left: ${(props) =>
-    props.needStudy ? " 4px solid #bababa;" : " 4px solid #b3f0e8;"};
+  border-left: ${props =>
+    props.needStudy ? ' 4px solid #bababa;' : ' 4px solid #b3f0e8;'};
   border-radius: 0px 16px 16px 0px;
   padding: 20px;
 `;

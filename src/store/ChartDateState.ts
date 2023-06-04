@@ -4,6 +4,7 @@ interface ChartDate {
   theDay?: string;
   firstDay?: string;
   lastDay?: string;
+  theMonth?: string;
 }
 
 export const ChartDateState = atom<ChartDate>({
