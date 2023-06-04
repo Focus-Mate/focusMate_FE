@@ -1,43 +1,43 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 import {
   DDayIcon,
   AlarmIcon,
   RightArrowIcon,
-} from "../../style/icon/chartPage";
-import { ReactComponent as ViewMoreIcon } from "../../style/icon/viewmore_icon.svg";
-import DayChart from "../../component/chart/DayChart";
-import WeekChart from "../../component/chart/WeekChart";
-import MonthChart from "../../component/chart/MonthChart";
-import { useEffect, useState } from "react";
-import instance from "../../axios";
-import { useNavigate } from "react-router-dom";
-import { useQuery } from "react-query";
-import MyCharactor from "../../component/chart/MyCharactor";
+} from '../../style/icon/chartPage';
+import { ReactComponent as ViewMoreIcon } from '../../style/icon/viewmore_icon.svg';
+import DayChart from '../../component/chart/DayChart';
+import WeekChart from '../../component/chart/WeekChart';
+import MonthChart from '../../component/chart/MonthChart';
+import { useEffect, useState } from 'react';
+import instance from '../../instance';
+import { useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import MyCharactor from '../../component/chart/MyCharactor';
 
-import BottomModal, { SelectedDday } from "@/component/chart/BottomModal";
+import BottomModal, { SelectedDday } from '@/component/chart/BottomModal';
 
 export default function Chart() {
   const [visible, setVisible] = useState(false);
   const [selectedDday, selectDday] = useState<SelectedDday>({
-    exam: "",
-    dday: "",
+    exam: '',
+    dday: '',
   });
   const [currentTab, setCurrentTab] = useState(1);
   const navigate = useNavigate();
   const chartPeriod = [
-    { period: "일", content: <DayChart />, id: 1 },
-    { period: "주", content: <WeekChart />, id: 2 },
-    { period: "월", content: <MonthChart />, id: 3 },
+    { period: '일', content: <DayChart />, id: 1 },
+    { period: '주', content: <WeekChart />, id: 2 },
+    { period: '월', content: <MonthChart />, id: 3 },
   ];
 
   const getDday = async () => {
     const response = await instance.get(`/api/calculate/getDDays`);
-    if (response.data.message === "success") {
+    if (response.data.message === 'success') {
       return response.data.rows;
     }
   };
 
-  const { data: ddayList } = useQuery("ddayInfo", getDday);
+  const { data: ddayList } = useQuery('ddayInfo', getDday);
 
   useEffect(() => {
     console.log(ddayList);
@@ -61,7 +61,7 @@ export default function Chart() {
         <>
           {ddayList?.map((item: any) => {
             const dDateData = item.eday;
-            const dDate = dDateData.split("T")[0];
+            const dDate = dDateData.split('T')[0];
             return (
               <DDayContainer key={item.exam}>
                 <Wrapper className="left">
@@ -77,7 +77,7 @@ export default function Chart() {
                   <DDay>
                     D
                     {item.dday === 0
-                      ? "-DAY"
+                      ? '-DAY'
                       : item.dday < 0
                       ? `+${Math.abs(item.dday)}`
                       : `-${item.dday}`}
@@ -99,7 +99,7 @@ export default function Chart() {
       ) : (
         <DDayContainer
           onClick={() => {
-            navigate("/makedday");
+            navigate('/makedday');
           }}
         >
           <Wrapper>
@@ -118,11 +118,11 @@ export default function Chart() {
       <MyCharactor />
 
       <PeriodTabs>
-        {chartPeriod.map((item) => {
+        {chartPeriod.map(item => {
           return (
             <PeriodTab
               key={item.id}
-              className={currentTab === item.id ? "selected" : undefined}
+              className={currentTab === item.id ? 'selected' : undefined}
               onClick={() => {
                 setCurrentTab(item.id);
               }}

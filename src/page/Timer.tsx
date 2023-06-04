@@ -7,7 +7,7 @@ import stopIcon from '@/style/icon/timer/stop.png';
 import TimerSavePop from '@/component/timer/TimerSavePop';
 import TimerCircle from '@/component/timer/TimerCircle';
 import { useMutation } from 'react-query';
-import instance from '@/axios';
+import instance from '@/instance';
 import TimerBottomSlideBox, {
   timerBottomSlider,
 } from '@/component/timer/TimerBottomSlideBox';
@@ -31,7 +31,7 @@ function Timer() {
     const api = async () => {
       const response = await instance.get('/api/calculate/dayrecord', {
         params: {
-          theDay: '2023-04-02',
+          theDay: '2023-04-30',
         },
       });
       console.log(response);

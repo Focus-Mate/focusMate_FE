@@ -1,12 +1,11 @@
 import Calendar from '@/page/chart/Calendar';
-import styled from 'styled-components';
 import PeriodSelector from './PeriodSelector';
 import StudyTime from './StudyTime';
 import { useQuery } from 'react-query';
 import { GraphContainer, WeekRecord } from './WeekChart';
 import { useRecoilValue } from 'recoil';
 import { ChartDateState } from '@/store/ChartDateState';
-import instance from '@/axios';
+import instance from '@/instance';
 import { useEffect, useState } from 'react';
 import Record from './Record';
 import { findMinMax, formatSeconds } from '@/util';

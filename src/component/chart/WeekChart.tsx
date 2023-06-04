@@ -4,8 +4,8 @@ import PeriodSelector from './PeriodSelector';
 import { useQuery } from 'react-query';
 import { useRecoilValue } from 'recoil';
 import { ChartDateState } from '@/store/ChartDateState';
-import instance from '@/axios';
-import { formatSeconds, isFuture, msToTime, week } from '@/util';
+import instance from '@/instance';
+import { isFuture, msToTime, week } from '@/util';
 import { useEffect, useState } from 'react';
 import Record from './Record';
 
