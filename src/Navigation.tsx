@@ -1,37 +1,72 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { ReactComponent as TimerIcon } from './style/icon/GNB/timer_icon.svg';
-import { ReactComponent as ChartIcon } from './style/icon/GNB/chart_icon.svg';
-import { ReactComponent as AllStudyIcon } from './style/icon/GNB/all studies_icon.svg';
-import { ReactComponent as MyStudyIcon } from './style/icon/GNB/my study_icon.svg';
-import { ReactComponent as MoreIcon } from './style/icon/GNB/more_icon.svg';
+import {
+  DefaultAllStudyIcon,
+  DefaultChartIcon,
+  DefaultMyStudyIcon,
+  DefaultSettingIcon,
+  DefaultTimerIcon,
+  SelectedAllStudyIcon,
+  SelectedChartIcon,
+  SelectedMyStudyIcon,
+  SelectedSettingIcon,
+  SelectedTimerIcon,
+} from './style/icon/GNB';
+import { useEffect, useState } from 'react';
 
 function Navigation() {
+  const location = useLocation();
+  const [currentPath, setCurrentPath] = useState<string>();
+
+  useEffect(() => {
+    setCurrentPath(location.pathname.substring(1));
+  }, [location]);
+
   return (
     <GNB>
       <GNBIcon>
         <Link to={'timer'}>
-          <TimerIcon />
+          {currentPath === 'timer' ? (
+            <SelectedTimerIcon />
+          ) : (
+            <DefaultTimerIcon />
+          )}
         </Link>
       </GNBIcon>
       <GNBIcon>
         <Link to={'chart'}>
-          <ChartIcon />
+          {currentPath === 'chart' ? (
+            <SelectedChartIcon />
+          ) : (
+            <DefaultChartIcon />
+          )}
         </Link>
       </GNBIcon>
       <GNBIcon>
         <Link to={'allstudies'}>
-          <AllStudyIcon />
+          {currentPath === 'allstudies' ? (
+            <SelectedAllStudyIcon />
+          ) : (
+            <DefaultAllStudyIcon />
+          )}
         </Link>
       </GNBIcon>
       <GNBIcon>
         <Link to={'mystudy'}>
-          <MyStudyIcon />
+          {currentPath === 'mystudy' ? (
+            <SelectedMyStudyIcon />
+          ) : (
+            <DefaultMyStudyIcon />
+          )}
         </Link>
       </GNBIcon>
       <GNBIcon>
         <Link to={'more'}>
-          <MoreIcon />
+          {currentPath === 'more' ? (
+            <SelectedSettingIcon />
+          ) : (
+            <DefaultSettingIcon />
+          )}
         </Link>
       </GNBIcon>
     </GNB>
@@ -43,7 +78,7 @@ export default Navigation;
 const GNB = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.base};
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   gap: 20px;
   height: 75px;
@@ -56,6 +91,7 @@ const GNB = styled.div`
 `;
 
 const GNBIcon = styled.div`
+  margin-top: 6px;
   width: 48px;
   height: 48px;
   text-align: center;
