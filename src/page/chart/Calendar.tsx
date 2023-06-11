@@ -6,6 +6,8 @@ import objectPlugin from 'dayjs/plugin/toObject';
 import isTodayPlugin from 'dayjs/plugin/isToday';
 import styled from 'styled-components';
 import { MinMax } from '@/component/chart/MonthChart';
+import { useRecoilValue } from 'recoil';
+import { CurrentDateState } from '@/store/CurrentDateState';
 
 interface CalendarProps {
   dateRecord: string[];
@@ -13,9 +15,8 @@ interface CalendarProps {
 }
 
 const Calendar = ({ dateRecord, minMaxDate }: CalendarProps) => {
-  const now = dayjs().locale({
-    ...locale,
-  });
+  const currentDate = useRecoilValue(CurrentDateState);
+  const now = dayjs(currentDate.currentDate).locale({ ...locale });
 
   dayjs.extend(weekdayPlugin);
   dayjs.extend(objectPlugin);
@@ -24,37 +25,9 @@ const Calendar = ({ dateRecord, minMaxDate }: CalendarProps) => {
   const [currentMonth, setCurrentMonth] = useState(now);
   const [arrayOfDays, setArrayOfDays] = useState<any>([]);
 
-  const nextMonth = () => {
-    const plus = currentMonth.add(1, 'month');
-
-    setCurrentMonth(plus);
-  };
-
-  const prevMonth = () => {
-    const minus = currentMonth.subtract(1, 'month');
-
-    setCurrentMonth(minus);
-  };
-
-  const renderHeader = () => {
-    const dateFormat = 'YYYY MMMM';
-
-    return (
-      <div className="header row flex-middle">
-        <div className="col col-start">
-          <div className="icon" onClick={() => prevMonth()}>
-            chevron_left
-          </div>
-        </div>
-        <div className="col col-center">
-          <span>{currentMonth.format(dateFormat)}</span>
-        </div>
-        <div className="col col-end" onClick={() => nextMonth()}>
-          <div className="icon">chevron_right</div>
-        </div>
-      </div>
-    );
-  };
+  useEffect(() => {
+    setCurrentMonth(dayjs(currentDate.currentDate).locale({ ...locale }));
+  }, [currentDate]);
 
   const renderDays = () => {
     const dateFormat = 'dd';
@@ -94,7 +67,6 @@ const Calendar = ({ dateRecord, minMaxDate }: CalendarProps) => {
   };
 
   useEffect(() => {
-    console.log(minMaxDate);
     getAllDays();
   }, [currentMonth]);
 
@@ -162,7 +134,6 @@ const Calendar = ({ dateRecord, minMaxDate }: CalendarProps) => {
 
   return (
     <CanlendarContainer>
-      {renderHeader()}
       {renderDays()}
       {renderCells()}
     </CanlendarContainer>
@@ -187,7 +158,7 @@ const DayContainer = styled.div`
   flex-direction: column;
   font-size: 0.875rem;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: center;
   margin-bottom: 28px;
   color: ${({ theme }) => theme.colors.grey[900]};
@@ -197,6 +168,7 @@ const DayContainer = styled.div`
   }
 
   &.disabled {
+    margin-bottom: 50px;
     color: #bababa;
   }
 
