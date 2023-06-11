@@ -41,7 +41,12 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
     }
   }, [startDate, currentDate]);
 
-  const dateFormat = 'YYYY MMMM';
+  useEffect(() => {
+    return () => {
+      setCurrentDate({ currentDate: new Date() });
+    };
+  }, []);
+
   useEffect(() => {
     if (period === 'week' && startDate.getDay() === 0) {
       startDate.setDate(startDate.getDate() - 1);
