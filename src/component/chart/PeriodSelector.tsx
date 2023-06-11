@@ -9,8 +9,9 @@ import {
 } from '../../util';
 import format from 'date-fns/format';
 import { add, setDate, sub } from 'date-fns';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { ChartDateState } from '@/store/ChartDateState';
+import { CurrentDateState } from '@/store/CurrentDateState';
 
 type Period = 'day' | 'week' | 'month';
 
@@ -24,7 +25,7 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
   const [isToday, setIsToday] = useState(true);
   const setRequestDay = useSetRecoilState(ChartDateState);
   const { monday, sunday } = getMondayAndSundayDates(startDate);
-  const [startMonth, setStartMonth] = useState(new Date());
+  const [currentDate, setCurrentDate] = useRecoilState(CurrentDateState);
   const [mondayState, setMondayState] = useState();
   const [isSunday, setIsSunday] = useState<boolean>();
 
@@ -38,7 +39,7 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
     } else if (period === 'month') {
       monthChartRequest();
     }
-  }, [startDate, startMonth]);
+  }, [startDate, currentDate]);
 
   const dateFormat = 'YYYY MMMM';
   useEffect(() => {
@@ -58,8 +59,8 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
         setStartDate(weekResult);
         break;
       case 'month':
-        const monthResult = add(startMonth, { months: 1 });
-        setStartMonth(monthResult);
+        const monthResult = add(currentDate.currentDate, { months: 1 });
+        setCurrentDate({ currentDate: monthResult });
         break;
     }
   };
@@ -75,8 +76,8 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
         setStartDate(weekResult);
         break;
       case 'month':
-        const monthResult = sub(startMonth, { months: 1 });
-        setStartMonth(monthResult);
+        const monthResult = sub(currentDate.currentDate, { months: 1 });
+        setCurrentDate({ currentDate: monthResult });
         break;
     }
   };
@@ -106,7 +107,7 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
         }
         break;
       case 'month':
-        if (startMonth.getMonth() === new Date().getMonth()) {
+        if (currentDate.currentDate.getMonth() === new Date().getMonth()) {
           return setIsToday(true);
         } else return setIsToday(false);
     }
@@ -119,10 +120,10 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
 
   const monthChartRequest = () => {
     const today = new Date();
-    const year = startMonth.getFullYear();
-    const month = startMonth.getMonth() + 1;
+    const year = currentDate.currentDate.getFullYear();
+    const month = currentDate.currentDate.getMonth() + 1;
 
-    if (today.getMonth() === startMonth.getMonth()) {
+    if (today.getMonth() === currentDate.currentDate.getMonth()) {
       const thisMonth = today.toISOString();
       const lastDay = thisMonth.substring(0, thisMonth.length - 14);
       return setRequestDay({
@@ -131,8 +132,8 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
       });
     } else {
       const lastDate = new Date(
-        startMonth.getFullYear(),
-        startMonth.getMonth() + 1,
+        currentDate.currentDate.getFullYear(),
+        currentDate.currentDate.getMonth() + 1,
         1,
       ).toISOString();
 
@@ -177,7 +178,9 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
             sunday,
             'MM/dd',
           )}(${getToday(sunday)})`
-        : `${startMonth.getFullYear()}년 ${startMonth.getMonth() + 1}월`}
+        : `${currentDate.currentDate.getFullYear()}년 ${
+            currentDate.currentDate.getMonth() + 1
+          }월`}
 
       <PeriodSelectBtn
         onClick={dateAdd}
