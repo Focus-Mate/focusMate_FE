@@ -15,14 +15,16 @@ interface NewCharacterGroupProps {
   }[];
   groupType: string;
   mainId: number;
+  count: number;
 }
 
 const NewCharacterGroup: React.FC<NewCharacterGroupProps> = ({
   group,
   groupType,
   mainId,
+  count,
 }) => {
-  const [slider, setSlider] = useRecoilState(bottomSlider);
+  const [, setSlider] = useRecoilState(bottomSlider);
 
   return (
     <Container>
@@ -33,7 +35,7 @@ const NewCharacterGroup: React.FC<NewCharacterGroupProps> = ({
           {groupType === 'C' && '누적 최고 공부기록 도전!'}
         </Subject>
         <Count>
-          {group?.length}/{group?.length}
+          {count}/{group?.length}
         </Count>
       </CharacterGroupHeader>
       {groupType === 'B' && (
@@ -56,6 +58,7 @@ const NewCharacterGroup: React.FC<NewCharacterGroupProps> = ({
                   title: group.requirement,
                   description: group.progress,
                   tips: group.tip,
+                  codeNum: group.codeNum,
                 })
               }
             >

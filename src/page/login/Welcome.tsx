@@ -1,7 +1,16 @@
 import styled from 'styled-components';
 import welcomePuppy from '@/style/gif/welcome_puppy.gif';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Welcome = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    setTimeout(() => {
+      navigate('/timer');
+    }, 2000);
+  }, [navigate]);
+
   return (
     <Container>
       <Title>

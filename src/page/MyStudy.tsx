@@ -1,5 +1,105 @@
+import styled from 'styled-components';
+
 function MyStudy() {
-  return <>내 스터디 페이지</>;
+  return (
+    <Container>
+      <Title>
+        나의 스터디 탭을
+        <br />
+        준비중이에요.
+      </Title>
+      <Description>
+        '나의 스터디'에서는 팀원과
+        <br />
+        스터디를 함께 할 수 있어요.
+      </Description>
+      <Circle></Circle>
+      <TipBox>
+        <TipTitle>TIP</TipTitle>
+        <Comment>
+          앱 사용 후기를 남겨주시면
+          <br />더 멋진 서비스로 찾아올게요!
+        </Comment>
+      </TipBox>
+      <Button>의견 남기러 가기</Button>
+    </Container>
+  );
 }
 
 export default MyStudy;
+
+const Container = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+`;
+
+const Title = styled.div`
+  width: 248px;
+  font-size: 24px;
+  line-height: 32px;
+  text-align: center;
+  margin: 0 auto;
+  color: ${({ theme }) => theme.colors.grey[900]};
+`;
+
+const Description = styled.div`
+  width: 248px;
+  text-align: center;
+  margin: 20px auto 0;
+  line-height: 25px;
+  font-size: 16px;
+  color: ${({ theme }) => theme.colors.grey[600]};
+`;
+
+const Circle = styled.div`
+  width: 187px;
+  height: 187px;
+  background-color: #d9d9d9;
+  margin: 70px auto;
+  border-radius: 50%;
+`;
+
+const TipBox = styled.div`
+  width: calc(100% - 40px);
+  margin: 0 auto;
+  padding: 16px;
+  background-color: ${({ theme }) => theme.colors.bg.mint10};
+  border-radius: 16px;
+  display: flex;
+`;
+
+const TipTitle = styled.div`
+  width: 40px;
+  height: 30px;
+  background-color: ${({ theme }) => theme.colors.icon.mint10};
+  border-radius: 8px;
+  color: ${({ theme }) => theme.colors.primary[800]};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Comment = styled.div`
+  margin-left: 16px;
+  line-height: 22px;
+  color: ${({ theme }) => theme.colors.grey[800]};
+`;
+
+const Button = styled.div`
+  width: calc(100% - 40px);
+  height: 48px;
+  margin: 20px auto 0;
+  color: ${({ theme }) => theme.colors.bg.base};
+  background-color: ${({ theme }) => theme.colors.primary[700]};
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+`;
