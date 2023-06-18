@@ -1,12 +1,14 @@
-import { useEffect, useState } from 'react';
+import instance from '@/instance';
+import { useCallback, useEffect, useState } from 'react';
 import ReactModal from 'react-modal';
+import { useQueryClient } from 'react-query';
 import { atom, useRecoilState } from 'recoil';
 import styled, { css, keyframes } from 'styled-components';
-import rabbit from '@/style/icon/character/rabbit.svg';
 
 export const bottomSlider = atom({
   key: 'bottomSlider',
   default: {
+    codeNum: 0,
     isRepresentative: false,
     isActive: false,
     icon: '',
@@ -44,6 +46,22 @@ const modalStyle = {
 const BottomSlideBox: React.FC<BottomSlideBoxProps> = () => {
   const [slider, setSlider] = useRecoilState(bottomSlider);
   const [isClose, setClose] = useState(false);
+  const queryClient = useQueryClient();
+
+  const onChangeMainCharacter = useCallback(
+    async (num: number) => {
+      const response = await instance.put('/api/user/changemaincharacter', {
+        codeNum: num,
+      });
+
+      if (response.data.message === 'success') {
+        queryClient.invalidateQueries('Characters/GetCharacters');
+        queryClient.invalidateQueries('Characters/GetMainCharacter');
+        onClose();
+      }
+    },
+    [queryClient],
+  );
 
   const onClose = () => {
     setClose(true);
@@ -81,7 +99,9 @@ const BottomSlideBox: React.FC<BottomSlideBoxProps> = () => {
           )}
           {/* 대표 이미지가 아닐 경우 */}
           {!slider.isRepresentative && slider.hasCharacter && (
-            <Button>내 대표 프로필로 설정하기</Button>
+            <Button onClick={() => onChangeMainCharacter(slider.codeNum)}>
+              내 대표 프로필로 설정하기
+            </Button>
           )}
           {/* 캐릭터를 가지고 있지 않을 경우 정보 출력 */}
           {!slider.hasCharacter && (

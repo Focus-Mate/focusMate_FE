@@ -1,11 +1,17 @@
 import styled from 'styled-components';
 
-const CharacterPickUpCounter = () => {
+interface CharacterPickUpCounterProps {
+  count: number;
+}
+
+const CharacterPickUpCounter: React.FC<CharacterPickUpCounterProps> = ({
+  count,
+}) => {
   return (
     <PickCounter>
-      모은캐릭터 <PickNow>1</PickNow>
+      모은캐릭터 <PickNow>{count}</PickNow>
       <Split>/</Split>
-      <PickAll>10</PickAll>
+      <PickAll>11</PickAll>
     </PickCounter>
   );
 };
@@ -23,7 +29,7 @@ const PickCounter = styled.div`
   gap: 5px;
   border-radius: 16px;
   font-family: ${({ theme }) => theme.fonts.spoqa.medium};
-  margin: 0 auto;
+  margin: 32px auto 0;
 `;
 
 const PickNow = styled.div`

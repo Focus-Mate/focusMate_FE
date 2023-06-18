@@ -2,14 +2,17 @@ import StackHeader from '@/component/common/StackHeader';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useEffect, useState } from 'react';
 import instance from '@/instance';
 import CharacterGroupWrapper from '@/component/characters/CharacterGroupWrapper';
 import MainCharacter from '@/component/characters/MainCharacter';
 import CharacterPickUpCounter from '@/component/characters/CharacterPickCounter';
+import { useQuery } from 'react-query';
 
 interface ICharacterListResponse {
   message: string;
+  collectedA: number;
+  collectedB: number;
+  collectedC: number;
   missionTypeA: {
     codeNum: number;
     imageURL: string;
@@ -51,43 +54,29 @@ interface ICharacterMainResponse {
 const Characters = () => {
   const navigate = useNavigate();
 
-  const [data, setData] = useState<ICharacterListResponse | null>(null);
+  const { data: characters } = useQuery(
+    'Characters/GetCharacters',
+    async () => {
+      const response = await instance.get<ICharacterListResponse>(
+        '/api/user/getcharacter',
+      );
 
-  const [mainCharacter, setMainCharacter] = useState<{
-    characterImg: string;
-    codeNum: number;
-    requirement: string;
-  } | null>(null);
+      return response.data;
+    },
+  );
 
-  useEffect(() => {
-    const getCharacters = async () => {
-      const response = await instance.get('/api/user/getcharacter');
-
-      setData(response.data);
-    };
-
-    const getMainCharacter = async () => {
-      const response: {
-        data: {
-          character: {
-            codeNum: number;
-            characterImg: string;
-            requirement: string;
-          }[];
-          message: string;
-        };
-      } = await instance.get<ICharacterMainResponse>(
+  const { data: mainCharacter } = useQuery(
+    'Characters/GetMainCharacter',
+    async () => {
+      const response = await instance.get<ICharacterMainResponse>(
         '/api/user/getmaincharacter',
       );
 
-      setMainCharacter(response.data.character[0]);
-    };
+      return response.data.character[0];
+    },
+  );
 
-    getCharacters();
-    getMainCharacter();
-  }, []);
-
-  if (!mainCharacter) return null;
+  if (!mainCharacter || !characters) return null;
 
   return (
     <Container>
@@ -104,14 +93,41 @@ const Characters = () => {
       </StackHeader>
       <Content>
         <MainCharacter character={mainCharacter} />
-        <CharacterPickUpCounter />
-        <CharacterGroupWrapper data={data} mainId={mainCharacter?.codeNum} />
+        <SplitBox />
+        <CharacterPickUpCounter
+          count={
+            characters?.collectedA +
+            characters?.collectedB +
+            characters?.collectedC
+          }
+        />
+
+        <Comments>미션을 완료하고 캐릭터를 모아보세요</Comments>
+        <CharacterGroupWrapper
+          data={characters}
+          mainId={mainCharacter?.codeNum}
+        />
       </Content>
     </Container>
   );
 };
 
 export default Characters;
+
+const SplitBox = styled.div`
+  width: 100%;
+  height: 10px;
+  background-color: ${({ theme }) => theme.colors.bg.grey};
+`;
+
+const Comments = styled.div`
+  width: 100%;
+  text-align: center;
+  font-size: 0.875rem;
+  color: ${({ theme }) => theme.colors.grey[500]};
+  margin-top: 12px;
+  margin-bottom: 45px;
+`;
 
 const Container = styled.div`
   position: absolute;
@@ -123,5 +139,4 @@ const Container = styled.div`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
 `;
