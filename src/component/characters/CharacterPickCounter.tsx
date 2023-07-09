@@ -21,8 +21,8 @@ export default CharacterPickUpCounter;
 const PickCounter = styled.div`
   width: 160px;
   height: 48px;
-  background-color: #e9faf7;
-  color: ${({ theme }) => theme.colors.grey[900]};
+  background-color: ${({ theme }) => theme.colors.bg.mint10};
+  color: ${({ theme }) => theme.colors.grey[800]};
   display: flex;
   justify-content: center;
   align-items: center;

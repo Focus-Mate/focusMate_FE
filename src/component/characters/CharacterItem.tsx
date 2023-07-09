@@ -50,7 +50,9 @@ const ColorBox = styled.div<{
   width: 100%;
   padding-top: 100%;
   border-radius: 20px;
-  background-color: ${({ isActive }) => (isActive ? '#b3f0e8' : '#e8e8e8')};
+  overflow: hidden;
+  /* background-color: ${({ isActive }) =>
+    isActive ? '#b3f0e8' : '#e8e8e8'}; */
   display: flex;
   justify-content: center;
   align-items: center;

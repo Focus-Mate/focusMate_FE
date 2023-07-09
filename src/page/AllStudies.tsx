@@ -37,6 +37,7 @@ const Container = styled.div`
   position: absolute;
   left: 0;
   top: 0;
+  background-color: ${({ theme }) => theme.colors.bg.base};
 `;
 
 const Title = styled.div`

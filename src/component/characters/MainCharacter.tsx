@@ -40,6 +40,7 @@ const MainText = styled.div`
   font-family: 'SpoqaMedium';
   font-size: 1.25rem;
   text-align: center;
+  color: ${({ theme }) => theme.colors.grey[900]};
 `;
 
 const SubText = styled.div`
@@ -67,14 +68,16 @@ const Center = styled.div<{
 
 const Title = styled.div`
   padding: 0.5rem;
-  background-color: #f6f6f6;
+  background-color: ${({ theme }) => theme.colors.bg.grey};
   font-size: 0.875rem;
   color: ${({ theme }) => theme.colors.grey[600]};
+  border-radius: 8px;
 `;
 const Text = styled.div`
   font-family: 'SpoqaMedium';
   font-size: 0.875rem;
   margin-left: 0.5rem;
+  color: ${({ theme }) => theme.colors.grey[800]};
 `;
 
 const CharacterBox = styled.div`

@@ -135,6 +135,7 @@ const useTimerLogic = () => {
   // 타이머 저장
   const onClickTimerSave = async () => {
     // 저장 로직
+    console.log(timerId);
     await requestTimerStop({ startPoint: timerId });
     setNowTime(0);
     setStackTime(0);

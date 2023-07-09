@@ -61,6 +61,8 @@ const Characters = () => {
         '/api/user/getcharacter',
       );
 
+      console.log(response);
+
       return response.data;
     },
   );
@@ -139,4 +141,5 @@ const Container = styled.div`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
+  background-color: ${({ theme }) => theme.colors.bg.base};
 `;
