@@ -213,12 +213,14 @@ const Picture = styled.div`
   img {
     width: 136px;
     height: 136px;
+    border-radius: 20px;
   }
 `;
 const Title = styled.div`
   margin-top: 20px;
   font-size: 20px;
   font-family: ${({ theme }) => theme.fonts.spoqa.bold};
+  color: ${({ theme }) => theme.colors.grey[800]};
 `;
 const Button = styled.button`
   width: 320px;

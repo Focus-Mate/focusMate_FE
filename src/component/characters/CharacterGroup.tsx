@@ -91,6 +91,7 @@ const CharacterGroupHeader = styled.div`
 const Subject = styled.div`
   font-size: 1.25rem;
   font-family: ${({ theme }) => theme.fonts.spoqa.medium};
+  color: ${({ theme }) => theme.colors.grey[800]};
 `;
 
 const Count = styled.div`

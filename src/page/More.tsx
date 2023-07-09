@@ -55,7 +55,7 @@ function Setting() {
           <Title>설정</Title>
           <User>
             <PictureBox></PictureBox>
-            <Nickname>{response?.data?.nicknmae}</Nickname>
+            <Nickname>{response?.data?.nickname}</Nickname>
             <ButtonArea onClick={() => navigate('/more/nick')}>
               <Button>닉네임 수정</Button>
             </ButtonArea>
