@@ -3,9 +3,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import instance from '../../instance';
 import { ISignInInfo } from '../../page/login/SignIn';
-import { Input, SignInStepButton, Title } from '../../style/globalStyle';
+import { Button, Input, Title } from '../../style/globalStyle';
 import { DeleteBtn } from '../../style/icon/agreeStep';
 import theme from '../../style/lightTheme';
+import { useSearchParams } from 'react-router-dom';
 
 interface INicknameProps {
   setCurrenStep: React.Dispatch<React.SetStateAction<string>>;
@@ -23,6 +24,7 @@ const Nickname = ({
   const [nicknameValid, setNicknameValid] = useState<boolean>(true);
   const [submitValid, setSubmitValid] = useState<boolean>(false);
   const inputFocus = useRef<HTMLInputElement>(null);
+  const [searchParams] = useSearchParams();
 
   const nickNameHandler = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -48,9 +50,29 @@ const Nickname = ({
 
   const setNewprofile = async () => {
     if (await checkNickname()) {
+      await instance.put(
+        'api/user/nickname',
+        {
+          nickname: signInInfo.nickname,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${searchParams.get('accessToken')}`,
+          },
+        },
+      );
+      await instance.put(
+        'api/user/ad-check',
+        { adCheck: signInInfo.adCheck },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${searchParams.get('accessToken')}`,
+          },
+        },
+      );
       setCurrenStep('complete');
-      instance.put('api/user/nickname', { nickname: signInInfo.nickname });
-      instance.put('api/user/ad-check', { adCheck: signInInfo.adCheck });
     } else {
       console.log('false');
       setNicknameValid(false);
@@ -116,6 +138,7 @@ export default Nickname;
 const NicknameContainer = styled.div`
   position: relative;
   min-height: 100vh;
+  padding: 0 20px;
 `;
 
 const NicknameErrorMsg = styled.div`
@@ -134,4 +157,12 @@ export const IconContainer = styled.div`
   transform: translate(-50%, -50%);
   right: 0;
   cursor: pointer;
+`;
+
+export const SignInStepButton = styled(Button)`
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  width: calc(100% - 20px);
+  transform: translateX(-50%);
 `;
