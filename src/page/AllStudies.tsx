@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import allStudyPng from '@/style/images/illust_everystudy.png';
+
 function AllStudies() {
   return (
     <Container>
@@ -12,7 +14,9 @@ function AllStudies() {
         <br />
         만들거나, 참여할 수 있어요.
       </Description>
-      <Circle></Circle>
+      <Square>
+        <img src={allStudyPng} alt="my study" />
+      </Square>
       <TipBox>
         <TipTitle>TIP</TipTitle>
         <Comment>
@@ -58,12 +62,16 @@ const Description = styled.div`
   color: ${({ theme }) => theme.colors.grey[600]};
 `;
 
-const Circle = styled.div`
-  width: 187px;
-  height: 187px;
-  background-color: #d9d9d9;
+const Square = styled.div`
+  width: 250px;
+  height: 250px;
   margin: 70px auto;
-  border-radius: 50%;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const TipBox = styled.div`

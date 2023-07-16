@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import { Button, SignInStepButton, Title } from "../../style/globalStyle";
-import { CheckBoxDefault, CheckBoxChecked } from "../../style/icon/agreeStep";
+import React from 'react';
+import styled from 'styled-components';
+import { Button, Title } from '../../style/globalStyle';
+import { CheckBoxDefault, CheckBoxChecked } from '../../style/icon/agreeStep';
 interface IAgreeStepProps {
   checkAll: (e: any) => void;
   checkboxHandler: (e: any) => void;
@@ -18,11 +18,11 @@ export default function AgreeStep({
   nextStep,
 }: IAgreeStepProps) {
   const agreementList = [
-    { agreement: "SERVICE", description: "서비스 이용약관 (필수)" },
-    { agreement: "PRIVACY", description: "개인정보 처리방침(필수)" },
+    { agreement: 'SERVICE', description: '서비스 이용약관 (필수)' },
+    { agreement: 'PRIVACY', description: '개인정보 처리방침(필수)' },
     {
-      agreement: "MARKETING",
-      description: "E-mail 및 마케팅 정보 수신동의 (선택)",
+      agreement: 'MARKETING',
+      description: 'E-mail 및 마케팅 정보 수신동의 (선택)',
     },
   ];
   return (
@@ -42,14 +42,14 @@ export default function AgreeStep({
 
       <hr />
       <form>
-        {agreementList.map((agree) => {
+        {agreementList.map((agree, idx) => {
           return (
-            <SingleAgreement>
+            <SingleAgreement key={idx}>
               <AgreementInput
                 type="checkbox"
                 value={agree.agreement}
                 onClick={checkboxHandler}
-                checked={
+                defaultChecked={
                   agreeList.includes(`${agree.agreement}`) ? true : false
                 }
               />
@@ -67,7 +67,7 @@ export default function AgreeStep({
       </form>
 
       <SignInStepButton
-        onClick={() => setCurrenStep("nickname")}
+        onClick={() => setCurrenStep('nickname')}
         type="submit"
         disabled={!nextStep}
       >
@@ -80,6 +80,8 @@ export default function AgreeStep({
 const AgreementContainer = styled.div`
   position: relative;
   min-height: 100vh;
+  padding: 0 20px;
+  box-sizing: border-box;
 `;
 
 const AgreeAllCheck = styled.span`
@@ -102,4 +104,12 @@ const AgreementCheckBox = styled.div`
   align-items: center;
   justify-content: center;
   margin-left: -8px;
+`;
+
+export const SignInStepButton = styled(Button)`
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  width: calc(100% - 20px);
+  transform: translateX(-50%);
 `;
