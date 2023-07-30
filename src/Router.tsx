@@ -13,7 +13,6 @@ import Notice from './page/more/Notice';
 import Personal from './page/more/Personal';
 import Service from './page/more/Service';
 import UserRemove from './page/more/UserRemove';
-import Welcome from './page/login/Welcome';
 
 const Router = () => {
   return (
@@ -35,7 +34,6 @@ const Router = () => {
           <Route path="mystudy" element={<MyStudy />} />
           <Route path="more" element={<More />} />
         </Route>
-        <Route path="welcome" element={<Welcome />} />
         <Route path="characters" element={<Characters />} />
         <Route path="more/nick" element={<NicknameChange />} />
         <Route path="more/notice" element={<Notice />} />
