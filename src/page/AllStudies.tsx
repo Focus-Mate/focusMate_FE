@@ -5,27 +5,29 @@ import allStudyPng from '@/style/images/illust_everystudy.png';
 function AllStudies() {
   return (
     <Container>
-      <Title>
-        모든 스터디 탭에서
-        <br />곧 만나요!
-      </Title>
-      <Description>
-        '모든 스터디'에서는 스터디를
-        <br />
-        만들거나, 참여할 수 있어요.
-      </Description>
-      <Square>
-        <img src={allStudyPng} alt="my study" />
-      </Square>
-      <TipBox>
-        <TipTitle>TIP</TipTitle>
-        <Comment>
-          잠깐! 5분 설문조사 참여하고
+      <Content>
+        <Title>
+          모든 스터디 탭에서
+          <br />곧 만나요!
+        </Title>
+        <Description>
+          '모든 스터디'에서는 스터디를
           <br />
-          이벤트 상품 받아가세요
-        </Comment>
-      </TipBox>
-      <Button>설문조사 참여하기</Button>
+          만들거나, 참여할 수 있어요.
+        </Description>
+        <Square>
+          <img src={allStudyPng} alt="my study" />
+        </Square>
+        <TipBox>
+          <TipTitle>TIP</TipTitle>
+          <Comment>
+            잠깐! 5분 설문조사 참여하고
+            <br />
+            이벤트 상품 받아가세요
+          </Comment>
+        </TipBox>
+        <Button>설문조사 참여하기</Button>
+      </Content>
     </Container>
   );
 }
@@ -35,13 +37,20 @@ export default AllStudies;
 const Container = styled.div`
   display: flex;
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 75px);
   flex-direction: column;
   justify-content: center;
   position: absolute;
   left: 0;
   top: 0;
   background-color: ${({ theme }) => theme.colors.bg.base};
+`;
+
+const Content = styled.div`
+  width: 100%;
+  height: 100%;
+  padding: 70px 0 40px;
+  overflow-y: scroll;
 `;
 
 const Title = styled.div`
@@ -111,4 +120,5 @@ const Button = styled.div`
   justify-content: center;
   align-items: center;
   font-weight: 700;
+  flex-shrink: 0;
 `;

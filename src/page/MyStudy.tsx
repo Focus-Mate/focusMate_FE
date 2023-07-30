@@ -5,27 +5,29 @@ import myStudyPng from '@/style/images/illust_mystudy.png';
 function MyStudy() {
   return (
     <Container>
-      <Title>
-        나의 스터디 탭을
-        <br />
-        준비중이에요.
-      </Title>
-      <Description>
-        '나의 스터디'에서는 팀원과
-        <br />
-        스터디를 함께 할 수 있어요.
-      </Description>
-      <Square>
-        <img src={myStudyPng} alt="my study" />
-      </Square>
-      <TipBox>
-        <TipTitle>TIP</TipTitle>
-        <Comment>
-          앱 사용 후기를 남겨주시면
-          <br />더 멋진 서비스로 찾아올게요!
-        </Comment>
-      </TipBox>
-      <Button>의견 남기러 가기</Button>
+      <Content>
+        <Title>
+          나의 스터디 탭을
+          <br />
+          준비중이에요.
+        </Title>
+        <Description>
+          '나의 스터디'에서는 팀원과
+          <br />
+          스터디를 함께 할 수 있어요.
+        </Description>
+        <Square>
+          <img src={myStudyPng} alt="my study" />
+        </Square>
+        <TipBox>
+          <TipTitle>TIP</TipTitle>
+          <Comment>
+            앱 사용 후기를 남겨주시면
+            <br />더 멋진 서비스로 찾아올게요!
+          </Comment>
+        </TipBox>
+        <Button>의견 남기러 가기</Button>
+      </Content>
     </Container>
   );
 }
@@ -35,13 +37,20 @@ export default MyStudy;
 const Container = styled.div`
   display: flex;
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 75px);
   flex-direction: column;
   justify-content: center;
   position: absolute;
   left: 0;
   top: 0;
   background-color: ${({ theme }) => theme.colors.bg.base};
+`;
+
+const Content = styled.div`
+  width: 100%;
+  height: 100%;
+  padding: 70px 0 40px;
+  overflow-y: scroll;
 `;
 
 const Title = styled.div`
