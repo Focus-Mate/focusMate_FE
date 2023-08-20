@@ -38,14 +38,10 @@ export function formatSecondsToHHMM(seconds: number): string {
   const hoursString = hours.toString().padStart(2, '0');
   let minutesString = minutes.toString().padStart(2, '0');
 
-  if (seconds === 0) {
-    return '';
-  } else {
-    if (seconds > 0 && seconds < 60) {
-      minutesString = '01';
-    }
-    return `${hoursString}:${minutesString}`;
+  if (seconds > 0 && seconds < 60) {
+    minutesString = '01';
   }
+  return `${hoursString}:${minutesString}`;
 }
 
 //요일 구하기

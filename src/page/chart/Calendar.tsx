@@ -127,7 +127,9 @@ const Calendar = ({ monthRecord }: CalendarProps) => {
             {monthRecords && monthRecords[d.day - 1] && (
               <DateRecord
                 className={
-                  Number(monthRecords[d.day - 1].total) === minMax?.min
+                  Number(monthRecords[d.day - 1].total) === 0
+                    ? 'zero'
+                    : Number(monthRecords[d.day - 1].total) === minMax?.min
                     ? 'min'
                     : Number(monthRecords[d.day - 1].total) === minMax?.max
                     ? 'max'
@@ -196,7 +198,7 @@ const DayContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   text-align: center;
-  margin-bottom: 28px;
+  padding-bottom: 28px;
   color: ${({ theme }) => theme.colors.grey[900]};
 
   &.hidden {
@@ -237,7 +239,7 @@ const DateNumber = styled.div`
 `;
 
 const WeekDay = styled(DayContainer)`
-  margin-bottom: 24px;
+  padding-bottom: 24px;
   color: ${({ theme }) => theme.colors.grey[700]};
 `;
 
@@ -253,5 +255,9 @@ const DateRecord = styled.div`
 
   &.min {
     color: ${({ theme }) => theme.colors.icon.orange50};
+  }
+
+  &.zero {
+    color: transparent;
   }
 `;
