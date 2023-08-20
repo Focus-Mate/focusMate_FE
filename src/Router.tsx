@@ -13,6 +13,7 @@ import Notice from './page/more/Notice';
 import Personal from './page/more/Personal';
 import Service from './page/more/Service';
 import UserRemove from './page/more/UserRemove';
+import Alarm from './page/Alarm';
 
 const Router = () => {
   return (
@@ -41,6 +42,7 @@ const Router = () => {
         <Route path="more/personal" element={<Personal />} />
         <Route path="more/license" element={<License />} />
         <Route path="more/remove" element={<UserRemove />} />
+        <Route path="alarm" element={<Alarm />} />
       </Route>
     </Routes>
   );
