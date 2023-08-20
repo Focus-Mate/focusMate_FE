@@ -29,35 +29,23 @@ export function formatSeconds(seconds: number): string {
   return `${hoursString}:${minutesString}:${secondsString}`;
 }
 
-export function formatSecondsToMMSS(seconds: number): string {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
+export function formatSecondsToHHMM(seconds: number): string {
+  seconds = Math.floor(seconds);
 
-  const formattedMinutes = String(minutes).padStart(2, '0');
-  const formattedSeconds = String(remainingSeconds).padStart(2, '0');
-
-  return `${formattedMinutes}:${formattedSeconds}`;
-}
-
-export function formatSecondsToTime(seconds: number) {
   const hours = Math.floor(seconds / 3600);
-  const remainingSeconds = seconds % 3600;
-  const minutes = Math.floor(remainingSeconds / 60);
-  const finalSeconds = remainingSeconds % 60;
+  const minutes = Math.floor((seconds % 3600) / 60);
 
-  const stringHours = `${hours}시간`;
-  const stringMinutes = `${minutes}분`;
-  const stringSeconds = `${finalSeconds}초`;
+  const hoursString = hours.toString().padStart(2, '0');
+  let minutesString = minutes.toString().padStart(2, '0');
 
-  if (hours > 0) {
-    if (minutes === 0) {
-      return stringHours + ' ' + stringSeconds;
-    } else if (seconds === 0) {
-      return stringHours;
-    } else return stringHours + ' ' + stringMinutes;
-  } else if (minutes > 0) {
-    return stringMinutes + ' ' + stringSeconds;
-  } else return stringSeconds;
+  if (seconds === 0) {
+    return '';
+  } else {
+    if (seconds > 0 && seconds < 60) {
+      minutesString = '01';
+    }
+    return `${hoursString}:${minutesString}`;
+  }
 }
 
 //요일 구하기

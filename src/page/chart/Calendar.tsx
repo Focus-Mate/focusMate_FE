@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { CurrentDateState } from '@/store/CurrentDateState';
 import { WeekRecord } from '@/component/chart/WeekChart';
-import { formatSecondsToTime } from '@/util';
+import { formatSecondsToHHMM } from '@/util';
 
 interface CalendarProps {
   monthRecord: WeekRecord;
@@ -136,7 +136,7 @@ const Calendar = ({ monthRecord }: CalendarProps) => {
               >
                 {monthRecords &&
                   monthRecords[d.day - 1] &&
-                  formatSecondsToTime(Number(monthRecords[d.day - 1].total))}
+                  formatSecondsToHHMM(Number(monthRecords[d.day - 1].total))}
               </DateRecord>
             )}
           </DayContainer>,
