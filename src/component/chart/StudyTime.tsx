@@ -1,4 +1,4 @@
-import { formatSeconds, msToTime } from '@/util';
+import { formatSeconds } from '@/util';
 import styled from 'styled-components';
 
 type StudyTimeProps = {
