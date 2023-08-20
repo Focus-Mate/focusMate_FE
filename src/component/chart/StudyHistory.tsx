@@ -1,5 +1,5 @@
 import { Button } from '@/style/globalStyle';
-import { formatSeconds, msToTime } from '@/util';
+import { formatSeconds } from '@/util';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { RightArrowIcon, StudyHistoryIcon } from '../../style/icon/chartPage';

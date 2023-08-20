@@ -5,22 +5,42 @@ import weekdayPlugin from 'dayjs/plugin/weekday';
 import objectPlugin from 'dayjs/plugin/toObject';
 import isTodayPlugin from 'dayjs/plugin/isToday';
 import styled from 'styled-components';
-import { MinMax } from '@/component/chart/MonthChart';
 import { useRecoilValue } from 'recoil';
 import { CurrentDateState } from '@/store/CurrentDateState';
+import { WeekRecord } from '@/component/chart/WeekChart';
+import { formatSecondsToTime } from '@/util';
 
 interface CalendarProps {
-  dateRecord: string[];
-  minMaxDate: MinMax;
+  monthRecord: WeekRecord;
 }
 
-const Calendar = ({ dateRecord, minMaxDate }: CalendarProps) => {
+export interface IMonthResult {
+  studyDate: string;
+  total: string;
+}
+
+export interface IMinxMax {
+  min: number;
+  max: number;
+}
+
+const Calendar = ({ monthRecord }: CalendarProps) => {
   const currentDate = useRecoilValue(CurrentDateState);
   const now = dayjs(currentDate.currentDate).locale({ ...locale });
+  const [monthRecords, setMonthRecords] = useState<IMonthResult[]>();
+  const [minMax, setMinMax] = useState<IMinxMax>();
 
   dayjs.extend(weekdayPlugin);
   dayjs.extend(objectPlugin);
   dayjs.extend(isTodayPlugin);
+
+  useEffect(() => {
+    if (!monthRecord) {
+      return;
+    }
+    setMonthRecords(monthRecord.result);
+    setMinMax({ min: monthRecord.min, max: monthRecord.max });
+  }, [monthRecord]);
 
   const [currentMonth, setCurrentMonth] = useState(now);
   const [arrayOfDays, setArrayOfDays] = useState<any>([]);
@@ -76,7 +96,6 @@ const Calendar = ({ dateRecord, minMaxDate }: CalendarProps) => {
 
     arrayOfDays.forEach((week: any, index: number) => {
       week.dates.forEach((d: any, i: number) => {
-        console.log(d.isFuture);
         days.push(
           <DayContainer
             className={
@@ -91,18 +110,35 @@ const Calendar = ({ dateRecord, minMaxDate }: CalendarProps) => {
             key={i}
           >
             <DateNumber>
-              <div
+              {monthRecords && monthRecords[d.day - 1] && (
+                <div
+                  className={
+                    Number(monthRecords[d.day - 1].total) === minMax?.min
+                      ? 'min'
+                      : Number(monthRecords[d.day - 1].total) === minMax?.max
+                      ? 'max'
+                      : ''
+                  }
+                />
+              )}
+
+              {d.day}
+            </DateNumber>
+            {monthRecords && monthRecords[d.day - 1] && (
+              <DateRecord
                 className={
-                  minMaxDate.minDate.includes(d.day)
+                  Number(monthRecords[d.day - 1].total) === minMax?.min
                     ? 'min'
-                    : minMaxDate.maxDate.includes(d.day)
+                    : Number(monthRecords[d.day - 1].total) === minMax?.max
                     ? 'max'
                     : ''
                 }
-              />
-              {d.day}
-            </DateNumber>
-            <DateRecord>{d.isCurrentMonth && dateRecord[d.day - 1]}</DateRecord>
+              >
+                {monthRecords &&
+                  monthRecords[d.day - 1] &&
+                  formatSecondsToTime(Number(monthRecords[d.day - 1].total))}
+              </DateRecord>
+            )}
           </DayContainer>,
         );
       });
@@ -211,6 +247,11 @@ const DateRecord = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 12px;
-
+  word-break: keep-all;
   font-size: 0.625rem;
+  line-height: 0.9rem;
+
+  &.min {
+    color: ${({ theme }) => theme.colors.icon.orange50};
+  }
 `;

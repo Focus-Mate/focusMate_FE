@@ -5,7 +5,7 @@ import { useQuery } from 'react-query';
 import { useRecoilValue } from 'recoil';
 import { ChartDateState } from '@/store/ChartDateState';
 import instance from '@/instance';
-import { isFuture, msToTime, week } from '@/util';
+import { isFuture, week } from '@/util';
 import { useEffect, useState } from 'react';
 import Record from './Record';
 
