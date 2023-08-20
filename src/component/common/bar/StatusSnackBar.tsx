@@ -91,7 +91,7 @@ const Picture = styled.div`
 const Text = styled.div`
   width: 100%;
   margin: 0 8px;
-  color: ${({ theme }) => theme.colors.bg.base};
+  color: ${({ theme }) => theme.colors.icon.white};
 `;
 
 const RightBox = styled.div``;

@@ -111,12 +111,12 @@ const TipBox = styled.div`
 const TipIcon = styled.div`
   width: 40px;
   height: 30px;
-  background-color: ${({ theme }) => theme.colors.icon.mint10};
+  background-color: ${({ theme }) => theme.colors.icon.white};
   border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${({ theme }) => theme.colors.primary[800]};
+  color: ${({ theme }) => theme.colors.primary[700]};
 `;
 
 const TipText = styled.div`

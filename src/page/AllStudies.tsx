@@ -95,9 +95,9 @@ const TipBox = styled.div`
 const TipTitle = styled.div`
   width: 40px;
   height: 30px;
-  background-color: ${({ theme }) => theme.colors.icon.mint10};
+  background-color: ${({ theme }) => theme.colors.icon.white};
   border-radius: 8px;
-  color: ${({ theme }) => theme.colors.primary[800]};
+  color: ${({ theme }) => theme.colors.primary[700]};
   display: flex;
   justify-content: center;
   align-items: center;
