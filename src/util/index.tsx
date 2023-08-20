@@ -15,22 +15,6 @@ export function msToSec(milliseconds: number): number {
   return seconds;
 }
 
-export function msToTime(milliseconds: number): string {
-  const seconds: number = Math.floor(milliseconds / 1000);
-  const minutes: number = Math.floor(seconds / 60);
-  const hours: number = Math.floor(minutes / 60);
-
-  const secPart: number = seconds % 60;
-  const minPart: number = minutes % 60;
-  const hourPart: number = hours;
-
-  const secStr: string = secPart < 10 ? `0${secPart}` : `${secPart}`;
-  const minStr: string = minPart < 10 ? `0${minPart}` : `${minPart}`;
-  const hourStr: string = hourPart < 10 ? `0${hourPart}` : `${hourPart}`;
-
-  return `${hourStr}:${minStr}:${secStr}`;
-}
-
 export function formatSeconds(seconds: number): string {
   seconds = Math.floor(seconds);
 
@@ -43,6 +27,37 @@ export function formatSeconds(seconds: number): string {
   const secondsString = remainingSeconds.toString().padStart(2, '0');
 
   return `${hoursString}:${minutesString}:${secondsString}`;
+}
+
+export function formatSecondsToMMSS(seconds: number): string {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+
+  const formattedMinutes = String(minutes).padStart(2, '0');
+  const formattedSeconds = String(remainingSeconds).padStart(2, '0');
+
+  return `${formattedMinutes}:${formattedSeconds}`;
+}
+
+export function formatSecondsToTime(seconds: number) {
+  const hours = Math.floor(seconds / 3600);
+  const remainingSeconds = seconds % 3600;
+  const minutes = Math.floor(remainingSeconds / 60);
+  const finalSeconds = remainingSeconds % 60;
+
+  const stringHours = `${hours}시간`;
+  const stringMinutes = `${minutes}분`;
+  const stringSeconds = `${finalSeconds}초`;
+
+  if (hours > 0) {
+    if (minutes === 0) {
+      return stringHours + ' ' + stringSeconds;
+    } else if (seconds === 0) {
+      return stringHours;
+    } else return stringHours + ' ' + stringMinutes;
+  } else if (minutes > 0) {
+    return stringMinutes + ' ' + stringSeconds;
+  } else return stringSeconds;
 }
 
 //요일 구하기
@@ -95,21 +110,8 @@ export const isFuture = (dateString: string): boolean => {
 };
 
 export function findMinMax(numbers: number[]): { min: number; max: number } {
-  if (numbers.length === 0) {
-    throw new Error('배열이 비어있습니다.');
-  }
-
-  let min = numbers[0];
-  let max = numbers[0];
-
-  for (let i = 1; i < numbers.length; i++) {
-    if (numbers[i] < min) {
-      min = numbers[i];
-    }
-    if (numbers[i] > max) {
-      max = numbers[i];
-    }
-  }
+  const min = Math.min(...numbers);
+  const max = Math.max(...numbers);
 
   return { min, max };
 }
