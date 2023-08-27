@@ -2,7 +2,7 @@ import { setInputClear } from '@/util/input';
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import instance from '../../instance';
-import { ISignInInfo } from '../../page/login/SignIn';
+import { ISignInInfo } from '../../page/signIn';
 import { Button, Input, Title } from '../../style/globalStyle';
 import { DeleteBtn } from '../../style/icon/agreeStep';
 import theme from '../../style/lightTheme';
