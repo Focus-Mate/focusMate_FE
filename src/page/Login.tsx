@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as KakaoLogo } from '../../style/icon/kakaoLogo.svg';
+import { ReactComponent as KakaoLogo } from '@/style/icon/kakaoLogo.svg';
 import logoText from '@/style/images/logo_text.png';
 import studyAnimation from '@/style/gif/study_animation.gif';
 

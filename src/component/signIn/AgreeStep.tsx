@@ -1,7 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button, Title } from '../../style/globalStyle';
-import { CheckBoxDefault, CheckBoxChecked } from '../../style/icon/agreeStep';
+import {
+  CheckBoxDefault,
+  CheckBoxChecked,
+  SeeAgreementsArrow,
+} from '../../style/icon/agreeStep';
+import { Link } from 'react-router-dom';
+import { AgreementEnum } from '@/page/signIn/AgreementsDetail';
 interface IAgreeStepProps {
   checkAll: (e: any) => void;
   checkboxHandler: (e: any) => void;
@@ -10,6 +16,24 @@ interface IAgreeStepProps {
   nextStep: boolean;
 }
 
+export const agreementList = [
+  {
+    title: AgreementEnum.SERVICE,
+    agreement: '서비스 이용약관',
+    option: '(필수)',
+  },
+  {
+    title: AgreementEnum.PRIVACY,
+    agreement: '개인정보 처리방침',
+    option: '(필수)',
+  },
+  {
+    title: AgreementEnum.MARKETING,
+    agreement: 'E-mail 및 마케팅 정보 수신동의',
+    option: '(선택)',
+  },
+];
+
 export default function AgreeStep({
   checkAll,
   checkboxHandler,
@@ -17,14 +41,6 @@ export default function AgreeStep({
   agreeList,
   nextStep,
 }: IAgreeStepProps) {
-  const agreementList = [
-    { agreement: 'SERVICE', description: '서비스 이용약관 (필수)' },
-    { agreement: 'PRIVACY', description: '개인정보 처리방침(필수)' },
-    {
-      agreement: 'MARKETING',
-      description: 'E-mail 및 마케팅 정보 수신동의 (선택)',
-    },
-  ];
   return (
     <AgreementContainer>
       <Title>
@@ -40,32 +56,34 @@ export default function AgreeStep({
         <AgreeAllCheck>전체 동의</AgreeAllCheck>
       </SingleAgreement>
 
-      <hr />
+      <Divider />
       <form>
         {agreementList.map((agree, idx) => {
           return (
             <SingleAgreement key={idx}>
               <AgreementInput
                 type="checkbox"
-                value={agree.agreement}
+                value={agree.title}
                 onClick={checkboxHandler}
                 defaultChecked={
-                  agreeList.includes(`${agree.agreement}`) ? true : false
+                  agreeList.includes(`${agree.title}`) ? true : false
                 }
               />
               <AgreementCheckBox>
-                {agreeList.includes(`${agree.agreement}`) ? (
+                {agreeList.includes(`${agree.title}`) ? (
                   <CheckBoxChecked />
                 ) : (
                   <CheckBoxDefault />
                 )}
               </AgreementCheckBox>
-              {agree.description}
+              {agree.agreement} {agree.option}
+              <SeeMoreArrow to={agree.title}>
+                <SeeAgreementsArrow />
+              </SeeMoreArrow>
             </SingleAgreement>
           );
         })}
       </form>
-
       <SignInStepButton
         onClick={() => setCurrenStep('nickname')}
         type="submit"
@@ -76,6 +94,11 @@ export default function AgreeStep({
     </AgreementContainer>
   );
 }
+
+const Divider = styled.hr`
+  border: transparent;
+  border-bottom: 1px solid #dcdcdc;
+`;
 
 const AgreementContainer = styled.div`
   position: relative;
@@ -112,4 +135,15 @@ export const SignInStepButton = styled(Button)`
   left: 50%;
   width: calc(100% - 20px);
   transform: translateX(-50%);
+`;
+
+export const SeeMoreArrow = styled(Link)`
+  position: absolute;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 `;
