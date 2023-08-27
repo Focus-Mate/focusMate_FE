@@ -14,12 +14,14 @@ import Personal from './page/more/Personal';
 import Service from './page/more/Service';
 import UserRemove from './page/more/UserRemove';
 import Alarm from './page/Alarm';
+import AgreementsDetail from './page/signIn/AgreementsDetail';
 
 const Router = () => {
   return (
     <Routes>
       {/* NOTE LandingGuide = 랜딩 분기점 (추후에 로그인/게스트 분기점) */}
-      <Route path="signin" element={<SignIn />}></Route>
+      <Route path="signin" element={<SignIn />} />
+      <Route path="signin/:title" element={<AgreementsDetail />} />
       <Route path="/" element={<LandingGuide />}>
         {/* NOTE DefaultLayout = 하단에 Navigation 붙어있는 layout component */}
         <Route element={<DefaultLayout />}>

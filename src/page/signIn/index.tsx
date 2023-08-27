@@ -24,7 +24,6 @@ const SignIn = () => {
   };
 
   const checkAll = (e: any) => {
-    console.log('asdasd');
     if (e.target.checked) setAgreeList(['SERVICE', 'PRIVACY', 'MARKETING']);
     else setAgreeList([]);
   };
@@ -39,7 +38,6 @@ const SignIn = () => {
 
   useEffect(() => {
     nextStepCheck();
-    console.log(agreeList, signInInfo);
   }, [agreeList, signInInfo]);
 
   useEffect(() => {
