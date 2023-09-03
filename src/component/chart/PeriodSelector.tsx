@@ -26,20 +26,6 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
   const setRequestDay = useSetRecoilState(ChartDateState);
   const { monday, sunday } = getMondayAndSundayDates(startDate);
   const [currentDate, setCurrentDate] = useRecoilState(CurrentDateState);
-  const [mondayState, setMondayState] = useState();
-  const [isSunday, setIsSunday] = useState<boolean>();
-
-  useEffect(() => {
-    todayCheck();
-    if (period === 'day') {
-      dailyChartRequest();
-    } else if (period === 'week') {
-      weeklyChartRequest();
-      // setStartDate(monday);
-    } else if (period === 'month') {
-      monthChartRequest();
-    }
-  }, [startDate, currentDate]);
 
   useEffect(() => {
     return () => {
@@ -52,6 +38,18 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
       startDate.setDate(startDate.getDate() - 1);
     }
   }, [startDate]);
+
+  useEffect(() => {
+    todayCheck();
+    if (period === 'day') {
+      dailyChartRequest();
+    } else if (period === 'week') {
+      weeklyChartRequest();
+      // setStartDate(monday);
+    } else if (period === 'month') {
+      monthChartRequest();
+    }
+  }, [startDate, currentDate]);
 
   const dateAdd = () => {
     switch (period) {
@@ -88,6 +86,9 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
   };
 
   const todayCheck = () => {
+    const todayDate = new Date();
+    const todayString = String(todayDate);
+
     switch (period) {
       case 'day':
         const today = getTodayDate();
@@ -99,20 +100,25 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
         }
         break;
       case 'week':
-        const todayDate = new Date();
-        const thisMonday = format(
-          getMondayAndSundayDates(todayDate).monday,
-          'MM/dd',
+        const sudayString = String(sunday);
+        const sudayStringOnlyDate = sudayString.substring(
+          0,
+          sudayString.length - 27,
         );
-
-        if (thisMonday === format(monday, 'MM/dd')) {
+        const todayStringOnlyDate = todayString.substring(
+          0,
+          todayString.length - 27,
+        );
+        if (sudayStringOnlyDate === todayStringOnlyDate) {
           setIsToday(true);
-        } else if (thisMonday !== format(monday, 'MM/dd')) {
-          setIsToday(false);
-        }
+        } else setIsToday(false);
         break;
       case 'month':
-        if (currentDate.currentDate.getMonth() === new Date().getMonth()) {
+        const todayYear = todayDate.getFullYear();
+        const todayMonth = todayDate.getMonth() + 1;
+        const currentYear = currentDate.currentDate.getFullYear();
+        const currentMonth = currentDate.currentDate.getMonth() + 1;
+        if (todayYear === currentYear && todayMonth === currentMonth) {
           return setIsToday(true);
         } else return setIsToday(false);
     }
