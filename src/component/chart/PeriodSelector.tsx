@@ -87,7 +87,7 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
 
   const todayCheck = () => {
     const todayDate = new Date();
-    const todayString = String(todayDate);
+    // const todayString = String(todayDate);
 
     switch (period) {
       case 'day':
@@ -100,16 +100,7 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
         }
         break;
       case 'week':
-        const sudayString = String(sunday);
-        const sudayStringOnlyDate = sudayString.substring(
-          0,
-          sudayString.length - 27,
-        );
-        const todayStringOnlyDate = todayString.substring(
-          0,
-          todayString.length - 27,
-        );
-        if (sudayStringOnlyDate === todayStringOnlyDate) {
+        if (todayDate < sunday) {
           setIsToday(true);
         } else setIsToday(false);
         break;
