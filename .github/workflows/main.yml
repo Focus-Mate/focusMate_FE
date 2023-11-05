@@ -60,9 +60,9 @@ jobs:
             build s3://${{ secrets.AWS_S3_BUCKET_NAME }} \
             --delete
 
-    #   - name: Invalidate cache CloudFront
-    #     uses: chetan/invalidate-cloudfront-action@master
-    #     env:
-    #       DISTRIBUTION: ${{ secrets.DISTRIBUTION_ID }}
-    #       PATHS: '/*'
-    #     continue-on-error: true
+      - name: Invalidate cache CloudFront
+        uses: chetan/invalidate-cloudfront-action@master
+        env:
+          DISTRIBUTION: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION }}
+          PATHS: '/index.html'
+        continue-on-error: true
