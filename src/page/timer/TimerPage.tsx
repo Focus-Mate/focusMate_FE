@@ -1,19 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import playIcon from '../style/icon/timer/play.png';
-import stopIcon from '@/style/icon/timer/stop.png';
-import TimerSavePop from '@/component/timer/TimerSavePop';
-import TimerCircle from '@/component/timer/TimerCircle';
-import TimerBottomSlideBox from '@/component/timer/TimerBottomSlideBox';
-import useTimerLogic from '@/component/timer/hooks/useTimerLogic';
-
-const TimerStatus = {
-  NONE: 0,
-  PLAYING: 1,
-  PAUSE: 2,
-  STOP: 3,
-};
+import TimerSavePop from '@/component/timer/TimerPage/TimerSavePop';
+import TimerCircle from '@/component/timer/TimerPage/TimerCircle';
+import TimerBottomSlideBox from '@/component/timer/TimerPage/TimerBottomSlideBox';
+import useTimerLogic from '@/component/timer/TimerPage/hooks/useTimerLogic';
+import TimerController from '@/component/timer/TimerPage/TimerController';
 
 const circleWidth = 300;
 
@@ -63,22 +54,11 @@ function Timer() {
         <TimeText>공부시간 기록하기</TimeText>
         <Time>{getTimerText(resultTime)}</Time>
       </TimerCircle>
-      <Controller>
-        <ButtonWrap>
-          {/* 상태에 따른 버튼 출현 & 로직 분기 */}
-          {playStatus === TimerStatus.NONE && (
-            <Button onClick={onClickPlay}>
-              <img src={playIcon} alt="play" />
-            </Button>
-          )}
-          {(playStatus === TimerStatus.PLAYING ||
-            playStatus === TimerStatus.STOP) && (
-            <Button onClick={onClickStop}>
-              <img src={stopIcon} alt="stop" />
-            </Button>
-          )}
-        </ButtonWrap>
-      </Controller>
+      <TimerController
+        playStatus={playStatus}
+        onClickPlay={onClickPlay}
+        onClickStop={onClickStop}
+      />
     </Container>
   );
 }
@@ -121,36 +101,5 @@ const Time = styled.div`
   color: ${({ theme }) => theme.colors.primary[900]};
   @media (max-width: 330px) {
     font-size: 11vw;
-  }
-`;
-
-const Controller = styled.div`
-  position: relative;
-  width: 100%;
-`;
-
-const ButtonWrap = styled.div`
-  position: absolute;
-  top: 2rem;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-`;
-
-const Button = styled.button`
-  width: 70px;
-  height: 70px;
-  background-color: #2fc4bb;
-  border: 0;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #3c9b95;
   }
 `;

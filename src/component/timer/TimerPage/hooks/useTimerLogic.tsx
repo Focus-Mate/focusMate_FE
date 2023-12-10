@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useMutation } from 'react-query';
 import { useSetRecoilState } from 'recoil';
 import { timerBottomSlider } from '../TimerBottomSlideBox';
-import koalaPng from '@/component/timer/images/koala.png';
+import koalaPng from '@/component/timer/TimerPage/images/koala.png';
 
 const TimerStatus = {
   NONE: 0,
@@ -32,7 +32,7 @@ const useTimerLogic = () => {
   // 최종 결과 시간
   const [resultTime, setResultTime] = useState(0);
 
-  // 타이머 데이터가 추가 되었는지 확인하기 위한 코드
+  // 타이머 데이터가 추가 되었는지 확인하기 위한 ˛코드
   useEffect(() => {
     const api = async () => {
       const response = await instance.get('/api/calculate/dayrecord', {

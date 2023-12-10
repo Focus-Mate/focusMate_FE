@@ -3,7 +3,7 @@ import NicknameChange from './page/more/NicknameChange';
 import DefaultLayout from './layout/DefaultLayout';
 import LandingGuide from './layout/LandingGuide';
 import NavLayout from './layout/NavLayout';
-import { Timer, Chart, AllStudies, MyStudy, More } from './page';
+import { TimerPage, Chart, AllStudies, MyStudy, More } from './page';
 import Characters from './page/Characters';
 import MakeDday from './page/chart/MakeDday';
 import Login from './page/Login';
@@ -31,7 +31,7 @@ const Router = () => {
           </Route>
         </Route>
         <Route element={<NavLayout />}>
-          <Route path="timer" element={<Timer />} index />
+          <Route path="timer" element={<TimerPage />} index />
           <Route path="chart" element={<Chart />} />
           <Route path="allstudies" element={<AllStudies />} />
           <Route path="mystudy" element={<MyStudy />} />

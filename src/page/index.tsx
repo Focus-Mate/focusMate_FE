@@ -1,7 +1,7 @@
-import Chart from "./chart/Chart";
-import MyStudy from "./MyStudy";
-import More from "./More";
-import AllStudies from "./AllStudies";
-import Timer from "./Timer";
+import Chart from './chart/Chart';
+import MyStudy from './MyStudy';
+import More from './More';
+import AllStudies from './AllStudies';
+import TimerPage from './timer/TimerPage';
 
-export { Timer, Chart, AllStudies, MyStudy, More };
+export { TimerPage, Chart, AllStudies, MyStudy, More };
