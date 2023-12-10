@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import ReactModal from 'react-modal';
 import { atom, useRecoilState, useSetRecoilState } from 'recoil';
 import styled, { css, keyframes } from 'styled-components';
-import { snackBarStatus } from '../common/bar/StatusSnackBar';
+import { snackBarStatus } from '../../common/bar/StatusSnackBar';
 
 export const timerBottomSlider = atom({
   key: 'timerBottomSlider',
