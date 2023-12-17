@@ -38,6 +38,7 @@ const LandingGuide = () => {
     } else if (token && isFirstEnter !== null) {
       navigate('/timer');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

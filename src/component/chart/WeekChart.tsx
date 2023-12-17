@@ -95,11 +95,13 @@ const WeekChart = () => {
       }
       setRatioArray(calculateValues(chartArray));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [weekRecord]);
 
   useEffect(() => {
     console.log(chartArray);
     console.log(ratioArray);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [weekRecord, ratioArray]);
 
   function getValueByKey(num: number): number | undefined {

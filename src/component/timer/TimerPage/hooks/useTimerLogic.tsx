@@ -158,7 +158,8 @@ const useTimerLogic = () => {
   const onClickTimerSave = async () => {
     try {
       // 저장 로직
-      const response = requestTimerStop({ startPoint: timerId });
+      // const response = requestTimerStop({ startPoint: timerId });
+      requestTimerStop({ startPoint: timerId });
     } catch (e) {
       console.log(e);
     }

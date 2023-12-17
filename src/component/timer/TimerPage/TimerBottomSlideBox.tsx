@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import ReactModal from 'react-modal';
 import { atom, useRecoilState, useSetRecoilState } from 'recoil';
 import styled, { css, keyframes } from 'styled-components';

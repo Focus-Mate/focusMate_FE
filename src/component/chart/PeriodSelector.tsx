@@ -8,7 +8,7 @@ import {
   setDateFormat,
 } from '../../util';
 import format from 'date-fns/format';
-import { add, setDate, sub } from 'date-fns';
+import { add, sub } from 'date-fns';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { ChartDateState } from '@/store/ChartDateState';
 import { CurrentDateState } from '@/store/CurrentDateState';
@@ -31,12 +31,14 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
     return () => {
       setCurrentDate({ currentDate: new Date() });
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (period === 'week' && startDate.getDay() === 0) {
       startDate.setDate(startDate.getDate() - 1);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startDate]);
 
   useEffect(() => {
@@ -49,6 +51,7 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
     } else if (period === 'month') {
       monthChartRequest();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startDate, currentDate]);
 
   const dateAdd = () => {
