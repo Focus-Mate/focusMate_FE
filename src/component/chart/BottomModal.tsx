@@ -1,6 +1,5 @@
 import instance from '@/instance';
-import { Title } from '@/style/globalStyle';
-import React, { Dispatch, useState } from 'react';
+import React, { useState } from 'react';
 import ReactModal from 'react-modal';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';

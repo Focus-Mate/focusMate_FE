@@ -38,6 +38,7 @@ const SignIn = () => {
 
   useEffect(() => {
     nextStepCheck();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [agreeList, signInInfo]);
 
   useEffect(() => {

@@ -88,6 +88,7 @@ const Calendar = ({ monthRecord }: CalendarProps) => {
 
   useEffect(() => {
     getAllDays();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentMonth]);
 
   const renderCells = () => {

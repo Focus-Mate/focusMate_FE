@@ -43,6 +43,7 @@ const DayChart = () => {
     console.log(dayRecord);
     console.log(allStudyTime);
     console.log(requestDay);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [requestDay]);
   // const setStudyTime = () => {
   //   dayRecord.map(()=>)

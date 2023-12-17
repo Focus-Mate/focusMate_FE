@@ -15,6 +15,7 @@
     "@types/react-modal": "^3.13.1",
     "@types/styled-components": "^5.1.26",
     "babel-plugin-module-resolver": "^5.0.0",
+    "craco-plugin-env": "^1.0.5",
     "web-vitals": "^2.1.4"
   },
   "dependencies": {
@@ -48,8 +49,8 @@
     "workbox-streams": "^6.5.4"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
+    "start": "craco start --mode dev",
+    "build": "craco build --mode release",
     "test": "craco test",
     "eject": "react-scripts eject"
   },
