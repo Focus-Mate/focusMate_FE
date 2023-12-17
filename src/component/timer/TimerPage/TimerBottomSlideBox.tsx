@@ -4,13 +4,17 @@ import { atom, useRecoilState, useSetRecoilState } from 'recoil';
 import styled, { css, keyframes } from 'styled-components';
 import { snackBarStatus } from '../../common/bar/StatusSnackBar';
 
-export const timerBottomSlider = atom({
+export const timerBottomSlider = atom<
+  {
+    id: number;
+    isActive: boolean;
+    isClose: boolean;
+    icon: string;
+    mission: string;
+  }[]
+>({
   key: 'timerBottomSlider',
-  default: {
-    isActive: false,
-    icon: '',
-    mission: '',
-  },
+  default: [],
 });
 
 interface BottomSlideBoxProps {}
@@ -39,53 +43,78 @@ const modalStyle = {
 
 const TimerBottomSlideBox: React.FC<BottomSlideBoxProps> = () => {
   const [slider, setSlider] = useRecoilState(timerBottomSlider);
-  const [isClose, setClose] = useState(false);
   const setStatusSnackBar = useSetRecoilState(snackBarStatus);
 
-  const onClose = () => {
-    setClose(true);
+  const onClose = (idx: number) => {
+    setSlider(current => {
+      const newSlider = [...current];
+      newSlider[idx] = { ...newSlider[idx], isClose: true };
+      return newSlider;
+    });
+
+    setTimeout(() => {
+      setSlider(current => {
+        const newSlider = [...current];
+        newSlider[idx] = { ...newSlider[idx], isActive: false };
+        return newSlider;
+      });
+    }, 150);
   };
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
-    if (isClose) {
-      timeout = setTimeout(() => {
-        setSlider(current => ({ ...current, isActive: false }));
-        setClose(false);
-
-        setStatusSnackBar({
-          isOpen: true,
-          timer: 2500,
-          message: '공부시간을 저장했어요',
-        });
-      }, 300);
+    if (slider.length === 0) {
+      return;
     }
 
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [slider, isClose, setSlider, setStatusSnackBar]);
+    for (let i = 0; i < slider.length; i++) {
+      if (slider[i].isActive) {
+        return;
+      }
+    }
 
-  return (
-    <ReactModal
-      isOpen={slider.isActive}
-      style={{ overlay: modalStyle.overlay, content: modalStyle.content }}
-    >
-      <Background onClick={onClose} isClose={isClose}></Background>
-      <Slider isClose={isClose}>
-        <SliderWrapper>
-          <Title>{'짠, 미션을 완료하여 캐릭터가 등장했어요!'}</Title>
-          <Mission>
-            <MissionBox>달성한 미션</MissionBox>
-            {slider.mission}
-          </Mission>
-          <Picture>
-            <img src={slider.icon} alt="icon" />
-          </Picture>
-          <Button onClick={onClose}>획득하기</Button>
-        </SliderWrapper>
-      </Slider>
-    </ReactModal>
+    setSlider([]);
+    setStatusSnackBar({
+      isOpen: true,
+      timer: 2500,
+      message: '공부시간을 저장했어요',
+    });
+  }, [slider, setSlider, setStatusSnackBar]);
+
+  return slider.length === 0 ? null : (
+    <>
+      {slider.map((item, index) => {
+        return (
+          item.isActive && (
+            <ReactModal
+              key={item.id}
+              isOpen={item.isActive}
+              style={{
+                overlay: modalStyle.overlay,
+                content: modalStyle.content,
+              }}
+            >
+              <Background
+                onClick={() => onClose(index)}
+                isClose={item.isClose}
+              ></Background>
+              <Slider isClose={item.isClose}>
+                <SliderWrapper>
+                  <Title>{'짠, 미션을 완료하여 캐릭터가 등장했어요!'}</Title>
+                  <Mission>
+                    <MissionBox>달성한 미션</MissionBox>
+                    {item.mission}
+                  </Mission>
+                  <Picture>
+                    <img src={item.icon} alt="icon" />
+                  </Picture>
+                  <Button onClick={() => onClose(index)}>획득하기</Button>
+                </SliderWrapper>
+              </Slider>
+            </ReactModal>
+          )
+        );
+      })}
+    </>
   );
 };
 
@@ -128,7 +157,7 @@ const Background = styled.div<{ isClose: boolean }>`
 
 const SliderSlideIn = keyframes`
 	0% {
-		bottom: -280px;
+		bottom: -360px;
 	}
 	100% {
 		bottom: 0px;
@@ -140,7 +169,7 @@ const SliderSlideOut = keyframes`
 		bottom: 0px;
 	}
 	100% {
-		bottom: -280px;
+		bottom: -360px;
 	}
 `;
 
@@ -152,15 +181,15 @@ const Slider = styled.div<{
   background-color: ${({ theme }) => theme.colors.bg.elevated};
   position: absolute;
   z-index: 10;
-  bottom: -280px;
-  animation: ${SliderSlideIn} 0.3s ease-in-out forwards;
+  bottom: -360px;
+  animation: ${SliderSlideIn} 150ms ease-in-out forwards;
   border-radius: 20px 20px 0px 0px;
 
   ${({ isClose }) => {
     return (
       isClose &&
       css`
-        animation: ${SliderSlideOut} 0.3s ease-in-out forwards;
+        animation: ${SliderSlideOut} 150ms ease-in-out forwards;
       `
     );
   }}

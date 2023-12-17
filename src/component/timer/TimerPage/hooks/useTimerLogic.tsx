@@ -32,17 +32,34 @@ const useTimerLogic = () => {
   // 최종 결과 시간
   const [resultTime, setResultTime] = useState(0);
 
-  // 타이머 데이터가 추가 되었는지 확인하기 위한 ˛코드
+  // initialized
+  // 타이머 시작 시점에 서버에서 시간을 가져와서 stackTime에 저장
   useEffect(() => {
-    const api = async () => {
-      const response = await instance.get('/api/calculate/dayrecord', {
-        params: {
-          theDay: '2023-04-30',
-        },
-      });
-      console.log(response);
+    const getData = async () => {
+      // const response = await instance.get(`/api/calculate/timer`);
+      // if (!(response.data === '' || !response.data)) {
+      // setPlayStatus(TimerStatus.PLAYING);
+      // startTime.current = (new Date(response.data.studyDate)).getTime();
+      // setTimerId(response.data.studyDate);
+      // startTime.current = new Date('2023-12-17T15:56:22.293Z').getTime(); 예시 시간
+      // }
+      // function timeout() {
+      //   setTimeout(() => {
+      //     endTime.current = Date.now();
+      //     // 시간 정확도를 위해 setTimeout이 아닌 기기 시간을 사용해 계산
+      //     const time = new Date(endTime.current - startTime.current);
+      //     const hour = time.getUTCHours() * 3600000;
+      //     const minute = time.getUTCMinutes() * 60000;
+      //     const second = time.getUTCSeconds() * 1000;
+      //     const milliSecond = time.getUTCMilliseconds();
+      //     setNowTime(hour + minute + second + milliSecond);
+      //     timeout();
+      //   }, 100);
+      // }
+      // timeout();
     };
-    api();
+
+    getData();
   }, []);
 
   // stackTime에 저장된 시간과 nowTime을 합하여 resultTime에 저장
@@ -79,7 +96,12 @@ const useTimerLogic = () => {
   const { mutateAsync: requestTimerStop } = useMutation(
     'timer/stop',
     async ({ startPoint }: { startPoint: string }) => {
-      const response = await instance.put('/api/calculate/endTime', {
+      const response = await instance.put<{
+        getCharacters?: {
+          characterImg: string;
+          requirement: string;
+        }[];
+      }>('/api/calculate/endTime', {
         startPoint,
       });
 
@@ -134,20 +156,39 @@ const useTimerLogic = () => {
 
   // 타이머 저장
   const onClickTimerSave = async () => {
-    // 저장 로직
-    console.log(timerId);
-    await requestTimerStop({ startPoint: timerId });
+    try {
+      // 저장 로직
+      const response = requestTimerStop({ startPoint: timerId });
+    } catch (e) {
+      console.log(e);
+    }
+
+    const sample = [
+      {
+        characterImg: koalaPng,
+        requirement: '타이머 사용',
+      },
+      {
+        characterImg: koalaPng,
+        requirement: '타이머 사용2',
+      },
+    ];
+
     setNowTime(0);
     setStackTime(0);
     setResultTime(0);
     setDashOffset(dashArray - (dashArray * 0) / 100);
     setPlayStatus(TimerStatus.NONE);
 
-    setBottomSlideBox({
-      isActive: true,
-      icon: koalaPng,
-      mission: '타이머 사용',
-    });
+    setBottomSlideBox(
+      sample.map((item, idx) => ({
+        id: idx,
+        isActive: true,
+        isClose: false,
+        icon: item.characterImg,
+        mission: item.requirement,
+      })),
+    );
   };
 
   return {
