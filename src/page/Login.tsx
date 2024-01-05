@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { ReactComponent as KakaoLogo } from '@/style/icon/kakaoLogo.svg';
 import logoText from '@/style/images/logo_text.png';
 import studyAnimation from '@/style/gif/study_animation.gif';
+import { motion } from 'framer-motion';
 
 const Login = () => {
   const kakaoURL = process.env.REACT_APP_SOCIAL_URL;
@@ -12,8 +13,36 @@ const Login = () => {
   return (
     <LoginContainer>
       <Header>
-        <Logo src={logoText} alt="focus mate" />
-        <Comment>포메와 함께 스터디를 시작해봐요!</Comment>
+        <Logo
+          initial={{
+            opacity: 0,
+            transform: 'scale(0.5)',
+          }}
+          animate={{
+            opacity: 1,
+            transform: 'scale(1)',
+            transition: {
+              delay: 0.3,
+              duration: 0.6,
+            },
+          }}
+          src={logoText}
+          alt="focus mate"
+        />
+        <Comment
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: 1,
+            transition: {
+              delay: 0.4,
+              duration: 0.6,
+            },
+          }}
+        >
+          포메와 함께 스터디를 시작해봐요!
+        </Comment>
         <TitleImage src={studyAnimation} alt="study animation" />
       </Header>
       <KakaoLoginBtn onClick={() => setKakaoLogin()}>
@@ -45,11 +74,11 @@ const TitleImage = styled.img`
   margin: 32px 0;
 `;
 
-const Logo = styled.img`
+const Logo = styled(motion.img)`
   width: 230px;
 `;
 
-const Comment = styled.div`
+const Comment = styled(motion.div)`
   font-size: 16px;
   margin-top: 20px;
 `;
