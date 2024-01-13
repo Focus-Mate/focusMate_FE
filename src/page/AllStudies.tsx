@@ -134,11 +134,13 @@ const Title = styled(motion.div)`
   text-align: center;
   margin: 0 auto;
   font-weight: bold;
+  position: relative;
   color: ${({ theme }) => theme.colors.grey[900]};
 `;
 
 const Description = styled(motion.div)`
   width: 248px;
+  position: relative;
   text-align: center;
   margin: 20px auto 0;
   line-height: 25px;
@@ -150,6 +152,7 @@ const Square = styled(motion.div)`
   width: 250px;
   height: 250px;
   margin: 70px auto;
+  position: relative;
 
   img {
     width: 100%;
@@ -165,6 +168,7 @@ const TipBox = styled(motion.div)`
   background-color: ${({ theme }) => theme.colors.bg.mint10};
   border-radius: 16px;
   display: flex;
+  position: relative;
 `;
 
 const TipTitle = styled.div`
@@ -190,6 +194,7 @@ const Button = styled(motion.button)`
   outline: 0;
   height: 48px;
   margin: 20px auto 0;
+  position: relative;
   color: ${({ theme }) => theme.colors.bg.base};
   background-color: ${({ theme }) => theme.colors.primary[700]};
   border-radius: 16px;
