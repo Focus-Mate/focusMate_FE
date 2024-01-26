@@ -1,32 +1,100 @@
 import styled from 'styled-components';
 
 import myStudyPng from '@/style/images/illust_mystudy.png';
+import { motion } from 'framer-motion';
+
+const motionVariants = {
+  hidden: {
+    opacity: 0,
+    transform: 'translateY(100px)',
+  },
+  visible: {
+    opacity: 1,
+    transform: 'translateY(0)',
+  },
+};
 
 function MyStudy() {
   return (
     <Container>
       <Content>
-        <Title>
-          나의 스터디 탭을
-          <br />
-          준비중이에요.
-        </Title>
-        <Description>
-          '나의 스터디'에서는 팀원과
-          <br />
-          스터디를 함께 할 수 있어요.
-        </Description>
-        <Square>
-          <img src={myStudyPng} alt="my study" />
-        </Square>
-        <TipBox>
-          <TipTitle>TIP</TipTitle>
-          <Comment>
-            앱 사용 후기를 남겨주시면
-            <br />더 멋진 서비스로 찾아올게요!
-          </Comment>
-        </TipBox>
-        <Button>의견 남기러 가기</Button>
+        <TopView>
+          <Title
+            variants={motionVariants}
+            initial={'hidden'}
+            animate={'visible'}
+            transition={{
+              delay: 0.3,
+              duration: 0.1,
+              stiffness: 10,
+            }}
+          >
+            나의 스터디 탭을
+            <br />
+            준비중이에요.
+          </Title>
+          <Description
+            variants={motionVariants}
+            initial={'hidden'}
+            animate={'visible'}
+            transition={{
+              delay: 0.5,
+              duration: 0.1,
+              stiffness: 10,
+            }}
+          >
+            '나의 스터디'에서는 팀원과
+            <br />
+            스터디를 함께 할 수 있어요.
+          </Description>
+          <Square
+            initial={{
+              opacity: 0,
+              transform: 'scale(0.5)',
+            }}
+            animate={{
+              opacity: 1,
+              transform: 'scale(1)',
+            }}
+            transition={{
+              delay: 0.7,
+              duration: 0.1,
+              stiffness: 10,
+            }}
+          >
+            <img src={myStudyPng} alt="my study" />
+          </Square>
+        </TopView>
+        <BottomView>
+          <TipBox
+            variants={motionVariants}
+            initial={'hidden'}
+            animate={'visible'}
+            transition={{
+              delay: 0.9,
+              duration: 0.1,
+              stiffness: 10,
+            }}
+          >
+            <TipTitle>TIP</TipTitle>
+            <Comment>
+              앱 사용 후기를 남겨주시면
+              <br />더 멋진 서비스로 찾아올게요!
+            </Comment>
+          </TipBox>
+          <Button
+            variants={motionVariants}
+            initial={'hidden'}
+            animate={'visible'}
+            transition={{
+              delay: 1.1,
+              duration: 0.1,
+              stiffness: 10,
+            }}
+          >
+            의견 남기러 가기
+          </Button>
+        </BottomView>
       </Content>
     </Container>
   );
@@ -53,7 +121,7 @@ const Content = styled.div`
   overflow-y: scroll;
 `;
 
-const Title = styled.div`
+const Title = styled(motion.div)`
   width: 248px;
   font-size: 24px;
   line-height: 32px;
@@ -62,7 +130,7 @@ const Title = styled.div`
   color: ${({ theme }) => theme.colors.grey[900]};
 `;
 
-const Description = styled.div`
+const Description = styled(motion.div)`
   width: 248px;
   text-align: center;
   margin: 20px auto 0;
@@ -71,7 +139,7 @@ const Description = styled.div`
   color: ${({ theme }) => theme.colors.grey[600]};
 `;
 
-const Square = styled.div`
+const Square = styled(motion.div)`
   width: 250px;
   height: 250px;
   margin: 70px auto;
@@ -83,7 +151,7 @@ const Square = styled.div`
   }
 `;
 
-const TipBox = styled.div`
+const TipBox = styled(motion.div)`
   width: calc(100% - 40px);
   margin: 0 auto;
   padding: 16px;
@@ -109,8 +177,10 @@ const Comment = styled.div`
   color: ${({ theme }) => theme.colors.grey[800]};
 `;
 
-const Button = styled.div`
+const Button = styled(motion.button)`
   width: calc(100% - 40px);
+  border: 0;
+  outline: 0;
   height: 48px;
   margin: 20px auto 0;
   color: ${({ theme }) => theme.colors.bg.base};
@@ -120,4 +190,8 @@ const Button = styled.div`
   justify-content: center;
   align-items: center;
   font-weight: 700;
+  flex-shrink: 0;
 `;
+
+const TopView = styled.div``;
+const BottomView = styled.div``;

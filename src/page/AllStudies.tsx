@@ -1,32 +1,103 @@
 import styled from 'styled-components';
 
 import allStudyPng from '@/style/images/illust_everystudy.png';
+import { AnimatePresence, motion } from 'framer-motion';
+
+const motionVariants = {
+  hidden: {
+    opacity: 0,
+    transform: 'translateY(100px)',
+  },
+  visible: {
+    opacity: 1,
+    transform: 'translateY(0)',
+  },
+};
 
 function AllStudies() {
   return (
     <Container>
       <Content>
-        <Title>
-          모든 스터디 탭에서
-          <br />곧 만나요!
-        </Title>
-        <Description>
-          '모든 스터디'에서는 스터디를
-          <br />
-          만들거나, 참여할 수 있어요.
-        </Description>
-        <Square>
-          <img src={allStudyPng} alt="my study" />
-        </Square>
-        <TipBox>
-          <TipTitle>TIP</TipTitle>
-          <Comment>
-            잠깐! 5분 설문조사 참여하고
+        <TopView>
+          <AnimatePresence mode="wait">
+            <Title
+              variants={motionVariants}
+              initial={'hidden'}
+              animate={'visible'}
+              transition={{
+                delay: 0.3,
+                duration: 0.1,
+                stiffness: 10,
+              }}
+              exit={'hidden'}
+            >
+              모든 스터디 탭에서
+              <br />곧 만나요!
+            </Title>
+          </AnimatePresence>
+          <Description
+            variants={motionVariants}
+            initial={'hidden'}
+            animate={'visible'}
+            transition={{
+              delay: 0.5,
+              duration: 0.1,
+              stiffness: 10,
+            }}
+          >
+            '모든 스터디'에서는 스터디를
             <br />
-            이벤트 상품 받아가세요
-          </Comment>
-        </TipBox>
-        <Button>설문조사 참여하기</Button>
+            만들거나, 참여할 수 있어요.
+          </Description>
+          <Square
+            initial={{
+              opacity: 0,
+              transform: 'scale(0.5)',
+            }}
+            animate={{
+              opacity: 1,
+              transform: 'scale(1)',
+            }}
+            transition={{
+              delay: 0.7,
+              duration: 0.1,
+              stiffness: 10,
+            }}
+          >
+            <img src={allStudyPng} alt="my study" />
+          </Square>
+        </TopView>
+        <BottomView>
+          <TipBox
+            variants={motionVariants}
+            initial={'hidden'}
+            animate={'visible'}
+            transition={{
+              delay: 0.9,
+              duration: 0.1,
+              stiffness: 10,
+            }}
+          >
+            <TipTitle>TIP</TipTitle>
+            <Comment>
+              잠깐! 5분 설문조사 참여하고
+              <br />
+              이벤트 상품 받아가세요
+            </Comment>
+          </TipBox>
+          <Button
+            variants={motionVariants}
+            initial={'hidden'}
+            animate={'visible'}
+            transition={{
+              delay: 1.1,
+              duration: 0.1,
+              stiffness: 10,
+            }}
+          >
+            설문조사 참여하기
+          </Button>
+        </BottomView>
       </Content>
     </Container>
   );
@@ -51,19 +122,25 @@ const Content = styled.div`
   height: 100%;
   padding: 70px 0 40px;
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
-const Title = styled.div`
+const Title = styled(motion.div)`
   width: 248px;
   font-size: 24px;
   line-height: 32px;
   text-align: center;
   margin: 0 auto;
+  font-weight: bold;
+  position: relative;
   color: ${({ theme }) => theme.colors.grey[900]};
 `;
 
-const Description = styled.div`
+const Description = styled(motion.div)`
   width: 248px;
+  position: relative;
   text-align: center;
   margin: 20px auto 0;
   line-height: 25px;
@@ -71,10 +148,11 @@ const Description = styled.div`
   color: ${({ theme }) => theme.colors.grey[600]};
 `;
 
-const Square = styled.div`
+const Square = styled(motion.div)`
   width: 250px;
   height: 250px;
   margin: 70px auto;
+  position: relative;
 
   img {
     width: 100%;
@@ -83,13 +161,14 @@ const Square = styled.div`
   }
 `;
 
-const TipBox = styled.div`
+const TipBox = styled(motion.div)`
   width: calc(100% - 40px);
   margin: 0 auto;
   padding: 16px;
   background-color: ${({ theme }) => theme.colors.bg.mint10};
   border-radius: 16px;
   display: flex;
+  position: relative;
 `;
 
 const TipTitle = styled.div`
@@ -109,10 +188,13 @@ const Comment = styled.div`
   color: ${({ theme }) => theme.colors.grey[800]};
 `;
 
-const Button = styled.div`
+const Button = styled(motion.button)`
   width: calc(100% - 40px);
+  border: 0;
+  outline: 0;
   height: 48px;
   margin: 20px auto 0;
+  position: relative;
   color: ${({ theme }) => theme.colors.bg.base};
   background-color: ${({ theme }) => theme.colors.primary[700]};
   border-radius: 16px;
@@ -122,3 +204,6 @@ const Button = styled.div`
   font-weight: 700;
   flex-shrink: 0;
 `;
+
+const TopView = styled.div``;
+const BottomView = styled.div``;

@@ -1,18 +1,11 @@
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import {
-  DefaultAllStudyIcon,
-  DefaultChartIcon,
-  DefaultMyStudyIcon,
-  DefaultSettingIcon,
-  DefaultTimerIcon,
-  SelectedAllStudyIcon,
-  SelectedChartIcon,
-  SelectedMyStudyIcon,
-  SelectedSettingIcon,
-  SelectedTimerIcon,
-} from './style/icon/GNB';
 import { useEffect, useState } from 'react';
+import { GnbTimer } from './component/common/gnb/GnbTimer';
+import GnbChart from './component/common/gnb/GnbChart';
+import GnbAllStudy from './component/common/gnb/GnbAllStudy';
+import GnbMyStudy from './component/common/gnb/GnbMyStudy';
+import GnbSetting from './component/common/gnb/GnbSetting';
 
 function Navigation() {
   const location = useLocation();
@@ -26,47 +19,27 @@ function Navigation() {
     <GNB>
       <GNBIcon>
         <Link to={'timer'}>
-          {currentPath === 'timer' ? (
-            <SelectedTimerIcon />
-          ) : (
-            <DefaultTimerIcon />
-          )}
+          <GnbTimer active={currentPath === 'timer'} />
         </Link>
       </GNBIcon>
       <GNBIcon>
         <Link to={'chart'}>
-          {currentPath === 'chart' ? (
-            <SelectedChartIcon />
-          ) : (
-            <DefaultChartIcon />
-          )}
+          <GnbChart active={currentPath === 'chart'} />
         </Link>
       </GNBIcon>
       <GNBIcon>
         <Link to={'allstudies'}>
-          {currentPath === 'allstudies' ? (
-            <SelectedAllStudyIcon />
-          ) : (
-            <DefaultAllStudyIcon />
-          )}
+          <GnbAllStudy active={currentPath === 'allstudies'} />
         </Link>
       </GNBIcon>
       <GNBIcon>
         <Link to={'mystudy'}>
-          {currentPath === 'mystudy' ? (
-            <SelectedMyStudyIcon />
-          ) : (
-            <DefaultMyStudyIcon />
-          )}
+          <GnbMyStudy active={currentPath === 'mystudy'} />
         </Link>
       </GNBIcon>
       <GNBIcon>
         <Link to={'more'}>
-          {currentPath === 'more' ? (
-            <SelectedSettingIcon />
-          ) : (
-            <DefaultSettingIcon />
-          )}
+          <GnbSetting active={currentPath === 'more'} />
         </Link>
       </GNBIcon>
     </GNB>
@@ -88,6 +61,11 @@ const GNB = styled.div`
   bottom: 0;
   position: fixed;
   width: 100%;
+
+  @media screen and (max-width: 360px) {
+    gap: unset;
+    justify-content: space-evenly;
+  }
 `;
 
 const GNBIcon = styled.div`

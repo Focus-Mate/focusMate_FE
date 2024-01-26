@@ -46,6 +46,7 @@ const Nickname = ({
         nickname,
       };
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nickname]);
 
   const setNewprofile = async () => {

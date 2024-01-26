@@ -208,11 +208,11 @@ const DDay = styled.div`
   font-size: 1.5rem;
 `;
 
-const CharacterBadge = styled.div`
-  background-color: #e9faf7;
-  border-radius: 20px;
-  margin: 16px 0px 44px 0px;
-`;
+// const CharacterBadge = styled.div`
+//   background-color: #e9faf7;
+//   border-radius: 20px;
+//   margin: 16px 0px 44px 0px;
+// `;
 
 const PeriodTabs = styled.div`
   margin: 40px 0px 20px;

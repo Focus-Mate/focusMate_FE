@@ -8,7 +8,7 @@ import illustEmptyPush from '@/style/images/illust_empty_push.png';
 const Alarm = () => {
   const navigate = useNavigate();
 
-  const [isView, setIsView] = useState(false);
+  const [isView] = useState(false);
 
   return (
     <Container>
