@@ -2,12 +2,12 @@ import StackHeader from '@/component/common/StackHeader';
 import styled from 'styled-components';
 
 import icoWarning from './svg/ico_warning.svg';
-import { useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import instance from '@/instance';
+import useNavigatePop from '@/hooks/useNavigatePop';
 
 const UserRemove = () => {
-  const navigate = useNavigate();
+  const navigatePop = useNavigatePop();
 
   const { mutateAsync: removeUser } = useMutation(async () => {
     const response = await instance.delete(`/api/user/signout`);
@@ -18,7 +18,7 @@ const UserRemove = () => {
   const onClickConfirmRemoveUser = () => {
     removeUser().then(response => {
       localStorage.removeItem('token');
-      navigate('/login');
+      navigatePop('/login');
     });
   };
 
@@ -42,7 +42,7 @@ const UserRemove = () => {
           <OutButton onClick={onClickConfirmRemoveUser}>탈퇴하기</OutButton>
           <CancelButton
             onClick={() => {
-              navigate(-1);
+              navigatePop('/more');
             }}
           >
             취소하기

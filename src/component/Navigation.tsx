@@ -1,11 +1,29 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { GnbTimer } from './component/common/gnb/GnbTimer';
-import GnbChart from './component/common/gnb/GnbChart';
-import GnbAllStudy from './component/common/gnb/GnbAllStudy';
-import GnbMyStudy from './component/common/gnb/GnbMyStudy';
-import GnbSetting from './component/common/gnb/GnbSetting';
+import { GnbTimer } from './common/gnb/GnbTimer';
+import GnbChart from './common/gnb/GnbChart';
+import GnbAllStudy from './common/gnb/GnbAllStudy';
+import GnbMyStudy from './common/gnb/GnbMyStudy';
+import GnbSetting from './common/gnb/GnbSetting';
+import { useSetRecoilState } from 'recoil';
+import { navAtoms } from './Navigation.atoms';
+
+function Button({ to, children }: { to: string; children: React.ReactNode }) {
+  const setPageMoveTarget = useSetRecoilState(navAtoms.pageMoveTarget);
+
+  return (
+    <ButtonComp
+      onClick={() => {
+        setPageMoveTarget(to);
+      }}
+    >
+      {children}
+    </ButtonComp>
+  );
+}
+
+const ButtonComp = styled.div``;
 
 function Navigation() {
   const location = useLocation();
@@ -18,29 +36,29 @@ function Navigation() {
   return (
     <GNB>
       <GNBIcon>
-        <Link to={'timer'}>
+        <Button to={'/timer'}>
           <GnbTimer active={currentPath === 'timer'} />
-        </Link>
+        </Button>
       </GNBIcon>
       <GNBIcon>
-        <Link to={'chart'}>
+        <Button to={'/chart'}>
           <GnbChart active={currentPath === 'chart'} />
-        </Link>
+        </Button>
       </GNBIcon>
       <GNBIcon>
-        <Link to={'allstudies'}>
+        <Button to={'/allstudies'}>
           <GnbAllStudy active={currentPath === 'allstudies'} />
-        </Link>
+        </Button>
       </GNBIcon>
       <GNBIcon>
-        <Link to={'mystudy'}>
+        <Button to={'/mystudy'}>
           <GnbMyStudy active={currentPath === 'mystudy'} />
-        </Link>
+        </Button>
       </GNBIcon>
       <GNBIcon>
-        <Link to={'more'}>
+        <Button to={'/more'}>
           <GnbSetting active={currentPath === 'more'} />
-        </Link>
+        </Button>
       </GNBIcon>
     </GNB>
   );

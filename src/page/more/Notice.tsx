@@ -1,10 +1,10 @@
 import SlideBox from '@/component/more/SlideBox';
 import StackHeader from '@/component/common/StackHeader';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import useNavigatePop from '@/hooks/useNavigatePop';
 
 const Notice = () => {
-  const navigate = useNavigate();
+  const navigatePop = useNavigatePop();
   return (
     <Container>
       <StackHeader
@@ -12,7 +12,7 @@ const Notice = () => {
           line: true,
           before: {
             iconOptions: {
-              onClick: () => navigate('/more'),
+              onClick: () => navigatePop('/more'),
             },
           },
         }}
