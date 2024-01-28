@@ -2,8 +2,8 @@ import instance from '@/instance';
 import StackHeader from '@/component/common/StackHeader';
 import { useState } from 'react';
 import { useMutation } from 'react-query';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import useNavigatePop from '@/hooks/useNavigatePop';
 
 interface changeNicknameResponse {
   data: {
@@ -12,7 +12,7 @@ interface changeNicknameResponse {
 }
 
 const NicknameChange = () => {
-  const navigate = useNavigate();
+  const navigatePop = useNavigatePop();
 
   const [nickname, setNickname] = useState<string>('');
   const [buttonState, setButtonState] = useState(false);
@@ -31,7 +31,7 @@ const NicknameChange = () => {
   const onButtonClick = async () => {
     const result = await changeNickname(nickname);
     if (result.data.message === 'success') {
-      navigate('/more');
+      navigatePop('/more');
     } else {
       alert('닉네임 변경에 실패했습니다.');
     }
@@ -44,7 +44,7 @@ const NicknameChange = () => {
           line: true,
           before: {
             iconOptions: {
-              onClick: () => navigate('/more'),
+              onClick: () => navigatePop('/more'),
             },
           },
         }}

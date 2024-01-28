@@ -15,8 +15,12 @@ import { useQuery } from 'react-query';
 import MyCharactor from '../../component/chart/MyCharactor';
 
 import BottomModal, { SelectedDday } from '@/component/chart/BottomModal';
+import useNavigationComp from '@/component/Navigation.hooks';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export default function Chart() {
+  const { onExitComplete, getCompareSameTarget } = useNavigationComp();
+
   const [visible, setVisible] = useState(false);
   const [selectedDday, selectDday] = useState<SelectedDday>({
     exam: '',
@@ -47,95 +51,119 @@ export default function Chart() {
   //   return <>loading...</>;
   // }
   return (
-    <>
-      <BottomModal
-        visible={visible}
-        selecteExam={selectedDday}
-        setVisible={setVisible}
-      />
-      <Header>
-        <h1>공부 차트</h1>
-        <AlarmIcon />
-      </Header>
-      {ddayList?.length !== 0 ? (
-        <>
-          {ddayList?.map((item: any) => {
-            const dDateData = item.eday;
-            const dDate = dDateData.split('T')[0];
-            return (
-              <DDayContainer key={item.exam}>
-                <Wrapper className="left">
-                  <IconWrapper className="calender">
-                    <CalenderIcon />
-                  </IconWrapper>
-                  <DDayTitle>
-                    <h2> {item.exam} </h2>
-                    <SubTitle>{dDate}</SubTitle>
-                  </DDayTitle>
-                </Wrapper>
-                <Wrapper className="right">
-                  <DDay>
-                    D
-                    {item.dday === 0
-                      ? '-DAY'
-                      : item.dday < 0
-                      ? `+${Math.abs(item.dday)}`
-                      : `-${item.dday}`}
-                  </DDay>
-                  <IconWrapper
-                    className="viewMore"
-                    onClick={() => {
-                      setVisible(true);
-                      selectDday({ exam: item.exam, dday: dDate });
-                    }}
-                  >
-                    <ViewMoreIcon />
-                  </IconWrapper>
-                </Wrapper>
-              </DDayContainer>
-            );
-          })}
-        </>
-      ) : (
-        <DDayContainer
-          onClick={() => {
-            navigate('/makedday');
+    <AnimatePresence onExitComplete={onExitComplete}>
+      {getCompareSameTarget('/chart') && (
+        <Container
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: 1,
+            transition: {
+              duration: 0.3,
+            },
+          }}
+          exit={{
+            opacity: 0,
+            transition: {
+              duration: 0.3,
+            },
           }}
         >
-          <Wrapper>
-            <IconWrapper className="calender">
-              <CalenderIcon />
-            </IconWrapper>
-            D-DAY 추가하기
-          </Wrapper>
-          <Wrapper>
-            <IconWrapper className="arrow">
-              <RightArrowIcon />
-            </IconWrapper>
-          </Wrapper>
-        </DDayContainer>
-      )}
-      <MyCharactor />
-
-      <PeriodTabs>
-        {chartPeriod.map(item => {
-          return (
-            <PeriodTab
-              key={item.id}
-              className={currentTab === item.id ? 'selected' : undefined}
+          <BottomModal
+            visible={visible}
+            selecteExam={selectedDday}
+            setVisible={setVisible}
+          />
+          <Header>
+            <h1>공부 차트</h1>
+            <AlarmIcon />
+          </Header>
+          {ddayList?.length !== 0 ? (
+            <>
+              {ddayList?.map((item: any) => {
+                const dDateData = item.eday;
+                const dDate = dDateData.split('T')[0];
+                return (
+                  <DDayContainer key={item.exam}>
+                    <Wrapper className="left">
+                      <IconWrapper className="calender">
+                        <CalenderIcon />
+                      </IconWrapper>
+                      <DDayTitle>
+                        <h2> {item.exam} </h2>
+                        <SubTitle>{dDate}</SubTitle>
+                      </DDayTitle>
+                    </Wrapper>
+                    <Wrapper className="right">
+                      <DDay>
+                        D
+                        {item.dday === 0
+                          ? '-DAY'
+                          : item.dday < 0
+                          ? `+${Math.abs(item.dday)}`
+                          : `-${item.dday}`}
+                      </DDay>
+                      <IconWrapper
+                        className="viewMore"
+                        onClick={() => {
+                          setVisible(true);
+                          selectDday({ exam: item.exam, dday: dDate });
+                        }}
+                      >
+                        <ViewMoreIcon />
+                      </IconWrapper>
+                    </Wrapper>
+                  </DDayContainer>
+                );
+              })}
+            </>
+          ) : (
+            <DDayContainer
               onClick={() => {
-                setCurrentTab(item.id);
+                navigate('/makedday');
               }}
             >
-              {item.period}
-            </PeriodTab>
-          );
-        })}
-      </PeriodTabs>
-      {chartPeriod[currentTab - 1]?.content}
-    </>
+              <Wrapper>
+                <IconWrapper className="calender">
+                  <CalenderIcon />
+                </IconWrapper>
+                D-DAY 추가하기
+              </Wrapper>
+              <Wrapper>
+                <IconWrapper className="arrow">
+                  <RightArrowIcon />
+                </IconWrapper>
+              </Wrapper>
+            </DDayContainer>
+          )}
+          <MyCharactor />
+
+          <PeriodTabs>
+            {chartPeriod.map(item => {
+              return (
+                <PeriodTab
+                  key={item.id}
+                  className={currentTab === item.id ? 'selected' : undefined}
+                  onClick={() => {
+                    setCurrentTab(item.id);
+                  }}
+                >
+                  {item.period}
+                </PeriodTab>
+              );
+            })}
+          </PeriodTabs>
+          {chartPeriod[currentTab - 1]?.content}
+        </Container>
+      )}
+    </AnimatePresence>
   );
 }
+
+const Container = styled(motion.div)`
+  padding: 0 20px;
+`;
 
 const CalenderIcon = styled(DDayIcon)`
   fill: ${({ theme }) => theme.colors.primary[800]};

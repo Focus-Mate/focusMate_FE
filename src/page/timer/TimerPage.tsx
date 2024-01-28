@@ -5,6 +5,8 @@ import TimerCircle from '@/component/timer/TimerPage/TimerCircle';
 import TimerBottomSlideBox from '@/component/timer/TimerPage/TimerBottomSlideBox';
 import useTimerLogic from '@/component/timer/TimerPage/hooks/useTimerLogic';
 import TimerController from '@/component/timer/TimerPage/TimerController';
+import { AnimatePresence, motion } from 'framer-motion';
+import useNavigationComp from '@/component/Navigation.hooks';
 
 const circleWidth = 300;
 
@@ -34,38 +36,60 @@ function Timer() {
     resultTime,
   } = useTimerLogic();
 
-  return (
-    <Container>
-      <TimerBottomSlideBox />
-      {/* 타이머 저장 / 취소 팝업 */}
-      <TimerSavePop
-        playStatus={playStatus}
-        onResetClick={onClickTimerReset}
-        onConfirmClick={onClickTimerSave}
-      />
+  const { onExitComplete, getCompareSameTarget } = useNavigationComp();
 
-      {/* 타이머 SVG 그리기 */}
-      <TimerCircle
-        circleWidth={circleWidth}
-        radius={radius}
-        dashArray={dashArray}
-        dashOffset={dashOffset}
-      >
-        <TimeText>공부시간 기록하기</TimeText>
-        <Time>{getTimerText(resultTime)}</Time>
-      </TimerCircle>
-      <TimerController
-        playStatus={playStatus}
-        onClickPlay={onClickPlay}
-        onClickStop={onClickStop}
-      />
-    </Container>
+  return (
+    <AnimatePresence onExitComplete={onExitComplete}>
+      {getCompareSameTarget('/timer') && (
+        <Container
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: 1,
+            transition: {
+              duration: 0.3,
+            },
+          }}
+          exit={{
+            opacity: 0,
+            transition: {
+              duration: 0.3,
+            },
+          }}
+        >
+          <TimerBottomSlideBox />
+          {/* 타이머 저장 / 취소 팝업 */}
+          <TimerSavePop
+            playStatus={playStatus}
+            onResetClick={onClickTimerReset}
+            onConfirmClick={onClickTimerSave}
+          />
+
+          {/* 타이머 SVG 그리기 */}
+          <TimerCircle
+            circleWidth={circleWidth}
+            radius={radius}
+            dashArray={dashArray}
+            dashOffset={dashOffset}
+          >
+            <TimeText>공부시간 기록하기</TimeText>
+            <Time>{getTimerText(resultTime)}</Time>
+          </TimerCircle>
+          <TimerController
+            playStatus={playStatus}
+            onClickPlay={onClickPlay}
+            onClickStop={onClickStop}
+          />
+        </Container>
+      )}
+    </AnimatePresence>
   );
 }
 
 export default Timer;
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   position: absolute;
   width: 100%;
   height: 100vh;

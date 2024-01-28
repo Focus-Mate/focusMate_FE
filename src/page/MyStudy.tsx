@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 import myStudyPng from '@/style/images/illust_mystudy.png';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import useNavigationComp from '@/component/Navigation.hooks';
 
 const motionVariants = {
   hidden: {
@@ -14,95 +15,110 @@ const motionVariants = {
   },
 };
 
-function MyStudy() {
+interface Props {}
+
+function MyStudy(props: Props) {
+  const { onExitComplete, getCompareSameTarget } = useNavigationComp();
+
   return (
-    <Container>
-      <Content>
-        <TopView>
-          <Title
-            variants={motionVariants}
-            initial={'hidden'}
-            animate={'visible'}
-            transition={{
-              delay: 0.3,
-              duration: 0.1,
-              stiffness: 10,
-            }}
-          >
-            나의 스터디 탭을
-            <br />
-            준비중이에요.
-          </Title>
-          <Description
-            variants={motionVariants}
-            initial={'hidden'}
-            animate={'visible'}
-            transition={{
-              delay: 0.5,
-              duration: 0.1,
-              stiffness: 10,
-            }}
-          >
-            '나의 스터디'에서는 팀원과
-            <br />
-            스터디를 함께 할 수 있어요.
-          </Description>
-          <Square
-            initial={{
-              opacity: 0,
-              transform: 'scale(0.5)',
-            }}
-            animate={{
-              opacity: 1,
-              transform: 'scale(1)',
-            }}
-            transition={{
-              delay: 0.7,
-              duration: 0.1,
-              stiffness: 10,
-            }}
-          >
-            <img src={myStudyPng} alt="my study" />
-          </Square>
-        </TopView>
-        <BottomView>
-          <TipBox
-            variants={motionVariants}
-            initial={'hidden'}
-            animate={'visible'}
-            transition={{
-              delay: 0.9,
-              duration: 0.1,
-              stiffness: 10,
-            }}
-          >
-            <TipTitle>TIP</TipTitle>
-            <Comment>
-              앱 사용 후기를 남겨주시면
-              <br />더 멋진 서비스로 찾아올게요!
-            </Comment>
-          </TipBox>
-          <Button
-            variants={motionVariants}
-            initial={'hidden'}
-            animate={'visible'}
-            transition={{
-              delay: 1.1,
-              duration: 0.1,
-              stiffness: 10,
-            }}
-          >
-            의견 남기러 가기
-          </Button>
-        </BottomView>
-      </Content>
-    </Container>
+    <AnimatePresence onExitComplete={onExitComplete}>
+      {getCompareSameTarget('/mystudy') && (
+        <Container
+          exit={{
+            opacity: 0,
+            transition: {
+              duration: 0.3,
+            },
+          }}
+        >
+          <Content>
+            <TopView>
+              <Title
+                variants={motionVariants}
+                initial={'hidden'}
+                animate={'visible'}
+                transition={{
+                  delay: 0.3,
+                  duration: 0.1,
+                  stiffness: 10,
+                }}
+              >
+                나의 스터디 탭을
+                <br />
+                준비중이에요.
+              </Title>
+              <Description
+                variants={motionVariants}
+                initial={'hidden'}
+                animate={'visible'}
+                transition={{
+                  delay: 0.5,
+                  duration: 0.1,
+                  stiffness: 10,
+                }}
+              >
+                '나의 스터디'에서는 팀원과
+                <br />
+                스터디를 함께 할 수 있어요.
+              </Description>
+              <Square
+                initial={{
+                  opacity: 0,
+                  transform: 'scale(0.5)',
+                }}
+                animate={{
+                  opacity: 1,
+                  transform: 'scale(1)',
+                }}
+                transition={{
+                  delay: 0.7,
+                  duration: 0.1,
+                  stiffness: 10,
+                }}
+              >
+                <img src={myStudyPng} alt="my study" />
+              </Square>
+            </TopView>
+            <BottomView>
+              <TipBox
+                variants={motionVariants}
+                initial={'hidden'}
+                animate={'visible'}
+                transition={{
+                  delay: 0.9,
+                  duration: 0.1,
+                  stiffness: 10,
+                }}
+              >
+                <TipTitle>TIP</TipTitle>
+                <Comment>
+                  앱 사용 후기를 남겨주시면
+                  <br />더 멋진 서비스로 찾아올게요!
+                </Comment>
+              </TipBox>
+              <Button
+                variants={motionVariants}
+                initial={'hidden'}
+                animate={'visible'}
+                transition={{
+                  delay: 1.1,
+                  duration: 0.1,
+                  stiffness: 10,
+                }}
+              >
+                의견 남기러 가기
+              </Button>
+            </BottomView>
+          </Content>
+        </Container>
+      )}
+    </AnimatePresence>
   );
 }
 
 export default MyStudy;
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   display: flex;
   width: 100%;
   height: calc(100vh - 75px);
