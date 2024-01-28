@@ -77,8 +77,8 @@ const GNB = styled.div`
   border-bottom: 0px;
   border-radius: 24px 24px 0px 0px;
   bottom: 0;
-  position: fixed;
   width: 100%;
+  position: fixed;
 
   @media screen and (max-width: 360px) {
     gap: unset;

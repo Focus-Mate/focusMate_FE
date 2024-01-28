@@ -9,14 +9,14 @@ interface Props {
 
 // env mode가 development일 경우에만 보이게 하는 HOC이지만 isShow가 true일 경우에도 보이게 할 수 있음
 export function DevHoc({ children, isShow }: Props) {
-  const isComponentShow = envConfig.MODE === 'development' || isShow;
+  const isComponentShow = envConfig.MODE === 'DEVELOPMENT' || isShow;
 
-  return isComponentShow ? children : null;
+  return <>{isComponentShow ? children : null}</>;
 }
 
 // env mode가 release일 경우에만 보이게 하는 HOC이지만 isShow가 true일 경우에도 보이게 할 수 있음
 export function ReleaseHoc({ children, isShow }: Props) {
-  const isComponentShow = envConfig.MODE === 'release' || isShow;
+  const isComponentShow = envConfig.MODE === 'RELEASE' || isShow;
 
-  return isComponentShow ? children : null;
+  return <>{isComponentShow ? children : null}</>;
 }
