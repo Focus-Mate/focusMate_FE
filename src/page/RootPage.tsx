@@ -23,7 +23,21 @@ export default function RootPage(props: Props) {
   );
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+`;
 
-const Content = styled.div``;
-const Footer = styled.div``;
+const Content = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+`;
+
+const Footer = styled.div`
+  height: 75px;
+  flex-shrink: 0;
+`;

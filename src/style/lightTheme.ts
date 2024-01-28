@@ -1,3 +1,5 @@
+import { fontsTheme } from './fontsTheme';
+
 export type ThemeType = typeof lightTheme;
 
 // Grey
@@ -58,19 +60,10 @@ const colors = {
   icon,
 };
 
-const fonts = {
-  spoqa: {
-    thin: 'SpoqaThin',
-    light: 'SpoqaLight',
-    regular: 'SpoqaRegular',
-    medium: 'SpoqaMedium',
-    bold: 'SpoqaBold',
-  },
-};
-
 export const lightTheme = {
   colors,
-  fonts,
+  fonts: fontsTheme.fonts,
+  typography: fontsTheme.typography,
 };
 
 export default lightTheme as ThemeType;

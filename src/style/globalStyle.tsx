@@ -1,12 +1,12 @@
-import styled, { createGlobalStyle } from "styled-components";
-import Theme from "./lightTheme";
+import styled, { createGlobalStyle } from 'styled-components';
+import Theme from './lightTheme';
 import {
   SpoqaRegular,
   SpoqaLight,
   SpoqaMedium,
   SpoqaThin,
   SpoqaBold,
-} from "./fonts/index";
+} from './fonts/index';
 
 //전역 스타일링
 export const GlobalStyle = createGlobalStyle`
@@ -108,6 +108,15 @@ export const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
   }
+
+  div::-webkit-scrollbar {
+    display: none;
+  }
+
+  div {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 `;
 
 export const Input = styled.input`
@@ -126,16 +135,16 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
-  background-color: ${(props) =>
+  background-color: ${props =>
     props.disabled ? Theme.colors.bg.line : Theme.colors.primary[700]};
   border-radius: 16px;
-  font-family: "SpoqaBold";
-  color: ${(props) =>
+  font-family: 'SpoqaBold';
+  color: ${props =>
     props.disabled ? Theme.colors.grey[500] : Theme.colors.bg.base};
   width: 100%;
   padding: 16px 0px;
   border: 0px solid transparent;
-  cursor: ${(props) => (props.disabled ? "default" : "pointer")};
+  cursor: ${props => (props.disabled ? 'default' : 'pointer')};
 `;
 
 export const Title = styled.h1`

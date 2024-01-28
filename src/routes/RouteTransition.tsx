@@ -112,6 +112,6 @@ const Container = styled.div`
 
   .transition-wrapper {
     position: relative;
-    width: 100vw;
+    width: 100%;
   }
 `;
