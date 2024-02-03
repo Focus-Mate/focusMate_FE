@@ -1,11 +1,11 @@
 name: CI
-
+runs:
+  using: 'node20'
 on:
   push:
     branches: [release]
   pull_request:
     branches: [release]
-
   workflow_dispatch:
 jobs:
   build:
@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - name: Checkout source code.
-        uses: actions/checkout@master
+        uses: actions/checkout@release
 
       - name: Cache node modules
         uses: actions/cache@v1
