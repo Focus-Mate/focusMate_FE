@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Checkout source code.
-        uses: actions/checkout@release
+        uses: actions/checkout@master
 
       - name: Cache node modules
         uses: actions/cache@v1
@@ -47,9 +47,15 @@ jobs:
           REACT_APP_REGION: ${{ secrets.AWS_REGION }}
 
       - name: Install Dependencies
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
         run: npm install
 
       - name: Build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
         run: CI=false npm run build
 
       - name: Deploy
