@@ -1,6 +1,6 @@
-import { Outlet } from "react-router-dom";
-import styled from "styled-components";
-import Navigation from "../Navigation";
+import { Outlet } from 'react-router-dom';
+import styled from 'styled-components';
+import Navigation from '../component/Navigation';
 
 export default function NavLayout() {
   return (
@@ -13,6 +13,4 @@ export default function NavLayout() {
   );
 }
 
-const NavLayoutContainer = styled.div`
-  padding: 20px;
-`;
+const NavLayoutContainer = styled.div``;

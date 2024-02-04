@@ -1,4 +1,4 @@
-import Router from './Router';
+import Router from './routes/Router';
 import { GlobalStyle } from './style/globalStyle';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
@@ -28,6 +28,19 @@ const queryClient = new QueryClient({
 
 function App() {
   const [isDark, setIsDark] = useRecoilState(isThemeDark);
+
+  function setScreenSize() {
+    let vh = window.innerHeight * 0.01;
+    //주소창을 제외한 영역을 "--vh"라는 속성으로 정의
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }
+
+  useEffect(() => {
+    setScreenSize();
+  });
+
+  window.addEventListener('resize', () => setScreenSize());
+
   useEffect(() => {
     const screenMode = localStorage.getItem('screenMode');
     if (screenMode === '1') {

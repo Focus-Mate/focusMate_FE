@@ -1,9 +1,9 @@
 import StackHeader from '@/component/common/StackHeader';
-import { useNavigate } from 'react-router-dom';
+import useNavigatePop from '@/hooks/useNavigatePop';
 import styled from 'styled-components';
 
 const Service = () => {
-  const navigate = useNavigate();
+  const navigatePop = useNavigatePop();
   return (
     <Container>
       <StackHeader
@@ -11,7 +11,7 @@ const Service = () => {
           line: true,
           before: {
             iconOptions: {
-              onClick: () => navigate('/more'),
+              onClick: () => navigatePop('/more'),
             },
           },
         }}
