@@ -172,6 +172,7 @@ const Wrapper = styled(motion.div)`
   top: 0;
   width: 100%;
   height: 100vh;
+  height: 100%;
   background-color: ${({ theme }) => theme.colors.bg.base};
   padding: 20px;
   color: ${({ theme }) => theme.colors.grey[800]};

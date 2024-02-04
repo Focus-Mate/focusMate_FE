@@ -57,7 +57,8 @@ export default Login;
 const LoginContainer = styled.div`
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
+  height: 100dvh;
   display: flex;
   justify-content: center;
   flex-direction: column;
