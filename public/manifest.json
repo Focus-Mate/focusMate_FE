@@ -1,6 +1,7 @@
 {
   "short_name": "focusMate",
-  "name": "사람들과 같이 모여 공부할 때 더 집중할 수 있는 사람들을 위한 스터디 그룹 앱",
+  "name": "포커스 메이트",
+  "description": "사람들과 같이 모여 공부할 때 더 집중할 수 있는 사람들을 위한 스터디 그룹 앱",
   "icons": [
     {
       "src": "favicon.ico",
@@ -9,13 +10,21 @@
     },
     {
       "src": "maskable_icon_x512.png",
-      "sizes": "512x512 144x144",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable any"
+    },
+    {
+      "src": "maskable_icon_x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
     }
   ],
   "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "prefer_related_applications": true,
+  "categories": ["study"]
 }
