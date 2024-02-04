@@ -20,7 +20,7 @@ jobs:
       - name: Checkout source code.
         uses: actions/checkout@v4
         with:
-          ref: relase
+          ref: release
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
