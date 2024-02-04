@@ -92,7 +92,7 @@ export default Timer;
 const Container = styled(motion.div)`
   position: absolute;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   padding: 0 1rem;
   left: 0;
   top: 0;

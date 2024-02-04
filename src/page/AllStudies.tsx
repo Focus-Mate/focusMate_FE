@@ -22,12 +22,7 @@ function AllStudies(props: Props) {
             },
           }}
         >
-          <DevHoc>
-            <AllStudiesDev />
-          </DevHoc>
-          <ReleaseHoc>
-            <AllStudiesReady />
-          </ReleaseHoc>
+          <AllStudiesReady />
         </Container>
       )}
     </AnimatePresence>
@@ -39,7 +34,7 @@ export default AllStudies;
 const Container = styled(motion.div)`
   display: flex;
   width: 100%;
-  height: calc(100vh - 75px);
+  height: calc(100% - 75px);
   flex-direction: column;
   justify-content: center;
   position: absolute;
