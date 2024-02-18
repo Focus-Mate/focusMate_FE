@@ -22,12 +22,7 @@ function AllStudies(props: Props) {
             },
           }}
         >
-          <DevHoc>
-            <AllStudiesDev />
-          </DevHoc>
-          <ReleaseHoc>
-            <AllStudiesReady />
-          </ReleaseHoc>
+          <AllStudiesReady />
         </Container>
       )}
     </AnimatePresence>
