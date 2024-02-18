@@ -77,9 +77,11 @@ export default function AgreeStep({
                 )}
               </AgreementCheckBox>
               {agree.agreement} {agree.option}
-              <SeeMoreArrow to={agree.title}>
-                <SeeAgreementsArrow />
-              </SeeMoreArrow>
+              {agree.title !== AgreementEnum.MARKETING && (
+                <SeeMoreArrow to={agree.title}>
+                  <SeeAgreementsArrow />
+                </SeeMoreArrow>
+              )}
             </SingleAgreement>
           );
         })}

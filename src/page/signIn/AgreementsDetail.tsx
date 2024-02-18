@@ -2,8 +2,8 @@ import { agreementList } from '@/component/signIn/AgreeStep';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import ServiceDetail from '@/component/signIn/ServiceDetail';
-import PrivacyDetail from '@/component/signIn/PrivacyDetail';
+import ServiceTerms from '@/component/signIn/ServiceTerms';
+import PrivacyTerms from '@/component/signIn/PrivacyTerms';
 import { ReactComponent as BackArrow } from '@/style/icon/backArrow.svg';
 
 export enum AgreementEnum {
@@ -44,8 +44,8 @@ export default function AgreementsDetail() {
         </TitleContainer>
       </Title>
       <Details>
-        {title === AgreementEnum.SERVICE && <ServiceDetail />}
-        {title === AgreementEnum.PRIVACY && <PrivacyDetail />}
+        {title === AgreementEnum.SERVICE && <ServiceTerms />}
+        {title === AgreementEnum.PRIVACY && <PrivacyTerms />}
       </Details>
     </DetailContainer>
   );
