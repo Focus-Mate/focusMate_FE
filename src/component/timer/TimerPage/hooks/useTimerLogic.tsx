@@ -36,27 +36,29 @@ const useTimerLogic = () => {
   // 타이머 시작 시점에 서버에서 시간을 가져와서 stackTime에 저장
   useEffect(() => {
     const getData = async () => {
-      // const response = await instance.get(`/api/calculate/timer`);
-      // if (!(response.data === '' || !response.data)) {
-      // setPlayStatus(TimerStatus.PLAYING);
-      // startTime.current = (new Date(response.data.studyDate)).getTime();
-      // setTimerId(response.data.studyDate);
-      // startTime.current = new Date('2023-12-17T15:56:22.293Z').getTime(); 예시 시간
-      // }
-      // function timeout() {
-      //   setTimeout(() => {
-      //     endTime.current = Date.now();
-      //     // 시간 정확도를 위해 setTimeout이 아닌 기기 시간을 사용해 계산
-      //     const time = new Date(endTime.current - startTime.current);
-      //     const hour = time.getUTCHours() * 3600000;
-      //     const minute = time.getUTCMinutes() * 60000;
-      //     const second = time.getUTCSeconds() * 1000;
-      //     const milliSecond = time.getUTCMilliseconds();
-      //     setNowTime(hour + minute + second + milliSecond);
-      //     timeout();
-      //   }, 100);
-      // }
-      // timeout();
+      const response = await instance.get(`/api/calculate/timer`);
+
+      console.log(response);
+      if (!(response.data === '' || !response.data)) {
+        setPlayStatus(TimerStatus.PLAYING);
+        startTime.current = new Date(response.data.studyDate).getTime();
+        setTimerId(response.data.studyDate);
+        // startTime.current = new Date('2023-12-17T15:56:22.293Z').getTime(); // 예시 시간
+      }
+      function timeout() {
+        setTimeout(() => {
+          endTime.current = Date.now();
+          // 시간 정확도를 위해 setTimeout이 아닌 기기 시간을 사용해 계산
+          const time = new Date(endTime.current - startTime.current);
+          const hour = time.getUTCHours() * 3600000;
+          const minute = time.getUTCMinutes() * 60000;
+          const second = time.getUTCSeconds() * 1000;
+          const milliSecond = time.getUTCMilliseconds();
+          setNowTime(hour + minute + second + milliSecond);
+          timeout();
+        }, 100);
+      }
+      timeout();
     };
 
     getData();
