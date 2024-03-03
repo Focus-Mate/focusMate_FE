@@ -18,7 +18,6 @@ const LandingGuide = () => {
 
   //NOTE 추후에 login user / guest 분기점으로 사용
   useEffect(() => {
-    console.log(screenMode);
     if (!token) {
       if (
         kakaoAcsToken !== null &&

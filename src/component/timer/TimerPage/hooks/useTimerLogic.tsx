@@ -41,19 +41,25 @@ const useTimerLogic = () => {
       console.log(response);
       if (!(response.data === '' || !response.data)) {
         setPlayStatus(TimerStatus.PLAYING);
-        startTime.current = new Date(response.data.studyDate).getTime();
+        const resumeTime = new Date(response.data.studyDate).getTime();
+
+        console.log('resumeTime' + resumeTime);
+        startTime.current = resumeTime;
         setTimerId(response.data.studyDate);
         // startTime.current = new Date('2023-12-17T15:56:22.293Z').getTime(); // 예시 시간
       }
       function timeout() {
         setTimeout(() => {
-          endTime.current = Date.now();
+          endTime.current = new Date().getTime();
           // 시간 정확도를 위해 setTimeout이 아닌 기기 시간을 사용해 계산
-          const time = new Date(endTime.current - startTime.current);
-          const hour = time.getUTCHours() * 3600000;
-          const minute = time.getUTCMinutes() * 60000;
-          const second = time.getUTCSeconds() * 1000;
-          const milliSecond = time.getUTCMilliseconds();
+          const time = new Date(
+            Number(endTime.current) - Number(startTime.current),
+          );
+
+          const hour = time.getHours() * 3600000;
+          const minute = time.getMinutes() * 60000;
+          const second = time.getSeconds() * 1000;
+          const milliSecond = time.getMilliseconds();
           setNowTime(hour + minute + second + milliSecond);
           timeout();
         }, 100);

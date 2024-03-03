@@ -22,6 +22,7 @@ interface PeriodSelectorProps {
 const PeriodSelector = ({ period }: PeriodSelectorProps) => {
   // note: startdate = Date 객체 원본
   const [startDate, setStartDate] = useState(new Date());
+
   const [isToday, setIsToday] = useState(true);
   const setRequestDay = useSetRecoilState(ChartDateState);
   const { monday, sunday } = getMondayAndSundayDates(startDate);
@@ -119,7 +120,10 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
   };
 
   const dailyChartRequest = () => {
-    const day = startDate.toISOString();
+    // toISOString은 영국 표준시를 기준으로 나오기 때문에
+    // 9시간 오차 발생 조정 코드
+    const offset = new Date().getTimezoneOffset() * 60000;
+    const day = new Date(startDate.getTime() - offset).toISOString();
     return setRequestDay({ theDay: day.substring(0, day.length - 14) });
   };
 

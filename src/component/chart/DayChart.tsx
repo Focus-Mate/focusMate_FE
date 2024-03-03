@@ -18,6 +18,8 @@ const DayChart = () => {
   const [allStudyTime, setAllStudyTime] = useState<number>(0);
   const requestDay = useRecoilValue(ChartDateState);
 
+  console.log('requestDay', requestDay);
+
   const { data: dayRecord } = useQuery(
     ['dayRecord', requestDay.theDay],
     async () => {
