@@ -65,6 +65,7 @@ export const GlobalStyle = createGlobalStyle`
     font: inherit;
     vertical-align: baseline;
     box-sizing: border-box;
+    font-family: "SpoqaRegular";
   }
   
   /* HTML5 display-role reset for older browsers */
@@ -97,8 +98,6 @@ export const GlobalStyle = createGlobalStyle`
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;  
     box-sizing: border-box;
-    font-family: "SpoqaRegular";
-    font-weight: 400;
   }
 
   /* h1, h2, h3, h4, h5, h6 {
