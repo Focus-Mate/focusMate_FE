@@ -123,6 +123,10 @@ function Setting() {
                             );
 
                             console.log(response);
+                            localStorage.setItem(
+                              'screenMode',
+                              !darkMode ? '1' : '0',
+                            );
                             setDarkMode(mode => !mode);
                           } catch (e) {}
                         }}
