@@ -12,6 +12,7 @@ import MoreRouter from './MoreRouter';
 
 const Router = () => {
   const location = useLocation();
+  // RouteChangeTracker();
 
   return (
     <Routes location={location}>
