@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import ReactModal from 'react-modal';
 import { atom, useRecoilState, useSetRecoilState } from 'recoil';
 import styled, { css, keyframes } from 'styled-components';
-import { snackBarStatus } from '../../common/bar/StatusSnackBar';
+import { snackBarStatus } from '../../../common/bar/StatusSnackBar';
 
-export const timerBottomSlider = atom<
+export const timerBottomSliderAtom = atom<
   {
     id: number;
     isActive: boolean;
@@ -42,7 +42,7 @@ const modalStyle = {
 };
 
 const TimerBottomSlideBox: React.FC<BottomSlideBoxProps> = () => {
-  const [slider, setSlider] = useRecoilState(timerBottomSlider);
+  const [slider, setSlider] = useRecoilState(timerBottomSliderAtom);
   const setStatusSnackBar = useSetRecoilState(snackBarStatus);
 
   const onClose = (idx: number) => {
@@ -205,7 +205,11 @@ const SliderWrapper = styled.div`
   height: 100%;
 `;
 
-const Picture = styled.div``;
+const Picture = styled.div`
+  img {
+    width: 136px;
+  }
+`;
 const Title = styled.div`
   margin-bottom: 20px;
   font-size: 20px;
@@ -220,7 +224,7 @@ const Mission = styled.div`
   display: flex;
   align-items: center;
   color: ${({ theme }) => theme.colors.grey[800]};
-  margin-bottom: 12px;
+  margin-bottom: 5px;
 `;
 
 const MissionBox = styled.div`
@@ -235,9 +239,10 @@ const MissionBox = styled.div`
 const Button = styled.button`
   width: 320px;
   height: 48px;
+  flex-shrink: 0;
   background-color: ${({ theme }) => theme.colors.primary[700]};
   color: ${({ theme }) => theme.colors.bg.base};
   border: 0;
   border-radius: 16px;
-  margin-top: 28px;
+  margin-top: 4px;
 `;

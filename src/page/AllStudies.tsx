@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
 import useNavigationComp from '@/component/Navigation.hooks';
 import AllStudiesReady from '@/component/allstudies/AllStudiesReady';
-import { DevHoc, ReleaseHoc } from '@/layout/DevHoc';
-import AllStudiesDev from '@/component/allstudies/AllStudiesDev';
 
 interface Props {}
 
