@@ -51,10 +51,6 @@ const Container = styled(motion.div)`
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.bg.base};
 
-  svg {
-    margin-top: -120px;
-  }
-
   @media (max-width: 330px) {
     svg {
       width: 100%;
