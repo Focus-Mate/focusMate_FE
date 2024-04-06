@@ -23,7 +23,11 @@ export function TimerCircle(props: Props): React.ReactElement {
   const timerDashOffset = useRecoilValue(timerDashOffsetAtom);
 
   return (
-    <div>
+    <div
+      style={{
+        marginTop: '-120px',
+      }}
+    >
       <svg
         width={timer.circleWidth}
         height={timer.circleWidth}

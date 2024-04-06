@@ -7,6 +7,8 @@ import { useEffect } from 'react';
 import dayjs from 'dayjs';
 import { timerApi } from '../api';
 import { produce } from 'immer';
+import { SvgTimerPlay } from '@/component/timer/Timer/components/SvgTimerPlay';
+import { SvgTimerStop } from '@/component/timer/Timer/components/SvgTimerStop';
 
 interface Props {}
 
@@ -72,13 +74,13 @@ export default function TimerController(props: Props) {
         {/* 상태에 따른 버튼 출현 & 로직 분기 */}
         {timerStatus.playStatus === 'NONE' && (
           <Button onClick={onClickPlay}>
-            <img src={playIcon} alt="play" />
+            <SvgTimerPlay />
           </Button>
         )}
         {(timerStatus.playStatus === 'PLAYING' ||
           timerStatus.playStatus === 'STOP') && (
           <Button onClick={onClickStop}>
-            <img src={stopIcon} alt="stop" />
+            <SvgTimerStop />
           </Button>
         )}
       </ButtonWrap>
