@@ -96,13 +96,14 @@ const Content = styled.div`
 `;
 
 const Header2 = styled.h2`
-  font-size: 1.5rem;
-  line-height: 1.5;
+  font-size: 24px;
+  font-family: ${({ theme }) => theme.fonts.spoqa.medium};
+  line-height: 32px;
   color: ${({ theme }) => theme.colors.grey[900]};
 `;
 
 const InputBox = styled.div`
-  margin-top: 2rem;
+  margin-top: 40px;
 `;
 
 const Input = styled.input`
@@ -114,6 +115,7 @@ const Input = styled.input`
   padding: 0 20px;
   outline: none;
   color: ${({ theme }) => theme.colors.grey[500]};
+  font-size: 16px;
 `;
 
 const ButtonBox = styled.div`
@@ -129,8 +131,10 @@ const Button = styled.button<{
 }>`
   width: 100%;
   height: 48px;
+  flex-shrink: 0;
   border: 0;
   border-radius: 16px;
+  font-size: 16px;
   background: ${({ theme, isActive }) =>
     isActive ? theme.colors.primary[800] : theme.colors.bg.line};
   color: ${({ theme, isActive }) =>

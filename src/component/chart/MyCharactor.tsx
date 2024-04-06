@@ -32,7 +32,7 @@ const Container = styled.div`
   text-align: center;
   padding: 20px;
   width: 100%;
-  background-color: ${theme.colors.bg.mint10};
+  background-color: ${({ theme }) => theme.colors.bg.mint10};
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -41,9 +41,12 @@ const Container = styled.div`
 `;
 
 const CharactorTitle = styled(Title)`
-  font-family: 'SpoqaMedium';
   margin-bottom: 0px;
   padding-top: 15px;
+  font-size: 20px;
+  line-height: 26px;
+  font-family: ${({ theme }) => theme.fonts.spoqa.medium};
+  color: ${({ theme }) => theme.colors.grey[900]};
 `;
 
 const CharactorWrapper = styled.div``;

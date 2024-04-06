@@ -17,6 +17,7 @@
     "@types/styled-components": "^5.1.26",
     "babel-plugin-module-resolver": "^5.0.0",
     "craco-plugin-env": "^1.0.5",
+    "prettier": "^3.2.5",
     "web-vitals": "^2.1.4"
   },
   "dependencies": {
