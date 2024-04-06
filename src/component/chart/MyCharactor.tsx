@@ -1,27 +1,32 @@
 import styled from 'styled-components';
 import { Button, Title } from '../../style/globalStyle';
+import theme from '../../style/lightTheme';
 import MyCharactorPng from '../../style/charactor/character_size_area.png';
 import { useNavigate } from 'react-router-dom';
+import { CharactorBtnArrow } from '../../style/icon/chartPage/index';
 
 export default function MyCharactor() {
   const navigate = useNavigate();
   return (
     <Container>
       <CharactorTitle>
-        주어진 목표를 달성하고 <br />
-        캐릭터를 모아봐요
+        미션을 완료하고 <br />
+        캐릭터를 모아보세요!
       </CharactorTitle>
       모은 캐릭터 1/11 <br />
-      새로운 목표가 추가되었어요!
       <CharactorWrapper>
         <MyCharactorImg src={MyCharactorPng} />
       </CharactorWrapper>
-      <Button onClick={() => navigate('/characters')}>
-        모은 캐릭터 보러가기 ❯
-      </Button>
+      <CharactorBtn onClick={() => navigate('/characters')}>
+        모은 캐릭터 보러가기 <CharactorBtnArrow />
+      </CharactorBtn>
     </Container>
   );
 }
+
+const CharactorBtn = styled(Button)`
+  font-size: 1rem;
+`;
 
 const Container = styled.div`
   text-align: center;
