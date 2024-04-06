@@ -101,8 +101,8 @@ export default function Chart() {
                         {item.dday === 0
                           ? '-DAY'
                           : item.dday < 0
-                          ? `+${Math.abs(item.dday)}`
-                          : `-${item.dday}`}
+                            ? `+${Math.abs(item.dday)}`
+                            : `-${item.dday}`}
                       </DDay>
                       <IconWrapper
                         className="viewMore"
@@ -163,19 +163,22 @@ export default function Chart() {
 
 const Container = styled(motion.div)`
   padding: 0 20px;
+  background-color: ${({ theme }) => theme.colors.bg.base};
 `;
 
 const CalenderIcon = styled(DDayIcon)`
   fill: ${({ theme }) => theme.colors.primary[800]};
 `;
+
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 24px 0px;
   h1 {
-    font-weight: 600;
-    font-size: 1.25rem;
+    font-family: ${({ theme }) => theme.fonts.spoqa.medium};
+    font-size: 20px;
+    color: ${({ theme }) => theme.colors.grey[900]};
   }
 `;
 

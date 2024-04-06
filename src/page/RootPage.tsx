@@ -35,9 +35,11 @@ const Content = styled.div`
   width: 100%;
   height: 100%;
   overflow: scroll;
+  background-color: ${({ theme }) => theme.colors.bg.base};
 `;
 
 const Footer = styled.div`
   height: 75px;
   flex-shrink: 0;
+  background-color: ${({ theme }) => theme.colors.bg.base};
 `;

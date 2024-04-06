@@ -34,37 +34,41 @@ function Navigation() {
   }, [location]);
 
   return (
-    <GNB>
-      <GNBIcon>
-        <Button to={'/timer'}>
-          <GnbTimer active={currentPath === 'timer'} />
-        </Button>
-      </GNBIcon>
-      <GNBIcon>
-        <Button to={'/chart'}>
-          <GnbChart active={currentPath === 'chart'} />
-        </Button>
-      </GNBIcon>
-      <GNBIcon>
-        <Button to={'/allstudies'}>
-          <GnbAllStudy active={currentPath === 'allstudies'} />
-        </Button>
-      </GNBIcon>
-      <GNBIcon>
-        <Button to={'/mystudy'}>
-          <GnbMyStudy active={currentPath === 'mystudy'} />
-        </Button>
-      </GNBIcon>
-      <GNBIcon>
-        <Button to={'/more'}>
-          <GnbSetting active={currentPath === 'more'} />
-        </Button>
-      </GNBIcon>
-    </GNB>
+    <Container>
+      <GNB>
+        <GNBIcon>
+          <Button to={'/timer'}>
+            <GnbTimer active={currentPath === 'timer'} />
+          </Button>
+        </GNBIcon>
+        <GNBIcon>
+          <Button to={'/chart'}>
+            <GnbChart active={currentPath === 'chart'} />
+          </Button>
+        </GNBIcon>
+        <GNBIcon>
+          <Button to={'/allstudies'}>
+            <GnbAllStudy active={currentPath === 'allstudies'} />
+          </Button>
+        </GNBIcon>
+        <GNBIcon>
+          <Button to={'/mystudy'}>
+            <GnbMyStudy active={currentPath === 'mystudy'} />
+          </Button>
+        </GNBIcon>
+        <GNBIcon>
+          <Button to={'/more'}>
+            <GnbSetting active={currentPath === 'more'} />
+          </Button>
+        </GNBIcon>
+      </GNB>
+    </Container>
   );
 }
 
 export default Navigation;
+
+const Container = styled.div``;
 
 const GNB = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.base};
