@@ -59,7 +59,7 @@ const DetailContainer = styled.div`
 `;
 
 const Title = styled.div`
-  font-family: 'SpoqaMedium';
+  ${({ theme }) => theme.fonts.spoqa.medium};
   width: 100%;
   height: 84px;
   display: flex;

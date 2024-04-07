@@ -43,7 +43,7 @@ const RecordWrapper = styled.div`
 
 const RecordContainer = styled.div`
   border-radius: 16px;
-  font-family: 'SpoqaMedium';
+  ${({ theme }) => theme.fonts.spoqa.medium};
   display: flex;
   flex-direction: column;
   justify-content: center;

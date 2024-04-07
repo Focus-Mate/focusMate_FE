@@ -164,6 +164,7 @@ export const SignInStepButton = styled(Button)`
   position: absolute;
   bottom: 16px;
   left: 50%;
-  width: calc(100% - 20px);
+  width: calc(100% - 40px);
+  height: 48px;
   transform: translateX(-50%);
 `;

@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { Button, Title } from '../../style/globalStyle';
-import theme from '../../style/lightTheme';
 import MyCharactorPng from '../../style/charactor/character_size_area.png';
 import { useNavigate } from 'react-router-dom';
 import { CharactorBtnArrow } from '../../style/icon/chartPage/index';
