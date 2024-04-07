@@ -67,7 +67,7 @@ const IconWrapper = styled.div<IconWrapperProps>`
 
 const HistoryWrapper = styled.div<IconWrapperProps>`
   width: 100%;
-  background-color: #f8fafa;
+  background-color: ${({ theme }) => theme.colors.bg.grey};
   border-left: ${props =>
     props.needStudy ? ' 4px solid #bababa;' : ' 4px solid #b3f0e8;'};
   border-radius: 0px 16px 16px 0px;
@@ -88,6 +88,8 @@ const NeedStudy = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  font-size: 0.875rem;
+  line-height: 1.2rem;
 `;
 
 const NeedStudyBtn = styled(Button)`

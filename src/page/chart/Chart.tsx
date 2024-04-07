@@ -259,7 +259,7 @@ const PeriodTab = styled.div`
   cursor: pointer;
   text-align: center;
   width: 100%;
-  padding: 12px 46px;
+  padding: 12px 0px;
   &.selected {
     background-color: #b3f0e8;
     border-radius: 16px;

@@ -6,13 +6,21 @@ import { CharactorBtnArrow } from '../../style/icon/chartPage/index';
 
 export default function MyCharactor() {
   const navigate = useNavigate();
+  const myCharactorCount = 1;
+  const totalCharactorCount = 11;
   return (
     <Container>
       <CharactorTitle>
         미션을 완료하고 <br />
         캐릭터를 모아보세요!
       </CharactorTitle>
-      모은 캐릭터 1/11 <br />
+      <CharatorCount>
+        모은 캐릭터
+        <span>
+          <span>{myCharactorCount}</span>/{totalCharactorCount}
+        </span>
+      </CharatorCount>
+
       <CharactorWrapper>
         <MyCharactorImg src={MyCharactorPng} />
       </CharactorWrapper>
@@ -37,6 +45,22 @@ const Container = styled.div`
   flex-direction: column;
   gap: 16px;
   line-height: 1.5;
+`;
+
+const CharatorCount = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+
+  & > span {
+    font-weight: 500;
+    color: ${({ theme }) => theme.colors.grey[500]};
+
+    & > span {
+      font-weight: 700;
+      color: ${({ theme }) => theme.colors.primary[900]};
+    }
+  }
 `;
 
 const CharactorTitle = styled(Title)`
