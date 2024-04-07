@@ -60,7 +60,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: 'SpoqaMedium';
+  ${({ theme }) => theme.fonts.spoqa.medium};
   padding: 24px 20px 16px;
   background-color: ${({ theme }) => theme.colors.bg.elevated};
 `;

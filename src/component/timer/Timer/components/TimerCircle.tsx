@@ -85,7 +85,7 @@ const ProgressCircle = styled.circle`
 `;
 
 const CircleText = styled.div`
-  font-family: 'SpoqaMedium';
+  ${({ theme }) => theme.fonts.spoqa.medium};
   position: absolute;
   left: 50%;
   top: 50%;

@@ -1,5 +1,4 @@
 import styled, { createGlobalStyle } from 'styled-components';
-import Theme from './lightTheme';
 import {
   SpoqaRegular,
   SpoqaLight,
@@ -11,38 +10,38 @@ import {
 //전역 스타일링
 export const GlobalStyle = createGlobalStyle`
   @font-face {
-    font-family: 'SpoqaRegular';
-    src: local('SpoqaRegular'), local('SpoqaRegular');
+    font-family: 'SpoqaHanSansNeo';
+    src: url(${SpoqaThin}) format('woff2');
     font-style: normal;
-    src: url(${SpoqaRegular}) format('truetype');
+    font-weight: 200;
   }
 
   @font-face {
-    font-family: 'SpoqaLight';
-    src: local('SpoqaLight'), local('SpoqaLight');
+    font-family: 'SpoqaHanSansNeo';
+    src: url(${SpoqaLight}) format('woff2');
+    font-weight: 300;
     font-style: normal;
-    src: url(${SpoqaLight}) format('truetype');
   }
 
   @font-face {
-    font-family: 'SpoqaMedium';
-    src: local('SpoqaMedium'), local('SpoqaMedium');
+    font-family: 'SpoqaHanSansNeo';
+    src: url(${SpoqaRegular}) format('woff2');
+    font-weight: 400;
     font-style: normal;
-    src: url(${SpoqaMedium}) format('truetype');
   }
 
   @font-face {
-    font-family: 'SpoqaThin';
-    src: local('SpoqaThin'), local('SpoqaThin');
+    font-family: 'SpoqaHanSansNeo';
+    src: url(${SpoqaMedium}) format('woff2');
     font-style: normal;
-    src: url(${SpoqaThin}) format('truetype');
+    font-weight: 500;
   }
 
   @font-face {
-    font-family: 'SpoqaBold';
-    src: local('SpoqaBold'), local('SpoqaBold');
+    font-family: 'SpoqaHanSansNeo';
+    src: url(${SpoqaBold}) format('woff2');
     font-style: normal;
-    src: url(${SpoqaBold}) format('truetype');
+    font-weight: 700;
   }
 
   html, body, div, span, applet, object, iframe,
@@ -122,24 +121,27 @@ export const Input = styled.input`
   width: 100%;
   border-radius: 16px;
   border: 0px solid transparent;
-  background-color: ${Theme.colors.bg.grey};
-  padding: 23px;
-  outline-color: ${Theme.colors.bg.mint30};
-  caret-color: ${Theme.colors.bg.mint30};
+  background-color: ${({ theme }) => theme.colors.bg.grey};
+  padding: 23px 20px;
+  outline-color: ${({ theme }) => theme.colors.bg.mint30};
+  caret-color: ${({ theme }) => theme.colors.bg.mint30};
+  font-size: 16px;
 
   &.error {
-    outline-color: ${Theme.colors.orange[900]};
-    caret-color: ${Theme.colors.orange[900]};
+    outline-color: ${({ theme }) => theme.colors.orange[900]};
+    caret-color: ${({ theme }) => theme.colors.orange[900]};
   }
 `;
 
 export const Button = styled.button`
   background-color: ${props =>
-    props.disabled ? Theme.colors.bg.line : Theme.colors.primary[700]};
+    props.disabled
+      ? props.theme.colors.bg.line
+      : props.theme.colors.primary[700]};
   border-radius: 16px;
-  font-family: 'SpoqaBold';
+  ${({ theme }) => theme.fonts.spoqa.bold};
   color: ${props =>
-    props.disabled ? Theme.colors.grey[500] : Theme.colors.bg.base};
+    props.disabled ? props.theme.colors.grey[500] : props.theme.colors.bg.base};
   width: 100%;
   padding: 16px 0px;
   border: 0px solid transparent;
@@ -152,6 +154,8 @@ export const Title = styled.h1`
   word-break: keep-all;
   line-height: 32px;
   margin-bottom: 40px;
+
+  ${({ theme }) => theme.typography.bigTitle.medium};
 `;
 
 export const SignInStepButton = styled(Button)`

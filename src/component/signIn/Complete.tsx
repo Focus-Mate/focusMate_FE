@@ -9,8 +9,6 @@ export default function Complete() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  console.log('Complete 실행됨');
-
   useEffect(() => {
     let timer: null | ReturnType<typeof setTimeout> = null;
     timer = setTimeout(() => {
@@ -50,7 +48,7 @@ export default function Complete() {
     <Container>
       <Title>
         <TitleLine>{userInfo}님,</TitleLine>
-        <TitleLine>환영합니다!</TitleLine>
+        <TitleLine>환영해요</TitleLine>
       </Title>
       <Comment>가입 축하 선물로 캐릭터를 드려요</Comment>
       <PuppyWrapper>
@@ -75,17 +73,24 @@ const Container = styled.div`
 
 const Title = styled.div`
   font-size: 24px;
+  line-height: 32px;
   text-align: center;
 `;
 
 const TitleLine = styled.div`
+  color: ${({ theme }) => theme.colors.grey[900]};
+  font-family: ${({ theme }) => theme.fonts.spoqa.medium};
+
   & + & {
-    margin-top: 16px;
+    margin-top: 2px;
   }
 `;
 
 const Comment = styled.div`
   margin-top: 20px;
+  font-size: 16px;
+  font-family: ${({ theme }) => theme.fonts.spoqa.medium};
+  color: ${({ theme }) => theme.colors.grey[500]};
 `;
 
 const PuppyWrapper = styled.div`

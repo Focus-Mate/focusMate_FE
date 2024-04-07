@@ -37,7 +37,7 @@ const Container = styled.div`
 `;
 
 const MainText = styled.div`
-  font-family: 'SpoqaMedium';
+  ${({ theme }) => theme.fonts.spoqa.medium};
   font-size: 1.25rem;
   text-align: center;
   color: ${({ theme }) => theme.colors.grey[900]};
@@ -74,7 +74,7 @@ const Title = styled.div`
   border-radius: 8px;
 `;
 const Text = styled.div`
-  font-family: 'SpoqaMedium';
+  ${({ theme }) => theme.fonts.spoqa.medium};
   font-size: 0.875rem;
   margin-left: 0.5rem;
   color: ${({ theme }) => theme.colors.grey[800]};

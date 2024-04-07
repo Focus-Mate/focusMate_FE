@@ -110,7 +110,7 @@ const AgreementContainer = styled.div`
 `;
 
 const AgreeAllCheck = styled.span`
-  font-family: spoqaMedium;
+  ${({ theme }) => theme.fonts.spoqa.medium};
 `;
 
 const AgreementInput = styled.input`

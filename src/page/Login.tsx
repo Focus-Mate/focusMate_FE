@@ -94,7 +94,6 @@ const KakaoLoginBtn = styled.div`
   background-color: #fde500;
   padding: 16px;
   color: #421c1e;
-  font-family: SpoqaBold;
   border-radius: 16px;
   cursor: pointer;
 `;

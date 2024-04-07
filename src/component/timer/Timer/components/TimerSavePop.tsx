@@ -96,7 +96,7 @@ const Container = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  font-family: 'SpoqaMedium';
+  ${({ theme }) => theme.fonts.spoqa.medium};
   background-color: ${({ theme }) => theme.colors.bg.elevated};
   padding: 20px;
 `;

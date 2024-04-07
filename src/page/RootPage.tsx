@@ -7,6 +7,9 @@ interface Props {
 }
 
 export default function RootPage(props: Props) {
+  // mixpanel.identify('DEV_MODE');
+  // mixpanel.track('page_view', { page: props.page });
+
   return (
     <Container>
       <Content>

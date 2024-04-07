@@ -9,6 +9,7 @@ import darkTheme from './style/darkTheme';
 import { atom, useRecoilState } from 'recoil';
 import StatusSnackBar from './component/common/bar/StatusSnackBar';
 import { useEffect } from 'react';
+import mixpanel from 'mixpanel-browser';
 
 export const isThemeDark = atom({
   key: 'isThemeDark',
@@ -24,6 +25,14 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
     },
   },
+});
+
+const projectToken = '1cefe9b76a0691876fb61962a0b40e72';
+const secretKey = '6352a4b5aad3252f38414d3b546006a0';
+mixpanel.init(projectToken, {
+  debug: true,
+  track_pageview: true,
+  persistence: 'localStorage',
 });
 
 function App() {

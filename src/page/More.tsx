@@ -226,7 +226,7 @@ const PictureBox = styled.div`
 
 const Nickname = styled.div`
   margin-left: 0.5rem;
-  font-family: 'SpoqaMedium';
+  ${({ theme }) => theme.fonts.spoqa.medium};
   width: 100%;
 `;
 
