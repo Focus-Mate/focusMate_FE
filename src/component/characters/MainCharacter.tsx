@@ -83,7 +83,7 @@ const Text = styled.div`
 const CharacterBox = styled.div`
   width: 140px;
   height: 140px;
-  background-color: #e9faf7;
+  background-color: ${({ theme }) => theme.colors.bg.mint20};
   border-radius: 50px;
   display: flex;
   justify-content: center;

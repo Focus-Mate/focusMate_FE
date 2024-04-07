@@ -64,7 +64,6 @@ export const GlobalStyle = createGlobalStyle`
     font: inherit;
     vertical-align: baseline;
     box-sizing: border-box;
-    font-family: "SpoqaRegular";
   }
   
   /* HTML5 display-role reset for older browsers */
@@ -114,6 +113,11 @@ export const GlobalStyle = createGlobalStyle`
   div {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+
+  html, body {
+    font-family: 'SpoqaHanSansNeo', sans-serif;
+    font-weight: 400;
   }
 `;
 

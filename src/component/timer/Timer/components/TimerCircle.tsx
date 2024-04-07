@@ -116,6 +116,7 @@ const Time = styled.div`
   font-size: 2.25rem;
   font-weight: bold;
   color: ${({ theme }) => theme.colors.primary[900]};
+  ${({ theme }) => theme.fonts.spoqa.bold};
   @media (max-width: 330px) {
     font-size: 11vw;
   }

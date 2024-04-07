@@ -142,7 +142,7 @@ const Background = styled.div<{ isClose: boolean }>`
   width: 100%;
   height: 100%;
   position: absolute;
-  background: rgba(0, 0, 0, 0);
+  background: rgba(0, 0, 0, 0.5);
   animation: ${BackgroundFadeIn} 0.3s ease-in-out forwards;
 
   ${({ isClose }) => {

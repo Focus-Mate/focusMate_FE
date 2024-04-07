@@ -12,7 +12,7 @@ const modalStyle = {
   },
   content: {
     width: '280px',
-    height: '120px',
+    height: '126px',
     top: '50%',
     left: '50%',
     border: 'none',
@@ -98,7 +98,7 @@ const Container = styled.div`
   flex-direction: column;
   ${({ theme }) => theme.fonts.spoqa.medium};
   background-color: ${({ theme }) => theme.colors.bg.elevated};
-  padding: 20px;
+  padding: 24px 16px 16px 16px;
 `;
 
 const Text = styled.div`
@@ -107,18 +107,20 @@ const Text = styled.div`
   display: flex;
   justify-content: center;
   color: ${({ theme }) => theme.colors.grey[800]};
+  font-size: 16px;
+  font-weight: 500;
 `;
 
 const ButtonGroup = styled.div`
   flex-shrink: 0;
   display: flex;
   justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
 `;
 
 const Button = styled.button`
   width: 110px;
-  height: 40px;
+  height: 42px;
   background-color: transparent;
   border: 0;
   border-radius: 0.75rem;
@@ -127,10 +129,14 @@ const Button = styled.button`
 const ResetButton = styled(Button)`
   background-color: ${({ theme }) => theme.colors.bg.mint20};
   color: ${({ theme }) => theme.colors.primary[900]};
+  font-size: 14px;
+  font-weight: 500;
 `;
 
 const ConfirmButton = styled(Button)`
   width: 130px;
   background-color: ${({ theme }) => theme.colors.primary[800]};
   color: ${({ theme }) => theme.colors.bg.base};
+  font-weight: 500;
+  font-size: 14px;
 `;
