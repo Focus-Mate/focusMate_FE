@@ -1,13 +1,13 @@
 import Router from './routes/Router';
-import { GlobalStyle } from './style/globalStyle';
+import { GlobalStyle } from './styles/globalStyle';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import ReactModal from 'react-modal';
 import { ThemeProvider } from 'styled-components';
-import lightTheme from './style/lightTheme';
-import darkTheme from './style/darkTheme';
+import lightTheme from './styles/lightTheme';
+import darkTheme from './styles/darkTheme';
 import { atom, useRecoilState } from 'recoil';
-import StatusSnackBar from './component/common/bar/StatusSnackBar';
+import StatusSnackBar from './components/common/bar/StatusSnackBar';
 import { useEffect } from 'react';
 import mixpanel from 'mixpanel-browser';
 

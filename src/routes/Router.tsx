@@ -1,13 +1,13 @@
 import { Route, Routes, useLocation } from 'react-router-dom';
-import DefaultLayout from '../layout/DefaultLayout';
-import LandingGuide from '../layout/LandingGuide';
-import Characters from '../page/Characters';
-import MakeDday from '../page/chart/MakeDday';
-import Login from '../page/Login';
-import SignIn from '../page/signIn';
-import Alarm from '../page/Alarm';
-import AgreementsDetail from '../page/signIn/AgreementsDetail';
-import RootPage from '../page/RootPage';
+import DefaultLayout from '../components/layout/DefaultLayout';
+import LandingGuide from '../components/layout/LandingGuide';
+import Characters from '../pages/Characters';
+import MakeDday from '../pages/chart/MakeDday';
+import Login from '../pages/Login';
+import SignIn from '../pages/signIn';
+import Alarm from '../pages/Alarm';
+import AgreementsDetail from '../pages/signIn/AgreementsDetail';
+import RootPage from '../pages/RootPage';
 import MoreRouter from './MoreRouter';
 
 const Router = () => {
