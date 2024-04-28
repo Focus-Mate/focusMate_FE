@@ -27,10 +27,12 @@ const StudyTime = ({ period, studyTime }: StudyTimeProps) => {
 export default StudyTime;
 
 const StudyTimeWrapper = styled.div`
+  color: ${({ theme }) => theme.colors.grey[700]};
   text-align: center;
   margin-bottom: 44px;
 
   h1 {
+    color: ${({ theme }) => theme.colors.grey[900]};
     margin-top: 16px;
     font-weight: 500;
     font-size: 2.25rem;

@@ -17,7 +17,7 @@ export default function MyCharacter() {
       <CharatorCount>
         모은 캐릭터
         <span>
-          <span>{myCharactorCount}</span>/{totalCharactorCount}
+          <span>{myCharactorCount} </span>/{totalCharactorCount}
         </span>
       </CharatorCount>
 
@@ -48,6 +48,7 @@ const Container = styled.div`
 `;
 
 const CharatorCount = styled.div`
+  color: ${({ theme }) => theme.colors.grey[700]};
   display: flex;
   justify-content: center;
   gap: 8px;

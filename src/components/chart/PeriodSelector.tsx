@@ -196,7 +196,7 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
         className={isToday ? 'isToday' : ''}
         disabled={isToday}
       >
-        <RightArrowIcon fill={isToday ? '#ececec' : '#949494'} />
+        <RightArrowIcon />
       </PeriodSelectBtn>
     </PeriodSelectWrapper>
   );
@@ -209,24 +209,35 @@ const PeriodSelectBtn = styled.button`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  background-color: #f6f6f6;
+  background-color: ${({ theme }) => theme.colors.bg.grey};
   border: 0px solid transparent;
   min-width: 36px;
   height: 36px;
   border-radius: 12px;
+
+  svg {
+    fill: #949494;
+  }
   :hover {
-    background-color: #b3f0e8;
+    background-color: ${({ theme }) => theme.colors.bg.mint20};
+    svg {
+      fill: ${({ theme }) => theme.colors.primary[900]};
+    }
   }
 
   &.isToday {
     cursor: default;
-    background-color: #e2e2e2;
+    background-color: ${({ theme }) => theme.colors.grey[400]};
+
+    svg {
+      fill: ${({ theme }) => theme.colors.grey[500]};
+    }
   }
 `;
 
 const PeriodSelectWrapper = styled.div`
   margin: 15px 0px 49px 0px;
-  color: #777;
+  color: ${({ theme }) => theme.colors.grey[600]};
   display: flex;
   justify-content: space-between;
   align-items: center;

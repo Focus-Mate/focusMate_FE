@@ -56,7 +56,8 @@ interface IconWrapperProps {
 }
 
 const IconWrapper = styled.div<IconWrapperProps>`
-  background-color: ${props => (props.needStudy ? '#bababa' : '#e9faf7')};
+  background-color: ${({ needStudy, theme }) =>
+    needStudy ? theme.colors.grey[400] : theme.colors.bg.mint10};
   width: 40px;
   height: 40px;
   border-radius: 20px;
@@ -68,8 +69,8 @@ const IconWrapper = styled.div<IconWrapperProps>`
 const HistoryWrapper = styled.div<IconWrapperProps>`
   width: 100%;
   background-color: ${({ theme }) => theme.colors.bg.grey};
-  border-left: ${props =>
-    props.needStudy ? ' 4px solid #bababa;' : ' 4px solid #b3f0e8;'};
+  border-left: ${({ needStudy, theme }) =>
+    needStudy ? ' 4px solid #bababa;' : ' 4px solid #b3f0e8;'};
   border-radius: 0px 16px 16px 0px;
   padding: 20px;
 `;

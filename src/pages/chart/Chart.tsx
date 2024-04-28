@@ -36,12 +36,12 @@ export default function Chart() {
 
   const getDday = async () => {
     const response = await instance.get(`/api/calculate/getDDays`);
-    if (response.data.message === 'success') {
+    if (response.status === 200) {
       return response.data.rows;
     }
   };
 
-  const { data: ddayList } = useQuery('ddayInfo', getDday);
+  const { data: ddayList, isSuccess } = useQuery('ddayInfo', getDday);
 
   useEffect(() => {
     console.log(ddayList);
@@ -79,7 +79,7 @@ export default function Chart() {
             <h1>공부 차트</h1>
             <AlarmIcon />
           </Header>
-          {ddayList?.length !== 0 ? (
+          {isSuccess && ddayList?.length !== 0 ? (
             <>
               {ddayList?.map((item: any) => {
                 const dDateData = item.eday;
@@ -144,7 +144,7 @@ export default function Chart() {
               return (
                 <PeriodTab
                   key={item.id}
-                  className={currentTab === item.id ? 'selected' : undefined}
+                  className={currentTab === item.id ? 'selected' : ''}
                   onClick={() => {
                     setCurrentTab(item.id);
                   }}
@@ -186,7 +186,7 @@ const DDayContainer = styled.div`
   color: ${({ theme }) => theme.colors.grey[600]};
   font-size: 0.875rem;
   cursor: pointer;
-  background-color: #f6f6f6;
+  background-color: ${({ theme }) => theme.colors.bg.grey};
   width: 100%;
   border-radius: 16px;
   display: flex;
@@ -214,7 +214,7 @@ const IconWrapper = styled.div`
   border-radius: 8px;
 
   &.calender {
-    background-color: #fff;
+    background-color: ${({ theme }) => theme.colors.icon.mint10};
   }
 
   &.arrow {
@@ -247,12 +247,12 @@ const DDay = styled.div`
 
 const PeriodTabs = styled.div`
   margin: 40px 0px 20px;
-  background-color: #f6f6f6;
+  background-color: ${({ theme }) => theme.colors.bg.grey};
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-radius: 16px;
-  color: #777;
+  color: ${({ theme }) => theme.colors.grey[600]};
 `;
 
 const PeriodTab = styled.div`
@@ -261,7 +261,8 @@ const PeriodTab = styled.div`
   width: 100%;
   padding: 12px 0px;
   &.selected {
-    background-color: #b3f0e8;
+    color: ${({ theme }) => theme.colors.grey[800]};
+    background-color: ${({ theme }) => theme.colors.primary[600]};
     border-radius: 16px;
   }
 `;
