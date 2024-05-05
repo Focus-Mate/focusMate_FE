@@ -38,7 +38,7 @@ const StudyHistory = ({ dayRecord }: StudyHistoryProps) => {
             `${dayRecord.startTime} ~ ${dayRecord.endTime}`
           ) : (
             <NeedStudy>
-              {isToday.isToday ? (
+              {!isToday.isToday ? (
                 <>이 날은 공부 기록이 없어요.</>
               ) : (
                 <>
