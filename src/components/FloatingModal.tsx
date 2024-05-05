@@ -1,7 +1,7 @@
-import React from "react";
-import ReactModal from "react-modal";
-import styled from "styled-components";
-import { customStyles } from "./chart/BottomModal";
+import React from 'react';
+import ReactModal from 'react-modal';
+import styled from 'styled-components';
+import { customStyles } from './chart/BottomModal';
 
 type options = {
   action: () => void | React.Dispatch<React.SetStateAction<any>>;
@@ -27,7 +27,7 @@ export default function FloatingModal({ modalContent, isOpen }: ModalProps) {
           <Comment>{modalContent.comment}</Comment>
 
           <OptionsWrapper>
-            {modalContent.options.map((option) => {
+            {modalContent.options.map(option => {
               return (
                 <Option
                   onClick={option.action}
@@ -55,7 +55,8 @@ const ModalContainer = styled.div`
 `;
 
 const ModalContent = styled.div`
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.colors.bg.base};
+  color: ${({ theme }) => theme.colors.grey[900]};
   padding: 16px;
   width: 80%;
   display: flex;

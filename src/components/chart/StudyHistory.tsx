@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { RightArrowIcon, StudyHistoryIcon } from '../../assets/icon/chartPage';
 import { StudySession } from './DayChart';
+import { IconWrapper } from '@/pages/chart/Chart';
 
 interface StudyHistoryProps {
   dayRecord?: StudySession;
@@ -15,9 +16,9 @@ const StudyHistory = ({ dayRecord, needStudy }: StudyHistoryProps) => {
   console.log(dayRecord, needStudy);
   return (
     <HistoryContainer>
-      <IconWrapper needStudy={needStudy}>
+      <StudyHistoryIconWrapper needStudy={needStudy}>
         <StudyHistoryIcon fill={!needStudy ? '#359D9E' : '#fff'} />
-      </IconWrapper>
+      </StudyHistoryIconWrapper>
       <HistoryWrapper needStudy={needStudy}>
         <StudyTime>
           {!needStudy && dayRecord
@@ -32,7 +33,9 @@ const StudyHistory = ({ dayRecord, needStudy }: StudyHistoryProps) => {
               앗, 오늘은 아직 공부 기록이 없어요.
               <NeedStudyBtn onClick={() => navigate('/timer')}>
                 바로 공부하러 가기
-                <RightArrowIcon fill={'#fff'} />
+                <IconWrapper className="base" size={14}>
+                  <RightArrowIcon />
+                </IconWrapper>
               </NeedStudyBtn>
             </NeedStudy>
           )}
@@ -55,7 +58,7 @@ interface IconWrapperProps {
   needStudy?: boolean;
 }
 
-const IconWrapper = styled.div<IconWrapperProps>`
+const StudyHistoryIconWrapper = styled.div<IconWrapperProps>`
   background-color: ${({ needStudy, theme }) =>
     needStudy ? theme.colors.grey[400] : theme.colors.bg.mint10};
   width: 40px;

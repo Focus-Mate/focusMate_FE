@@ -179,7 +179,7 @@ const DDaySelect = styled.div`
   width: 100%;
   border-radius: 16px;
   border: 0px solid transparent;
-  background-color: ${theme.colors.bg.grey};
+  background-color: ${({ theme }) => theme.colors.bg.grey};
   padding: 23px;
   display: flex;
   align-items: center;
@@ -192,6 +192,7 @@ const SelectArrow = styled(BackArrow)`
 `;
 
 const BackArrowWrapper = styled.div`
+  cursor: pointer;
   width: 48px;
   height: 48px;
   display: flex;
@@ -200,4 +201,8 @@ const BackArrowWrapper = styled.div`
   position: fixed;
   left: 0;
   top: 8px;
+
+  & > svg {
+    fill: ${({ theme }) => theme.colors.grey[500]};
+  }
 `;

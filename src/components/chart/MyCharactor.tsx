@@ -3,6 +3,7 @@ import { Button, Title } from '@/styles/globalStyle';
 import MyCharactorPng from '@/assets/character/character_size_area.png';
 import { useNavigate } from 'react-router-dom';
 import { CharactorBtnArrow } from '../../assets/icon/chartPage/index';
+import { IconWrapper } from '@/pages/chart/Chart';
 
 export default function MyCharacter() {
   const navigate = useNavigate();
@@ -25,13 +26,19 @@ export default function MyCharacter() {
         <MyCharactorImg src={MyCharactorPng} />
       </CharactorWrapper>
       <CharactorBtn onClick={() => navigate('/characters')}>
-        모은 캐릭터 보러가기 <CharactorBtnArrow />
+        모은 캐릭터 보러가기
+        <IconWrapper size={24} className="base">
+          <CharactorBtnArrow />
+        </IconWrapper>
       </CharactorBtn>
     </Container>
   );
 }
 
 const CharactorBtn = styled(Button)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 1rem;
 `;
 

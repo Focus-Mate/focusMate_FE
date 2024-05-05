@@ -131,7 +131,7 @@ export default function Chart() {
                 D-DAY 추가하기
               </Wrapper>
               <Wrapper>
-                <IconWrapper className="arrow">
+                <IconWrapper size={42} className="gray">
                   <RightArrowIcon />
                 </IconWrapper>
               </Wrapper>
@@ -193,7 +193,7 @@ const DDayContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 15px;
-  padding-right: 0px;
+  padding-right: 3px;
   gap: 12px;
   margin-bottom: 22px;
 `;
@@ -204,21 +204,28 @@ const Wrapper = styled.div`
   gap: 12px;
 `;
 
-const IconWrapper = styled.div`
-  width: 30px;
-  height: 30px;
+export const IconWrapper = styled.div<{ size?: number }>`
+  width: ${({ size }) => (size ? `${size}px` : '30px')};
+  height: ${({ size }) => (size ? `${size}px` : '30px')};
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 30px;
   border-radius: 8px;
 
   &.calender {
     background-color: ${({ theme }) => theme.colors.icon.mint10};
   }
 
-  &.arrow {
-    width: 42px;
+  &.base {
+    & > svg {
+      fill: ${({ theme }) => theme.colors.bg.base};
+    }
+  }
+
+  &.gray {
+    & > svg {
+      fill: ${({ theme }) => theme.colors.grey[500]};
+    }
   }
 `;
 
