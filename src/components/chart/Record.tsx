@@ -13,7 +13,7 @@ export default function Record({ period, min, max }: RecordProps) {
     <RecordWrapper>
       <RecordContainer className={'best'}>
         <RecordTitle>
-          <IconBase className={'best'}>
+          <IconBase>
             <BestRecordIcon />
           </IconBase>
           {period} 최고기록
@@ -23,7 +23,7 @@ export default function Record({ period, min, max }: RecordProps) {
       </RecordContainer>
       <RecordContainer className={'worst'}>
         <RecordTitle>
-          <IconBase className={'worst'}>
+          <IconBase>
             <WorstRecordIcon />
           </IconBase>
           {period} 최저 기록
@@ -80,11 +80,5 @@ const IconBase = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  &.best {
-    background-color: ${({ theme }) => theme.colors.icon.mint10};
-  }
-
-  &.worst {
-    background-color: ${({ theme }) => theme.colors.icon.orange10};
-  }
+  background-color: ${({ theme }) => theme.colors.icon.white};
 `;

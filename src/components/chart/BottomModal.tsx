@@ -128,7 +128,8 @@ const BottomContainer = styled.div`
 `;
 
 const Content = styled.div`
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.colors.bg.elevated};
+  color: ${({ theme }) => theme.colors.grey[900]};
   padding: 24px 20px 72px;
   width: 100%;
   display: flex;
@@ -137,7 +138,7 @@ const Content = styled.div`
   bottom: 0;
   z-index: 100;
   gap: 12px;
-  border-radius: 12px 12px 0px 0px;
+  border-radius: 24px 24px 0px 0px;
 `;
 
 const CloseBtn = styled(CloseIcon)`
@@ -158,8 +159,13 @@ const SettingDday = styled.div`
   gap: 8px;
   cursor: pointer;
   background-color: ${({ theme }) => theme.colors.bg.grey};
+  color: ${({ theme }) => theme.colors.grey[600]};
   border-radius: 12px;
   padding: 16px;
+
+  & > svg {
+    fill: ${({ theme }) => theme.colors.grey[600]};
+  }
 
   &.delete {
     color: ${({ theme }) => theme.colors.icon.orange50};

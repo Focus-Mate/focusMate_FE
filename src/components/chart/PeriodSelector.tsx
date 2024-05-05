@@ -22,7 +22,6 @@ interface PeriodSelectorProps {
 const PeriodSelector = ({ period }: PeriodSelectorProps) => {
   // note: startdate = Date 객체 원본
   const [startDate, setStartDate] = useState(new Date());
-
   const [isToday, setIsToday] = useState(true);
   const setRequestDay = useSetRecoilState(ChartDateState);
   const { monday, sunday } = getMondayAndSundayDates(startDate);
@@ -30,10 +29,17 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
 
   useEffect(() => {
     return () => {
-      setCurrentDate({ currentDate: new Date() });
+      setCurrentDate({ currentDate: new Date(), isToday });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    return () => {
+      setCurrentDate({ ...currentDate, isToday });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isToday]);
 
   useEffect(() => {
     if (period === 'week' && startDate.getDay() === 0) {
@@ -67,7 +73,7 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
         break;
       case 'month':
         const monthResult = add(currentDate.currentDate, { months: 1 });
-        setCurrentDate({ currentDate: monthResult });
+        setCurrentDate({ ...currentDate, currentDate: monthResult });
         break;
     }
   };
@@ -84,7 +90,7 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
         break;
       case 'month':
         const monthResult = sub(currentDate.currentDate, { months: 1 });
-        setCurrentDate({ currentDate: monthResult });
+        setCurrentDate({ ...currentDate, currentDate: monthResult });
         break;
     }
   };

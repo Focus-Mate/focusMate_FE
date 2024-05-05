@@ -64,7 +64,7 @@ const DayChart = () => {
             })}
           </>
         ) : (
-          <StudyHistory needStudy={true} />
+          <StudyHistory />
         )}
       </DayRecordContainer>
     </>

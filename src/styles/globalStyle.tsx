@@ -130,6 +130,7 @@ export const Input = styled.input`
   outline-color: ${({ theme }) => theme.colors.bg.mint30};
   caret-color: ${({ theme }) => theme.colors.bg.mint30};
   font-size: 16px;
+  color: ${({ theme }) => theme.colors.grey[900]};
 
   &.error {
     outline-color: ${({ theme }) => theme.colors.orange[900]};

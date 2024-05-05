@@ -142,7 +142,7 @@ const WeekChart = () => {
                             : ''
                   }
                 />
-                <div>{week[index]}</div>
+                <WeekDay>{week[index]}</WeekDay>
               </GraphWrapper>
             );
           })
@@ -172,6 +172,10 @@ const GraphDayContainer = styled.div`
   justify-content: space-around;
   align-items: flex-end;
   height: 130px;
+`;
+
+const WeekDay = styled.div`
+  color: ${({ theme }) => theme.colors.grey[600]};
 `;
 
 const GraphWrapper = styled.div`
