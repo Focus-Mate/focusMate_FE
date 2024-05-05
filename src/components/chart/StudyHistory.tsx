@@ -8,6 +8,7 @@ import { IconWrapper } from '@/pages/chart/Chart';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { CurrentDateState } from '@/store/CurrentDateState';
+import { IsTodayState } from '@/store/IsTodayState';
 
 interface StudyHistoryProps {
   dayRecord?: StudySession;
@@ -15,7 +16,7 @@ interface StudyHistoryProps {
 
 const StudyHistory = ({ dayRecord }: StudyHistoryProps) => {
   const [needStudy, setNeedStudy] = useState<boolean>(true);
-  const [currentDate] = useRecoilState(CurrentDateState);
+  const [isToday] = useRecoilState(IsTodayState);
 
   const navigate = useNavigate();
 
@@ -37,7 +38,7 @@ const StudyHistory = ({ dayRecord }: StudyHistoryProps) => {
             `${dayRecord.startTime} ~ ${dayRecord.endTime}`
           ) : (
             <NeedStudy>
-              {currentDate.isToday ? (
+              {isToday.isToday ? (
                 <>이 날은 공부 기록이 없어요.</>
               ) : (
                 <>
