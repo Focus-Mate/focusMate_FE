@@ -5,7 +5,7 @@ export type ThemeType = typeof lightTheme;
 // Grey
 const grey = {
   400: '#BABABA',
-  500: '#949494',
+  500: '#999999',
   600: '#777777',
   700: '#555555',
   800: '#303030',

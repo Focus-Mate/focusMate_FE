@@ -12,6 +12,7 @@ import { add, sub } from 'date-fns';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { ChartDateState } from '@/store/ChartDateState';
 import { CurrentDateState } from '@/store/CurrentDateState';
+import { IsTodayState } from '@/store/IsTodayState';
 
 type Period = 'day' | 'week' | 'month';
 
@@ -22,24 +23,17 @@ interface PeriodSelectorProps {
 const PeriodSelector = ({ period }: PeriodSelectorProps) => {
   // note: startdate = Date 객체 원본
   const [startDate, setStartDate] = useState(new Date());
-  const [isToday, setIsToday] = useState(true);
+  const [isToday, setIsToday] = useRecoilState(IsTodayState);
   const setRequestDay = useSetRecoilState(ChartDateState);
   const { monday, sunday } = getMondayAndSundayDates(startDate);
   const [currentDate, setCurrentDate] = useRecoilState(CurrentDateState);
 
   useEffect(() => {
     return () => {
-      setCurrentDate({ currentDate: new Date(), isToday });
+      setCurrentDate({ currentDate: new Date() });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    return () => {
-      setCurrentDate({ ...currentDate, isToday });
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isToday]);
 
   useEffect(() => {
     if (period === 'week' && startDate.getDay() === 0) {
@@ -73,7 +67,7 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
         break;
       case 'month':
         const monthResult = add(currentDate.currentDate, { months: 1 });
-        setCurrentDate({ ...currentDate, currentDate: monthResult });
+        setCurrentDate({ currentDate: monthResult });
         break;
     }
   };
@@ -90,7 +84,7 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
         break;
       case 'month':
         const monthResult = sub(currentDate.currentDate, { months: 1 });
-        setCurrentDate({ ...currentDate, currentDate: monthResult });
+        setCurrentDate({ currentDate: monthResult });
         break;
     }
   };
@@ -104,15 +98,15 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
         const today = getTodayDate();
         const selectedDate = format(startDate, 'MM/dd');
         if (today === selectedDate) {
-          setIsToday(true);
+          setIsToday({ isToday: true });
         } else if (today !== selectedDate) {
-          setIsToday(false);
+          setIsToday({ isToday: false });
         }
         break;
       case 'week':
         if (todayDate < sunday) {
-          setIsToday(true);
-        } else setIsToday(false);
+          setIsToday({ isToday: true });
+        } else setIsToday({ isToday: false });
         break;
       case 'month':
         const todayYear = todayDate.getFullYear();
@@ -120,8 +114,8 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
         const currentYear = currentDate.currentDate.getFullYear();
         const currentMonth = currentDate.currentDate.getMonth() + 1;
         if (todayYear === currentYear && todayMonth === currentMonth) {
-          return setIsToday(true);
-        } else return setIsToday(false);
+          return setIsToday({ isToday: true });
+        } else return setIsToday({ isToday: false });
     }
   };
 
@@ -199,8 +193,8 @@ const PeriodSelector = ({ period }: PeriodSelectorProps) => {
 
       <PeriodSelectBtn
         onClick={dateAdd}
-        className={isToday ? 'isToday' : ''}
-        disabled={isToday}
+        className={isToday.isToday ? 'isToday' : ''}
+        disabled={isToday.isToday}
       >
         <RightArrowIcon />
       </PeriodSelectBtn>
