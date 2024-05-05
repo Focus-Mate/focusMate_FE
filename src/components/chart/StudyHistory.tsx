@@ -5,38 +5,51 @@ import styled from 'styled-components';
 import { RightArrowIcon, StudyHistoryIcon } from '../../assets/icon/chartPage';
 import { StudySession } from './DayChart';
 import { IconWrapper } from '@/pages/chart/Chart';
+import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { CurrentDateState } from '@/store/CurrentDateState';
 
 interface StudyHistoryProps {
   dayRecord?: StudySession;
-  needStudy?: boolean;
 }
 
-const StudyHistory = ({ dayRecord, needStudy }: StudyHistoryProps) => {
+const StudyHistory = ({ dayRecord }: StudyHistoryProps) => {
+  const [needStudy, setNeedStudy] = useState<boolean>(true);
+  const [currentDate] = useRecoilState(CurrentDateState);
+
   const navigate = useNavigate();
-  console.log(dayRecord, needStudy);
+
+  useEffect(() => {
+    if (dayRecord) setNeedStudy(false);
+  }, [dayRecord]);
+
   return (
     <HistoryContainer>
       <StudyHistoryIconWrapper needStudy={needStudy}>
-        <StudyHistoryIcon fill={!needStudy ? '#359D9E' : '#fff'} />
+        <StudyHistoryIcon />
       </StudyHistoryIconWrapper>
       <HistoryWrapper needStudy={needStudy}>
         <StudyTime>
-          {!needStudy && dayRecord
-            ? formatSeconds(dayRecord.studyTime)
-            : '00:00:00'}
+          {dayRecord ? formatSeconds(dayRecord.studyTime) : '00:00:00'}
         </StudyTime>
         <StartToEnd>
-          {!needStudy && dayRecord ? (
+          {dayRecord ? (
             `${dayRecord.startTime} ~ ${dayRecord.endTime}`
           ) : (
             <NeedStudy>
-              앗, 오늘은 아직 공부 기록이 없어요.
-              <NeedStudyBtn onClick={() => navigate('/timer')}>
-                바로 공부하러 가기
-                <IconWrapper className="base" size={14}>
-                  <RightArrowIcon />
-                </IconWrapper>
-              </NeedStudyBtn>
+              {currentDate.isToday ? (
+                <>이 날은 공부 기록이 없어요.</>
+              ) : (
+                <>
+                  앗, 오늘은 아직 공부 기록이 없어요.
+                  <NeedStudyBtn onClick={() => navigate('/timer')}>
+                    바로 공부하러 가기
+                    <IconWrapper className="base" size={14}>
+                      <RightArrowIcon />
+                    </IconWrapper>
+                  </NeedStudyBtn>
+                </>
+              )}
             </NeedStudy>
           )}
         </StartToEnd>
@@ -67,13 +80,22 @@ const StudyHistoryIconWrapper = styled.div<IconWrapperProps>`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  & > svg {
+    fill: ${({ needStudy, theme }) =>
+      !needStudy
+        ? `${theme.colors.primary[900]}`
+        : `${theme.colors.icon.white}`};
+  }
 `;
 
 const HistoryWrapper = styled.div<IconWrapperProps>`
   width: 100%;
   background-color: ${({ theme }) => theme.colors.bg.grey};
   border-left: ${({ needStudy, theme }) =>
-    needStudy ? ' 4px solid #bababa;' : ' 4px solid #b3f0e8;'};
+    needStudy
+      ? `4px solid ${theme.colors.grey[400]}`
+      : `4px solid ${theme.colors.bg.mint20}`};
   border-radius: 0px 16px 16px 0px;
   padding: 20px;
 `;
