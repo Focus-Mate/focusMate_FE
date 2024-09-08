@@ -1,14 +1,26 @@
 import styled from 'styled-components';
 import { Button, Title } from '@/styles/globalStyle';
-import MyCharactorPng from '@/assets/character/character_size_area.png';
 import { useNavigate } from 'react-router-dom';
 import { CharactorBtnArrow } from '../../assets/icon/chartPage/index';
 import { IconWrapper } from '@/pages/chart/Chart';
+import instance from '@/instance';
+import { useQuery } from 'react-query';
 
 export default function MyCharacter() {
   const navigate = useNavigate();
-  const myCharactorCount = 1;
-  const totalCharactorCount = 11;
+
+  const getMyCharactorInfo = async () => {
+    const response = await instance.get(`/api/character/getinfos`);
+    if (response.status === 200) {
+      return response.data;
+    }
+  };
+
+  const { data: myCharactorData, isSuccess } = useQuery(
+    'myCharInfo',
+    getMyCharactorInfo,
+  );
+
   return (
     <Container>
       <CharactorTitle>
@@ -17,13 +29,16 @@ export default function MyCharacter() {
       </CharactorTitle>
       <CharatorCount>
         모은 캐릭터
-        <span>
-          <span>{myCharactorCount} </span>/{totalCharactorCount}
-        </span>
+        {isSuccess && (
+          <span>
+            <span>{myCharactorData.getCharacterNum} </span>/
+            {myCharactorData.allCharacterNum}
+          </span>
+        )}
       </CharatorCount>
 
       <CharactorWrapper>
-        <MyCharactorImg src={MyCharactorPng} />
+        {isSuccess && <MyCharactorImg src={myCharactorData.characterImg} />}
       </CharactorWrapper>
       <CharactorBtn onClick={() => navigate('/characters')}>
         모은 캐릭터 보러가기
