@@ -207,7 +207,6 @@ const DayContainer = styled.div`
   }
 
   &.disabled {
-    margin-bottom: 50px;
     color: ${({ theme }) => theme.colors.grey[400]};
   }
 

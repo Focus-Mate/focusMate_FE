@@ -43,10 +43,6 @@ export default function Chart() {
 
   const { data: ddayList, isSuccess } = useQuery('ddayInfo', getDday);
 
-  useEffect(() => {
-    console.log(ddayList);
-  }, [ddayList]);
-
   // if (isLoading) {
   //   return <>loading...</>;
   // }
