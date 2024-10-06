@@ -5,3 +5,5 @@ build
 .env.development
 .env
 .env.*
+
+.idea

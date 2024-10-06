@@ -1,10 +1,10 @@
-import RootPage from '@/page/RootPage';
-import License from '@/page/more/License';
-import NicknameChange from '@/page/more/NicknameChange';
-import Notice from '@/page/more/Notice';
-import Personal from '@/page/more/Personal';
-import Service from '@/page/more/Service';
-import UserRemove from '@/page/more/UserRemove';
+import RootPage from '@/pages/RootPage';
+import License from '@/pages/more/License';
+import NicknameChange from '@/pages/more/NicknameChange';
+import Notice from '@/pages/more/Notice';
+import Personal from '@/pages/more/Personal';
+import Service from '@/pages/more/Service';
+import UserRemove from '@/pages/more/UserRemove';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import RouteTransition from './RouteTransition';
 import RouteTransitionWrapper from './RouteTransitionWrapper';

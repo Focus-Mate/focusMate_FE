@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/axios": "^0.14.0",
     "@types/jest": "^27.5.2",
+    "@types/mixpanel-browser": "^2.49.0",
     "@types/node": "^17.0.45",
     "@types/react": "^18.0.21",
     "@types/react-datepicker": "^4.8.0",
@@ -17,6 +18,8 @@
     "@types/styled-components": "^5.1.26",
     "babel-plugin-module-resolver": "^5.0.0",
     "craco-plugin-env": "^1.0.5",
+    "mixpanel-browser": "^2.49.0",
+    "prettier": "^3.2.5",
     "web-vitals": "^2.1.4"
   },
   "dependencies": {
@@ -24,8 +27,9 @@
     "antd-mobile": "^5.28.1",
     "axios": "^1.2.1",
     "date-fns": "^2.29.3",
-    "dayjs": "^1.11.7",
+    "dayjs": "^1.11.10",
     "framer-motion": "^10.16.12",
+    "immer": "^10.0.4",
     "react": "^18.2.0",
     "react-app-alias": "^2.2.2",
     "react-dom": "^18.2.0",
