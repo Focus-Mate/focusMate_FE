@@ -2,16 +2,18 @@ import styled from 'styled-components';
 
 interface CharacterPickUpCounterProps {
   count: number;
+  maxCount: number;
 }
 
 const CharacterPickUpCounter: React.FC<CharacterPickUpCounterProps> = ({
   count,
+  maxCount,
 }) => {
   return (
     <PickCounter>
       모은캐릭터 <PickNow>{count}</PickNow>
       <Split>/</Split>
-      <PickAll>11</PickAll>
+      <PickAll>{maxCount}</PickAll>
     </PickCounter>
   );
 };
