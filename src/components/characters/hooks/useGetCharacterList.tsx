@@ -1,15 +1,12 @@
 import instance from '@/instance';
-import { ICharacter } from '@focusmate-types/response/character';
+import {
+  ICharacter,
+  ICharacterMainResponse,
+} from '@focusmate-types/response/character';
 import { useQuery } from 'react-query';
 
 interface ICharacterListResponse {
   character: ICharacter[];
-}
-
-interface ICharacterMainResponse {
-  characterImg: string;
-  codeNum: number;
-  requirement: string;
 }
 
 export function useGetCharacterList() {
@@ -19,8 +16,6 @@ export function useGetCharacterList() {
       const response = await instance.get<ICharacterListResponse>(
         '/api/user/getcharacter',
       );
-
-      console.log(response);
 
       return response.data;
     },

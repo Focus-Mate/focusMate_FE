@@ -118,6 +118,8 @@ export const GlobalStyle = createGlobalStyle`
   html, body {
     font-family: 'SpoqaHanSansNeo', sans-serif;
     font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 `;
 

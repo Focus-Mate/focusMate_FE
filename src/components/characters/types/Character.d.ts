@@ -8,4 +8,10 @@ declare module '@focusmate-types/response/character' {
     requirement: string;
     tip: string;
   }
+
+  interface ICharacterMainResponse {
+    characterImg: string;
+    codeNum: number;
+    requirement: string;
+  }
 }
