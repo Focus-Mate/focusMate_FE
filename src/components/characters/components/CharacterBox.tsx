@@ -1,40 +1,29 @@
+import { ICharacter } from '@focusmate-types/response/character';
 import styled from 'styled-components';
 
-interface NewCharacterProps {
+interface Props {
   children?: string;
   onClick?: () => void;
-  character: {
-    codeNum: number;
-    imageURL: string;
-    missionType: string;
-    requirement: string;
-    tip: string;
-    progress: string;
-    collected: number;
-  };
+  character: ICharacter;
 }
 
-const NewCharacter: React.FC<NewCharacterProps> = ({
-  children,
-  onClick,
-  character,
-}) => {
+export function CharacterBox(props: Props) {
+  const { children, onClick, character } = props;
+
   return (
     <Container onClick={onClick}>
-      <ColorBox isActive={character?.collected === 1}>
-        {character?.collected === 1 && character?.imageURL && (
-          <img src={character?.imageURL} alt="character" />
+      <ColorBox isActive={character.collected}>
+        {character.collected && character.characterImg && (
+          <img src={character.characterImg} alt="character" />
         )}
-        {!(character?.collected === 1) && (
-          <img src={character?.imageURL} alt="character" />
+        {!character?.collected && (
+          <img src={character?.characterImg} alt="character" />
         )}
       </ColorBox>
       <NameBox>{children}</NameBox>
     </Container>
   );
-};
-
-export default NewCharacter;
+}
 
 const Container = styled.div`
   display: flex;

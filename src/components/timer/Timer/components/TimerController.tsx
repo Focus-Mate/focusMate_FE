@@ -29,7 +29,7 @@ export default function TimerController(props: Props) {
           );
 
           // 시간 오차 9시간 만큼 차감
-          setTimerStartTime(dayjs(response.data.studyDate).add(-9, 'hour'));
+          setTimerStartTime(dayjs(response.data.studyDate));
         }
       }
     };

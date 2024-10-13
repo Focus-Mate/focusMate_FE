@@ -22,8 +22,9 @@ import ConfirmPop from '@/components/common/pop/ConfirmPop';
 import useNavigationComp from '@/components/Navigation.hooks';
 import { AnimatePresence, motion } from 'framer-motion';
 import useNavigatePush from '@/hooks/useNavigatePush';
+import { ICharacterMainResponse } from '@focusmate-types/response/character';
 
-function Setting() {
+export function More() {
   const [darkMode, setDarkMode] = useRecoilState(isThemeDark);
   const [isLogoutPop, setLogoutPop] = useState(false);
   const navigate = useNavigate();
@@ -34,8 +35,21 @@ function Setting() {
   const { data: response } = useQuery(['GetUser'], async () => {
     const response = await instance.get('/api/user/me');
 
+    console.log(response);
+
     return response;
   });
+
+  const { data: mainCharacter } = useQuery(
+    'Characters/GetMainCharacter',
+    async () => {
+      const response = await instance.get<ICharacterMainResponse>(
+        '/api/user/getmaincharacter',
+      );
+
+      return response.data;
+    },
+  );
 
   return (
     <AnimatePresence onExitComplete={onExitComplete}>
@@ -78,7 +92,9 @@ function Setting() {
             <Header>
               <Title>설정</Title>
               <User>
-                <PictureBox></PictureBox>
+                <PictureBox>
+                  <img src={mainCharacter?.characterImg} />
+                </PictureBox>
                 <Nickname>{response?.data?.nickname}</Nickname>
                 <ButtonArea onClick={() => navigate('/more/nick')}>
                   <Button>닉네임 수정</Button>
@@ -168,7 +184,6 @@ function Setting() {
     </AnimatePresence>
   );
 }
-export default Setting;
 
 const Wrapper = styled(motion.div)`
   position: absolute;
@@ -222,6 +237,12 @@ const PictureBox = styled.div`
   border-radius: 1.25rem;
   background-color: ${({ theme }) => theme.colors.bg.mint10};
   flex-shrink: 0;
+  padding: 5px;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const Nickname = styled.div`
