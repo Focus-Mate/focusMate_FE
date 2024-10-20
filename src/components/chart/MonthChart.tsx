@@ -25,6 +25,7 @@ const MonthChart = () => {
       );
       return response.data;
     },
+    { enabled: !!requestDay.lastDay && !!requestDay.firstDay },
   );
 
   return (
