@@ -8,7 +8,7 @@ import { ReactComponent as ViewMoreIcon } from '@/assets/icon/viewmore_icon.svg'
 import DayChart from '../../components/chart/DayChart';
 import WeekChart from '../../components/chart/WeekChart';
 import MonthChart from '../../components/chart/MonthChart';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import instance from '../../instance';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
