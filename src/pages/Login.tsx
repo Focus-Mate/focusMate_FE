@@ -1,13 +1,19 @@
 import styled from 'styled-components';
 import { ReactComponent as KakaoLogo } from '@/assets/icon/kakaoLogo.svg';
+import appleIcon from '@/assets/icon/apple_icon.png';
 import logoText from '@/assets/images/logo_text.png';
 import studyAnimation from '@/assets/gif/study_animation.gif';
 import { motion } from 'framer-motion';
 
 const Login = () => {
   const kakaoURL = process.env.REACT_APP_SOCIAL_URL;
+  const appleURL = process.env.REACT_APP_SOCIAL_APPLE_URL;
   const setKakaoLogin = () => {
     kakaoURL && window.location.replace(kakaoURL);
+  };
+
+  const setAppleLogin = () => {
+    appleURL && window.location.replace(appleURL);
   };
 
   return (
@@ -47,8 +53,12 @@ const Login = () => {
       </Header>
       <KakaoLoginBtn onClick={() => setKakaoLogin()}>
         <KakaoLogo width={16} />
-        <div> 카카오로 시작하기</div>
+        <div>카카오로 시작하기</div>
       </KakaoLoginBtn>
+      <AppleLoginBtn onClick={() => setAppleLogin()}>
+        <img src={appleIcon} width={26} height={26} alt="apple" />
+        <div>Apple로 시작하기</div>
+      </AppleLoginBtn>
     </LoginContainer>
   );
 };
@@ -92,8 +102,25 @@ const KakaoLoginBtn = styled.div`
   align-items: center;
   gap: 10px;
   background-color: #fde500;
-  padding: 16px;
+  height: 48px;
   color: #421c1e;
   border-radius: 16px;
   cursor: pointer;
+  font-weight: 700;
+`;
+
+const AppleLoginBtn = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background-color: #000000;
+  color: #ffffff;
+  border-radius: 16px;
+  cursor: pointer;
+  height: 48px;
+  font-weight: 700;
+  margin-top: 12px;
 `;
