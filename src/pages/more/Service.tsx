@@ -1,4 +1,5 @@
 import StackHeader from '@/components/common/StackHeader';
+import ServiceTerms from '@/components/signIn/ServiceTerms';
 import useNavigatePop from '@/hooks/useNavigatePop';
 import styled from 'styled-components';
 
@@ -18,7 +19,9 @@ const Service = () => {
       >
         서비스 이용약관
       </StackHeader>
-      <Content>서비스 이용약관</Content>
+      <Content>
+        <ServiceTerms />
+      </Content>
     </Container>
   );
 };
@@ -30,6 +33,8 @@ const Container = styled.div`
   height: 100vh;
   background-color: ${({ theme }) => theme.colors.bg.base};
 `;
+
 const Content = styled.div`
   color: ${({ theme }) => theme.colors.grey[600]};
+  padding: 16px 20px;
 `;

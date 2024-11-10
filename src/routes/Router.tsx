@@ -9,6 +9,7 @@ import Alarm from '../pages/Alarm';
 import AgreementsDetail from '../pages/signIn/AgreementsDetail';
 import RootPage from '../pages/RootPage';
 import MoreRouter from './MoreRouter';
+import { OAuthPage } from '@/pages/OAuthPage';
 
 const Router = () => {
   const location = useLocation();
@@ -19,6 +20,7 @@ const Router = () => {
       {/* NOTE LandingGuide = 랜딩 분기점 (추후에 로그인/게스트 분기점) */}
       <Route path="signin" element={<SignIn />} />
       <Route path="signin/:title" element={<AgreementsDetail />} />
+      <Route path="/oauth/apple" element={<OAuthPage />} />
       <Route path="/" element={<LandingGuide />}>
         {/* NOTE DefaultLayout = 하단에 Navigation 붙어있는 layout component */}
         <Route element={<DefaultLayout />}>

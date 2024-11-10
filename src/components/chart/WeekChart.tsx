@@ -56,6 +56,7 @@ const WeekChart = () => {
       );
       return response.data;
     },
+    { enabled: !!requestDay.lastDay && !!requestDay.firstDay },
   );
 
   function calculateValues(numbers: number[]): { [key: number]: number }[] {

@@ -24,17 +24,17 @@ const StackHeader: React.FC<StackHeaderProps> = ({
   return (
     <>
       <Header line={options?.line}>
-        <HeaderBefore>
-          <BackIcon
-            src={iconArrowBack}
-            alt="back"
-            onClick={
-              // onClick이 있을 경우 onClick을 실행하고, 없을 경우 뒤로가기를 실행한다.
-              options?.before?.iconOptions?.onClick
-                ? options?.before?.iconOptions?.onClick
-                : () => navigate(-1)
+        <HeaderBefore
+          onClick={() => {
+            // onClick이 있을 경우 onClick을 실행하고, 없을 경우 뒤로가기를 실행한다.
+            if (options?.before?.iconOptions?.onClick) {
+              options.before.iconOptions.onClick();
+            } else {
+              navigate(-1);
             }
-          />
+          }}
+        >
+          <BackIcon src={iconArrowBack} alt="back" />
         </HeaderBefore>
         <HeaderCenter>{children}</HeaderCenter>
         <HeaderAfter></HeaderAfter>

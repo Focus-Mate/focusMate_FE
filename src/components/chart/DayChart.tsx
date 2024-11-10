@@ -18,8 +18,6 @@ const DayChart = () => {
   const [allStudyTime, setAllStudyTime] = useState<number>(0);
   const requestDay = useRecoilValue(ChartDateState);
 
-  console.log('requestDay', requestDay);
-
   const { data: dayRecord } = useQuery(
     ['dayRecord', requestDay.theDay],
     async () => {
@@ -28,6 +26,7 @@ const DayChart = () => {
       );
       return response.data;
     },
+    { enabled: !!requestDay.theDay },
   );
 
   function sumStudyTime(arr: StudySession[]) {
@@ -40,16 +39,6 @@ const DayChart = () => {
       setAllStudyTime(studyTime);
     }
   }, [requestDay, dayRecord]);
-
-  useEffect(() => {
-    console.log(dayRecord);
-    console.log(allStudyTime);
-    console.log(requestDay);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [requestDay]);
-  // const setStudyTime = () => {
-  //   dayRecord.map(()=>)
-  // }
 
   return (
     <>
