@@ -12,7 +12,7 @@ jobs:
     env:
       REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
       REACT_APP_SOCIAL_URL: ${{ secrets.REACT_APP_SOCIAL_URL }}
-      REACT_APP_APPLE_SOCIAL_URL: ${{ secrets.REACT_APP_APPLE_SOCIAL_URL }}
+      REACT_APP_SOCIAL_APPLE_URL: ${{ secrets.REACT_APP_SOCIAL_APPLE_URL }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_REGION: '${{ secrets.AWS_REGION }}'
