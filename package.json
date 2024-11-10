@@ -56,7 +56,7 @@
   },
   "scripts": {
     "start": "craco start --mode dev",
-    "build": "craco build --mode release",
+    "build": "craco build --mode production",
     "test": "craco test",
     "eject": "react-scripts eject"
   },
