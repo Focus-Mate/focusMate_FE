@@ -4,6 +4,7 @@ import appleIcon from '@/assets/icon/apple_icon.png';
 import logoText from '@/assets/images/logo_text.png';
 import studyAnimation from '@/assets/gif/study_animation.gif';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 const Login = () => {
   const kakaoURL = process.env.REACT_APP_SOCIAL_URL;
@@ -15,6 +16,8 @@ const Login = () => {
   const setAppleLogin = () => {
     appleURL && window.location.replace(appleURL);
   };
+
+  const [touchedKakao, setTouchedKakao] = useState(false);
 
   return (
     <LoginContainer>
@@ -51,7 +54,18 @@ const Login = () => {
         </Comment>
         <TitleImage src={studyAnimation} alt="study animation" />
       </Header>
-      <KakaoLoginBtn onClick={() => setKakaoLogin()}>
+      <KakaoLoginBtn
+        onClick={() => setKakaoLogin()}
+        onTouchStart={() => {
+          setTouchedKakao(true);
+        }}
+        onTouchEnd={() => {
+          setTouchedKakao(false);
+        }}
+        animate={{
+          backgroundColor: touchedKakao ? '#ddc400' : '#fde500',
+        }}
+      >
         <KakaoLogo width={16} />
         <div>카카오로 시작하기</div>
       </KakaoLoginBtn>
@@ -94,7 +108,7 @@ const Comment = styled(motion.div)`
   margin-top: 20px;
 `;
 
-const KakaoLoginBtn = styled.div`
+const KakaoLoginBtn = styled(motion.div)`
   width: 100%;
   display: flex;
   flex-direction: row;
