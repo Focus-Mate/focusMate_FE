@@ -5,6 +5,7 @@ import styled, { css } from 'styled-components';
 
 import checkSvg from './svg/check.svg';
 import rightSvg from './svg/right.svg';
+import { navAtoms } from '@/components/Navigation.atoms';
 
 export const snackBarStatus = atom({
   key: 'snackBarStatus',
@@ -18,6 +19,7 @@ export const snackBarStatus = atom({
 const StatusSnackBar = () => {
   const { isOpen, timer, message } = useRecoilValue(snackBarStatus);
   const setSnackBarStatus = useSetRecoilState(snackBarStatus);
+  const setPageMoveTarget = useSetRecoilState(navAtoms.pageMoveTarget);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,7 +38,8 @@ const StatusSnackBar = () => {
       <Text>{message}</Text>
       <RightBox
         onClick={() => {
-          navigate('/chart');
+          setPageMoveTarget('/chart');
+
           setSnackBarStatus(current => ({
             ...current,
             isOpen: false,
@@ -92,6 +95,7 @@ const Text = styled.div`
   width: 100%;
   margin: 0 8px;
   color: ${({ theme }) => theme.colors.icon.white};
+  font-size: 14px;
 `;
 
 const RightBox = styled.div``;

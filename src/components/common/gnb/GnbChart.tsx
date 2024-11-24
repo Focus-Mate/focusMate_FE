@@ -13,14 +13,14 @@ export default function GnbChart(props: Props) {
       fill: '#005F6C',
       stroke: '#005F6C',
       transition: {
-        duration: 0.3,
+        duration: 0.1,
       },
     },
     inactive: {
       fill: theme.colors.grey[400],
       stroke: theme.colors.grey[400],
       transition: {
-        duration: 0.3,
+        duration: 0.1,
       },
     },
   };
@@ -33,20 +33,6 @@ export default function GnbChart(props: Props) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       animate={props.active ? 'active' : 'inactive'}
-      variants={{
-        active: {
-          transform: 'scale(1.2)',
-          transition: {
-            duration: 0.3,
-          },
-        },
-        inactive: {
-          transform: 'scale(1.0)',
-          transition: {
-            duration: 0.3,
-          },
-        },
-      }}
     >
       <g clipPath="url(#clip0_699_3162)">
         <motion.rect
@@ -61,13 +47,13 @@ export default function GnbChart(props: Props) {
             active: {
               opacity: 1,
               transition: {
-                duration: 0.3,
+                duration: 0.1,
               },
             },
             inactive: {
               opacity: 0,
               transition: {
-                duration: 0.3,
+                duration: 0.1,
               },
             },
           }}
@@ -77,7 +63,7 @@ export default function GnbChart(props: Props) {
           y="25.5472"
           width="2.30943"
           height="5.38868"
-          fill="#005F6C"
+          // fill="#005F6C"
           animate={props.active ? 'active' : 'inactive'}
           variants={colorVariants}
         />
@@ -86,7 +72,7 @@ export default function GnbChart(props: Props) {
           y="17.8491"
           width="2.30943"
           height="13.0868"
-          fill="#005F6C"
+          // fill="#005F6C"
           animate={props.active ? 'active' : 'inactive'}
           variants={colorVariants}
         />
@@ -95,7 +81,7 @@ export default function GnbChart(props: Props) {
           y="21.6982"
           width="2.30943"
           height="9.23773"
-          fill="#005F6C"
+          // fill="#005F6C"
           animate={props.active ? 'active' : 'inactive'}
           variants={colorVariants}
         />
@@ -105,7 +91,7 @@ export default function GnbChart(props: Props) {
           width="20.4"
           height="20.4"
           rx="3.2"
-          stroke="#005F6C"
+          // stroke="#005F6C"
           strokeWidth="2.4"
           animate={props.active ? 'active' : 'inactive'}
           variants={{

@@ -1,6 +1,10 @@
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { timerAtom, timerDashOffsetAtom } from '../timer.atoms';
+import {
+  timerAtom,
+  timerDashOffsetAtom,
+  timerStatusAtom,
+} from '../timer.atoms';
 
 interface Props {
   seconds: number;
@@ -21,6 +25,7 @@ const getTimerText = (seconds: number) => {
 export function TimerCircle(props: Props): React.ReactElement {
   const timer = useRecoilValue(timerAtom);
   const timerDashOffset = useRecoilValue(timerDashOffsetAtom);
+  const [timerStatus] = useRecoilState(timerStatusAtom);
 
   return (
     <div
@@ -70,7 +75,11 @@ export function TimerCircle(props: Props): React.ReactElement {
         />
       </svg>
       <CircleText>
-        <TimeText>공부시간 기록하기</TimeText>
+        <TimeText>
+          {timerStatus.playStatus === 'PLAYING'
+            ? '지금은 열공시간!'
+            : '공부시간 기록하기'}
+        </TimeText>
         <Time>{getTimerText(props.seconds * 1000)}</Time>
       </CircleText>
     </div>

@@ -33,20 +33,6 @@ export function GnbTimer(props: Props) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       animate={props.active ? 'active' : 'inactive'}
-      variants={{
-        active: {
-          transform: 'scale(1.2)',
-          transition: {
-            duration: 0.3,
-          },
-        },
-        inactive: {
-          transform: 'scale(1.0)',
-          transition: {
-            duration: 0.3,
-          },
-        },
-      }}
     >
       <g clipPath="url(#clip0_967_3041)">
         <motion.circle
@@ -59,13 +45,13 @@ export function GnbTimer(props: Props) {
             active: {
               opacity: 1,
               transition: {
-                duration: 0.3,
+                duration: 0.1,
               },
             },
             inactive: {
               opacity: 0,
               transition: {
-                duration: 0.3,
+                duration: 0.1,
               },
             },
           }}

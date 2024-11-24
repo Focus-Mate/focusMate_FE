@@ -28,8 +28,8 @@ const Login = () => {
             opacity: 1,
             transform: 'scale(1)',
             transition: {
-              delay: 0.3,
-              duration: 0.6,
+              // delay: 0.3,
+              duration: 0.3,
             },
           }}
           src={logoText}
@@ -42,8 +42,8 @@ const Login = () => {
           animate={{
             opacity: 1,
             transition: {
-              delay: 0.4,
-              duration: 0.6,
+              // delay: 0.4,
+              duration: 0.3,
             },
           }}
         >
